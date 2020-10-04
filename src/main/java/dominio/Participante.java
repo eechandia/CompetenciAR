@@ -5,5 +5,6 @@ public class Participante {
 	private Integer idParticipante;
 	private String nombre;
 	private String email;
+	private Competencia competencia;
 	
 }
