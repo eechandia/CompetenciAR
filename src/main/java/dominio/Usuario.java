@@ -13,5 +13,7 @@ public class Usuario {
 	private String nombre;
 	private TipoDoc tipoDocumento;
 	private String documento;
+	private Localidad localidad;
+	
 	
 }

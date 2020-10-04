@@ -17,8 +17,14 @@ public class Competencia {
 	private String reglamento;
 	private boolean dadaDeBaja;
 	private LocalDateTime fechaBaja;
+	private Usuario usuarioAsociado;
+	private List<Reserva> reservasDisponibles;
+	private Deporte deporteDeCompetencia;
+	private Modalidad modalidadCompetencia;
 	
 	public Competencia(){
 		this.participantes = new ArrayList<Participante>();
+		this.reservasDisponibles = new ArrayList<Reserva>();
+		
 	}
 }
