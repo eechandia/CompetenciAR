@@ -4,4 +4,12 @@
   <artifactId>tp_diseno</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Trabajo Practico Diseño</name>
+  <dependencies>
+	  <dependency>
+		  <groupId>org.hibernate</groupId>
+		  <artifactId>hibernate-agroal</artifactId>
+		  <version>5.4.22.Final</version>
+		  <type>pom</type>
+	</dependency>
+  </dependencies>
 </project>
