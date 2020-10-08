@@ -17,6 +17,10 @@ import javax.persistence.Table;
 @Table(name="FormaPuntuacion", schema = "tp")
 public abstract class FormaPuntuacion {
 	
+	public enum Tipo {
+		SETS, PUNTUACION, RESULTADO_FINAL
+	}
+	
 	@Id
 	@Column
 	protected Integer id;

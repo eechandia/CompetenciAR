@@ -1,5 +1,5 @@
 package dominio;
 
-public class SistemaDeEliminatoriaSimple extends SistemaCompetencia {
+public class SistemaDeEliminatoriaSimple extends SistemaDeCompetencia {
 
 }

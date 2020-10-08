@@ -10,7 +10,12 @@ import javax.persistence.ManyToOne;
 
 
 
-public abstract class SistemaCompetencia {
+public abstract class SistemaDeCompetencia {
+	
+	public enum Tipo {
+		LIGA, ELIMIN_SIMPLE, ELIMIN_DOBLE
+	}
+	
 	
 
 	protected Integer id;

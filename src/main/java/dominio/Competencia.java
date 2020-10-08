@@ -45,7 +45,7 @@ public class Competencia {
 	private String reglamento;
 	
 	@Column(name="dadadebaja")
-	private boolean dadaDeBaja;
+	private Boolean dadaDeBaja;
 	
 	
 	@Column(name="fechadebaja")

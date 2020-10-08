@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="reserva", schema = "tp")
-class Reserva  implements Serializable{
+public class Reserva  implements Serializable{
 	
 	@Id
 	@ManyToOne()

@@ -1,15 +1,15 @@
 package dao;
 
-import dominio.SistemaCompetencia;
+import dominio.SistemaDeCompetencia;
 
 public interface SistemaDeCompetenciaDAO {
 
-	public abstract SistemaCompetencia darDeAltaSistemaDeCompetencia();
+	public abstract SistemaDeCompetencia darDeAltaSistemaDeCompetencia();
 	
 	public abstract void darDeBajaSistemaDeCompetencia();
 	
 	public abstract void guardarSistemaDeCompetencia();
 	
-	public abstract SistemaCompetencia recuperarSistemaDeCompetencia();
+	public abstract SistemaDeCompetencia recuperarSistemaDeCompetencia();
 	
 }

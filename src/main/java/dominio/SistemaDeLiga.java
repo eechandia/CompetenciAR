@@ -6,12 +6,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="SistemaDeLiga", schema = "tp")
-public class SistemaDeLiga extends SistemaCompetencia {
+public class SistemaDeLiga extends SistemaDeCompetencia {
 
 	@Column
 	private Integer puntosPorPartido;
 	@Column
-	private boolean empatePermitido;
+	private Boolean empatePermitido;
 	@Column
 	private Integer puntosPorEmpate;
 	@Column
