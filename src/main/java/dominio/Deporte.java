@@ -1,16 +1,20 @@
 package dominio;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 
 @Entity
-@Embeddable
 @Table(name="Deporte", schema = "tp")
 public class Deporte {
 
@@ -20,6 +24,15 @@ public class Deporte {
 	private Integer id;
 	@Column
 	private String nombre;
+
+	
+	@ManyToMany(cascade = { CascadeType.ALL })
+    @JoinTable(
+        name = "DeporteLugarDeRealizacion", 
+        joinColumns = { @JoinColumn(name = "idDeporte") }, 
+        inverseJoinColumns = { @JoinColumn(name = "idLugarDeRealizacion") }
+    )
+	private List<LugarDeRealizacion> LugaresDeRealizacion;
 	
 	public Deporte() {
 	};

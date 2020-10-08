@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -25,8 +26,7 @@ public class Pais {
 	@Column
 	private String nombre;
 	
-	@Embedded
-	@Column
+	@OneToMany(mappedBy = "pais")
 	private List<Provincia> provincias;
 	
 	public Pais() {

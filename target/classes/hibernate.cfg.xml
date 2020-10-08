@@ -18,6 +18,18 @@
         
         <mapping class="dominio.Competencia"/>
         <mapping class="dominio.Deporte"/>
-        
+        <mapping class="dominio.FormaPuntuacion"/>
+        <mapping class="dominio.FormaPuntuacionPuntuacion"/>
+        <mapping class="dominio.FormaPuntuacionResFinal"/>
+        <mapping class="dominio.FormaPuntuacionSets"/>
+        <mapping class="dominio.Localidad"/>
+        <mapping class="dominio.LugarDeRealizacion"/>
+        <mapping class="dominio.Modalidad"/>
+        <mapping class="dominio.Pais"/>
+        <mapping class="dominio.Participante"/>
+        <mapping class="dominio.Provincia"/>
+        <mapping class="dominio.Reserva"/>
+        <mapping class="dominio.Sesion"/>
+        <mapping class="dominio.Usuario"/>
     </session-factory>
 </hibernate-configuration>

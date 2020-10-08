@@ -10,6 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -26,12 +29,11 @@ public class Provincia {
 	@Column
 	private String nombre;
 	
-	@Embedded
-	@Column
+	@OneToMany(mappedBy = "provincia")
 	private List<Localidad> localidades;
 	
-	@Embedded
-	@Column
+	@ManyToOne()
+    @JoinColumn(name = "idPais")
 	private Pais pais;
 	
 	public Provincia() {

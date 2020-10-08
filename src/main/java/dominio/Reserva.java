@@ -4,17 +4,24 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Embeddable
+
 @Entity
 @Table(name="reserva", schema = "tp")
 class Reserva {
 	
-	@Embedded
+	@Id
+	@ManyToOne()
+    @JoinColumn(name = "codigoLugarDeRealizacion")
 	private LugarDeRealizacion lugarDeRealizacion;
 	
-	@Embedded
+    @Id
+	@ManyToOne()
+    @JoinColumn(name = "idCompetencia")
 	private Competencia competencia;
 	
 	@Column
