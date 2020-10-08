@@ -9,14 +9,12 @@
         <property name="hibernate.connection.username">dchqgbyd</property>
         <property name="hibernate.connection.password">NhtBV0fJkxswJU_wnGShHGwMDup5cj_6</property>
         <property name="hibernate.connection.url">jdbc:postgresql://tuffi.db.elephantsql.com:5432/dchqgbyd</property>
+        
+		
+        <property name="connection_pool_size">2</property>
+    
 
-        <property name="connection_pool_size">1</property>
-        <property name="hbm2ddl.auto">create</property>
         <property name="show_sql">true</property>
 		
-		<property name="javax.persistence.schema-generation.database.action" value="create"/>
-		
-
-
     </session-factory>
 </hibernate-configuration>

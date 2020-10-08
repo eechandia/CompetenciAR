@@ -13,22 +13,22 @@ public class DB {
 	private DB(){
 	}
 	
-	public static Connection crearConnection(){
-		Connection conn=null;
-		
-		try {
-			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection(url,user,pass);
-		} catch (ClassNotFoundException ex) {
-		ex.printStackTrace();
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		}
-		return conn;
-	}
-	
-	public static Connection getConnection() {
-		return crearConnection();
-	}
+//	public static Connection crearConnection(){
+//		Connection conn=null;
+//		
+//		try {
+//			Class.forName("org.postgresql.Driver");
+//			conn = DriverManager.getConnection(url,user,pass);
+//		} catch (ClassNotFoundException ex) {
+//		ex.printStackTrace();
+//		} catch (SQLException ex) {
+//			ex.printStackTrace();
+//		}
+//		return conn;
+//	}
+//	
+//	public static Connection getConnection() {
+//		return crearConnection();
+//	}
 
 }

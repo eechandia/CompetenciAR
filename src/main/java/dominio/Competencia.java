@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
  @Entity
- @Table(name="Competencia")
+ @Table(name="Competencia", schema = "tp")
  
 public class Competencia {
 
