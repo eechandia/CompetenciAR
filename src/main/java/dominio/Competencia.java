@@ -12,7 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -39,8 +41,7 @@ public class Competencia {
 	@Column(name="estado")
 	private Estado estadoCompetencia;
 
-	
-	@Embedded
+	@OneToMany(mappedBy = "competencia")
 	private List<Participante> participantes;
 	
 	@Column(name="reglamento")
@@ -53,21 +54,21 @@ public class Competencia {
 	@Column(name="fechadebaja")
 	private LocalDate fechaBaja;
 	
+	@ManyToOne()
+    @JoinColumn(name = "idUsuario")
+	private Usuario usuarioAsociado;
 	
-//	@Column(name="idusuario")
-//	private Usuario usuarioAsociado;
+	@OneToMany(mappedBy = "competencia")
+	private List<Reserva> reservasDisponibles;
 	
-//	@Column
-//	private List<Reserva> reservasDisponibles;
-//	
 	
 	@OneToOne @MapsId
 	@JoinColumn(name="iddeporte")
 	private Deporte deporteDeCompetencia;
 	
-//	@Column
-//	private Modalidad modalidadCompetencia;
-//	
+	
+	private Modalidad modalidadCompetencia;
+	
 	public Competencia(){
 		this.participantes = new ArrayList<Participante>();
 //		this.reservasDisponibles = new ArrayList<Reserva>();

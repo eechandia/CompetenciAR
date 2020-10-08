@@ -1,5 +1,7 @@
 package dominio;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
@@ -7,6 +9,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
@@ -42,8 +47,14 @@ public class Usuario {
 	@Column
 	private String documento;
 	
-	@Column
+	@ManyToOne()
+    @JoinColumn(name = "idLocalidad")
 	private Localidad localidad;
 	
+	@OneToMany(mappedBy = "usuario")
+	private List<Sesion> sesiones;
+	
+	@OneToMany(mappedBy = "usuario")
+	private List<Competencia> competencias;
 	
 }
