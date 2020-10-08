@@ -15,6 +15,9 @@
     
 
         <property name="show_sql">true</property>
-		
+        
+        <mapping class="dominio.Competencia"/>
+        <mapping class="dominio.Deporte"/>
+        
     </session-factory>
 </hibernate-configuration>

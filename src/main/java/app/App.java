@@ -7,6 +7,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import dominio.Competencia;
 import dominio.Deporte;
 import gui.*;
 
@@ -44,6 +45,7 @@ public class App extends JFrame {
 	}
 	
 	public static void main(String[] args) {
+
 		
 		App aplicacion = new App();
 		aplicacion.setSize(1000, 600);
@@ -51,6 +53,45 @@ public class App extends JFrame {
 		aplicacion.armarApp();
 		aplicacion.setTitle("Gestor Camiones");
 		aplicacion.setVisible(true);
+
+		// TODO Auto-generated method stub
+		System.out.println("testeando");
+		
+		
+		SessionFactory factory = new Configuration()
+				.configure("hibernate.cfg.xml")
+				.buildSessionFactory();
+		
+		Deporte temp = new Deporte("Hockey");
+		Competencia comp = new Competencia("Compe1", "vale todo pa!");
+		comp.setDeporteDeCompetencia(temp);
+		
+		try {
+			Session session = factory.openSession();
+			session.beginTransaction();
+			session.save(comp); 
+			session.save(temp);
+			session.getTransaction().commit();
+			} finally {
+		
+		}
+		
+		
+		
+		try {
+			Session session = factory.openSession();
+			session.beginTransaction();
+			Competencia comp1 = session.get(Competencia.class, comp.getId());
+			System.out.println(comp1.getDeporteDeCompetencia().getId());
+			session.getTransaction().commit();
+			} finally {
+			factory.close();
+		}
+		
+		
+		
+		
+
 	}
 
 
