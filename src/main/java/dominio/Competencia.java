@@ -6,10 +6,14 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -31,9 +35,10 @@ public class Competencia {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	@Column(name="estado")
 	private Estado estadoCompetencia;
+
 	
 	@Embedded
 	private List<Participante> participantes;
@@ -45,26 +50,27 @@ public class Competencia {
 	private boolean dadaDeBaja;
 	
 	
-	@Column(name="fechabaja")
+	@Column(name="fechadebaja")
 	private LocalDate fechaBaja;
 	
 	
-	@Column(name="idusuario")
-	private Usuario usuarioAsociado;
+//	@Column(name="idusuario")
+//	private Usuario usuarioAsociado;
 	
-	@Column
-	private List<Reserva> reservasDisponibles;
+//	@Column
+//	private List<Reserva> reservasDisponibles;
+//	
 	
-	
-	@Column
+	@OneToOne @MapsId
+	@JoinColumn(name="iddeporte")
 	private Deporte deporteDeCompetencia;
 	
-	@Column
-	private Modalidad modalidadCompetencia;
-	
+//	@Column
+//	private Modalidad modalidadCompetencia;
+//	
 	public Competencia(){
 		this.participantes = new ArrayList<Participante>();
-		this.reservasDisponibles = new ArrayList<Reserva>();
+//		this.reservasDisponibles = new ArrayList<Reserva>();
 		
 	}
 

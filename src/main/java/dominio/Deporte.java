@@ -10,6 +10,7 @@ import javax.persistence.Table;
 
 
 @Entity
+@Embeddable
 @Table(name="Deporte", schema = "tp")
 public class Deporte {
 
