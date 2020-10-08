@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -21,15 +22,10 @@ public class Modalidad {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
 	private Integer id;
+
 	
-	@Embedded
-	private FormaPuntuacion formaPuntuacion;
-	
-	@Embedded
-	private SistemaCompetencia sistemaCompetencia;
-	
-	@OneToOne @MapsId
-	@JoinColumn(name="idCompetencia")
+	@ManyToOne()
+    @JoinColumn(name = "idCompetencia")
 	private Competencia competencia;
 	
 }

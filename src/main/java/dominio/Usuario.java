@@ -51,10 +51,8 @@ public class Usuario {
     @JoinColumn(name = "idLocalidad")
 	private Localidad localidad;
 	
-	@OneToMany(mappedBy = "usuario")
-	private List<Sesion> sesiones;
-	
-	@OneToMany(mappedBy = "usuario")
+
+	@OneToMany(mappedBy = "usuarioAsociado")
 	private List<Competencia> competencias;
 	
 }

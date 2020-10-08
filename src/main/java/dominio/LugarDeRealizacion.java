@@ -1,5 +1,6 @@
 package dominio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="lugarderealizacion", schema = "tp")
+@Table(name="LugarDeRealizacion", schema = "tp")
 public class LugarDeRealizacion {
 
 
@@ -38,8 +39,8 @@ public class LugarDeRealizacion {
 	@Column
 	private boolean activo;
 	
-    @ManyToMany(mappedBy = "lugarderealizacion")
-	private List<Deporte> deportes;
+    @ManyToMany(mappedBy = "LugaresDeRealizacion")
+	private List<Deporte> deportes = new ArrayList<>();
 	
 	@ManyToOne()
     @JoinColumn(name = "idUsuario")

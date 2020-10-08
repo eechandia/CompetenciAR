@@ -66,8 +66,7 @@ public class Competencia {
 	@JoinColumn(name="iddeporte")
 	private Deporte deporteDeCompetencia;
 	
-	
-	private Modalidad modalidadCompetencia;
+
 	
 	public Competencia(){
 		this.participantes = new ArrayList<Participante>();
