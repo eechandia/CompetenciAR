@@ -32,6 +32,7 @@ ENUM('LIGA','ELIMIN_SIMPLE','ELIMIN_DOBLE_GANADORES','ELIMIN_DOBLE_PERDEDORES');
 			id SERIAL,
 			nombre varchar(50),
 			idProvincia integer,
+			codigoPostal integer,
 			
 			CONSTRAINT pk_idLocalidad PRIMARY KEY (id),
 			CONSTRAINT fk_idProvincia FOREIGN KEY (idProvincia) REFERENCES tp.provincia(id)
