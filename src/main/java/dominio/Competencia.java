@@ -71,6 +71,7 @@ public class Competencia {
 	
 	public Competencia(){
 		this.participantes = new ArrayList<Participante>();
+<<<<<<< Updated upstream
 //		this.reservasDisponibles = new ArrayList<Reserva>();
 		
 	}
@@ -108,5 +109,9 @@ public class Competencia {
 
 
 	
+=======
+		this.reservasDisponibles = new ArrayList<Reserva>();	
+	}
+>>>>>>> Stashed changes
 	
 }
