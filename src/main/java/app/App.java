@@ -47,12 +47,12 @@ public class App extends JFrame {
 	public static void main(String[] args) {
 
 		
-		App aplicacion = new App();
-		aplicacion.setSize(1000, 600);
-		aplicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		aplicacion.armarApp();
-		aplicacion.setTitle("Gestor Camiones");
-		aplicacion.setVisible(true);
+//		App aplicacion = new App();
+//		aplicacion.setSize(1000, 600);
+//		aplicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		aplicacion.armarApp();
+//		aplicacion.setTitle("Gestor Camiones");
+//		aplicacion.setVisible(true);
 
 		// TODO Auto-generated method stub
 		System.out.println("testeando");

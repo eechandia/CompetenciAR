@@ -40,7 +40,7 @@ public class LugarDeRealizacion {
 	private boolean activo;
 	
     @ManyToMany(mappedBy = "LugaresDeRealizacion")
-	private List<Deporte> deportes = new ArrayList<>();
+	private List<Deporte> deportes = new ArrayList<Deporte>();
 	
 	@ManyToOne()
     @JoinColumn(name = "idUsuario")
