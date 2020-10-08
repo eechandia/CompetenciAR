@@ -37,7 +37,7 @@ public class LugarDeRealizacion {
 	private String descripcion;
 
 	@Column
-	private boolean activo;
+	private Boolean activo;
 	
     @ManyToMany(mappedBy = "LugaresDeRealizacion")
 	private List<Deporte> deportes = new ArrayList<Deporte>();
