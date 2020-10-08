@@ -4,8 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import dao.utils.DB;
-import dominio.Competencia;
 import dominio.Deporte;
 
 public class App {
@@ -19,10 +17,10 @@ public class App {
 									.configure("hibernate.cfg.xml")
 									.addAnnotatedClass(Deporte.class)
 									.buildSessionFactory();
-		Session session = factory.getCurrentSession();
+		Session session = factory.openSession();
 		
 		try {
-			Deporte temp = new Deporte("Football");
+			Deporte temp = new Deporte("Tenis");
 			session.beginTransaction();
 			session.save(temp);
 			session.getTransaction().commit();
