@@ -1,17 +1,17 @@
 package gui;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,16 +22,20 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+public class PantallaIniciarSesion extends JPanel{
 
-
-public class PantallaIniciarSesion extends JFrame{
-
-public GridBagConstraints gbc;
+private GridBagConstraints gbc;
+private JPanel tpPanel;
 	
+public PantallaIniciarSesion(JPanel tp) {
+	this.tpPanel = tp;
+	this.armarApp();
+}
+
 	public void armarApp() {
 		this.gbc = new GridBagConstraints();
-		JPanel panel = new JPanel(new GridBagLayout());
-		panel.setBackground(Color.WHITE);
+		this.setLayout(new GridBagLayout());
+		this.setBackground(Color.WHITE);
 		
 		ImageIcon iconoVolver= new ImageIcon("IconoVolver.JPG");
 		
@@ -42,8 +46,8 @@ public GridBagConstraints gbc;
 		ingresarContraseña.setFont(fuente);
 		
 		
-		JTextField usuario = new JTextField();
-		JPasswordField contraseña = new JPasswordField();
+		final JTextField usuario = new JTextField();
+		final JPasswordField contraseña = new JPasswordField();
 		
 		usuario.setFont(fuente);
 		contraseña.setFont(fuente);
@@ -65,6 +69,16 @@ public GridBagConstraints gbc;
 		Border compound = new CompoundBorder(line, margin);
 		volver.setBorder(compound);
 		
+		volver.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				CardLayout layout = (CardLayout)tpPanel.getLayout();
+		        layout.show(tpPanel, "Card__UsuarionNoAutenticado");
+			}
+			
+		});
+		
 		
 		JButton aceptar = new JButton("Aceptar");
 		aceptar.setFont(fuente);
@@ -73,17 +87,22 @@ public GridBagConstraints gbc;
 		aceptar.setMinimumSize(new Dimension(200, 50));
 		aceptar.setMaximumSize(new Dimension(200, 50));
 		
-		aceptar.addActionListener( e -> {
-			
-			if (usuario.getText().isBlank()) {
-				JOptionPane.showMessageDialog(panel,"Debe ingresar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-			else if(contraseña.getPassword().length == 0) {
-				JOptionPane.showMessageDialog(panel,"Debe ingresar una contraseña", "Error", JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-				String usuarioIngresado = usuario.getText();
-				char[] contraseñaIngresada = contraseña.getPassword();
+		aceptar.addActionListener( new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				if (usuario.getText().isBlank()) {
+					JOptionPane.showMessageDialog(new JPanel(),"Debe ingresar un usuario", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				else if(contraseña.getPassword().length == 0) {
+					JOptionPane.showMessageDialog(new JPanel(),"Debe ingresar una contraseña", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					String usuarioIngresado = usuario.getText();
+					char[] contraseñaIngresada = contraseña.getPassword();
+					//verificarUsuario
+					CardLayout layout = (CardLayout)tpPanel.getLayout();
+			        layout.show(tpPanel, "Card__UsuarioAutenticado");
+				}
 			}
 		});
 		
@@ -99,28 +118,28 @@ public GridBagConstraints gbc;
 		gbc.gridy = 0;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
-		panel.add(volver,gbc);
+		this.add(volver,gbc);
 		
 
 		gbc.gridx = 1;
 		gbc.gridy = 0;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
-		panel.add(Box.createRigidArea(new Dimension(117,20)),gbc);
+		this.add(Box.createRigidArea(new Dimension(117,20)),gbc);
 		
 		gbc.gridx = 2;
 		gbc.gridy = 2;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
 		gbc.anchor=GridBagConstraints.EAST;
-		panel.add(ingresarUsuario,gbc);
+		this.add(ingresarUsuario,gbc);
 		
 		gbc.gridx = 3;
 		gbc.gridy = 2;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
 		gbc.anchor=GridBagConstraints.CENTER;
-		panel.add(usuario,gbc);
+		this.add(usuario,gbc);
 		
 	
 		gbc.gridx = 2;
@@ -128,19 +147,19 @@ public GridBagConstraints gbc;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
 
-		panel.add(Box.createRigidArea(new Dimension(117,10)),gbc);
+		this.add(Box.createRigidArea(new Dimension(117,10)),gbc);
 		
 		gbc.gridx = 2;
 		gbc.gridy = 4;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
-		panel.add(ingresarContraseña,gbc);
+		this.add(ingresarContraseña,gbc);
 	
 		gbc.gridx = 3;
 		gbc.gridy = 4;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
-		panel.add(contraseña,gbc);
+		this.add(contraseña,gbc);
 		
 		
 		gbc.gridx = 3;
@@ -148,7 +167,7 @@ public GridBagConstraints gbc;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
 
-		panel.add(Box.createRigidArea(new Dimension(117,20)),gbc);
+		this.add(Box.createRigidArea(new Dimension(117,20)),gbc);
 		gbc.gridx = 3;
 		gbc.gridy = 6;
 		gbc.gridwidth=1;
@@ -156,21 +175,7 @@ public GridBagConstraints gbc;
 		gbc.anchor=GridBagConstraints.EAST;
 		//gbc.weightx=0.1;
 
-		panel.add(aceptar,gbc);
-
-		setContentPane(panel);
-		revalidate();
-		repaint();
+		this.add(aceptar,gbc);
 	}
 	
-	
-public static void main(String[] args) {
-		
-		PantallaIniciarSesion aplicacion = new PantallaIniciarSesion();
-		aplicacion.setSize(1280, 720);
-		aplicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		aplicacion.armarApp();
-		aplicacion.setTitle("Prueba pantalla Iniciar sesion");
-		aplicacion.setVisible(true);
-	}
 }
