@@ -99,6 +99,10 @@ public class Competencia {
 		return deporteDeCompetencia;
 	}
 
+	public List<Reserva> getReservasDisponibles() {
+		return reservasDisponibles;
+	}
+	
 		
 }
 

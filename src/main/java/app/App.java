@@ -54,40 +54,36 @@ public class App extends JFrame {
 //		aplicacion.setTitle("Gestor Camiones");
 //		aplicacion.setVisible(true);
 
-		// TODO Auto-generated method stub
-		System.out.println("testeando");
-		
 		
 		SessionFactory factory = new Configuration()
-				.configure("hibernate.cfg.xml")
-				.buildSessionFactory();
+								.configure("hibernate.cfg.xml")
+								.buildSessionFactory();
 		
-		Deporte temp = new Deporte("Hockey");
-		Competencia comp = new Competencia("Compe1", "vale todo pa!");
-		comp.setDeporteDeCompetencia(temp);
+		Deporte dep = new Deporte("Sumo");
+		Competencia comp = new Competencia("Compe10", "vale todo pa!");
+		comp.setDeporteDeCompetencia(dep);
 		
 		try {
 			Session session = factory.openSession();
 			session.beginTransaction();
 			session.save(comp); 
-			session.save(temp);
+		//	session.save(temp);
 			session.getTransaction().commit();
 			} finally {
+				factory.close();
 		
 		}
 		
-		
-		
-		try {
-			Session session = factory.openSession();
-			session.beginTransaction();
-			Competencia comp1 = session.get(Competencia.class, comp.getId());
-			System.out.println(comp1.getDeporteDeCompetencia().getId());
-			session.getTransaction().commit();
-			} finally {
-			factory.close();
-		}
-		
+//		try {
+//			Session session = factory.openSession();
+//			session.beginTransaction();
+//			Competencia comp1 = session.get(Competencia.class, comp.getId());
+//			System.out.println(comp1.getDeporteDeCompetencia().getId());
+//			session.getTransaction().commit();
+//			} finally {
+//			factory.close();
+//		}
+//		
 		
 		
 		
