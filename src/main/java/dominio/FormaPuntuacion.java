@@ -27,6 +27,7 @@ public abstract class FormaPuntuacion {
 	
 	@ManyToOne()
     @JoinColumn(name = "idModalidad")
-	private Modalidad modalidad;
+	protected Modalidad modalidad;
+	
 	
 }

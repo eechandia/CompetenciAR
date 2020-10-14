@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import dto.CompetenciaDTO;
+
 @Entity
 @Table(name="Competencia", schema = "tp")
  
@@ -63,37 +65,41 @@ public class Competencia {
 	@JoinColumn(name="iddeporte")
 	private Deporte deporteDeCompetencia;
 	
+	@OneToOne @MapsId
+	@JoinColumn(name="idmodalidad")
+	private Modalidad modalidad;
 
 	
 	public Competencia(){
-		this.participantes = new ArrayList<Participante>();
-
-//		this.reservasDisponibles = new ArrayList<Reserva>();
-		
 	}
 
 	
+	public void inicializarCompetencia(CompetenciaDTO compeDTO) {
+		this.nombre = compeDTO.getNombre();
+		this.estadoCompetencia = compeDTO.getEstadoCompetencia();
+		this.participantes = compeDTO.getParticipantes();
+		this.reglamento = compeDTO.getReglamento();
+		this.dadaDeBaja = false;
+		this.fechaBaja = null;
+		this.reservasDisponibles = compeDTO.getReservasDisponibles();
 	
-	public Competencia(String nombre, String reglamento) {
-		super();
-		this.nombre = nombre;
-		this.reglamento = reglamento;
+	};
 	
+	
+
+
+
+	public void setUsuarioAsociado(Usuario usuarioAsociado) {
+		this.usuarioAsociado = usuarioAsociado;
 	}
-
-
 
 	public void setDeporteDeCompetencia(Deporte deporteDeCompetencia) {
 		this.deporteDeCompetencia = deporteDeCompetencia;
 	}
 
-
-
 	public Integer getId() {
 		return id;
 	}
-
-
 
 	public Deporte getDeporteDeCompetencia() {
 		return deporteDeCompetencia;
@@ -102,6 +108,12 @@ public class Competencia {
 	public List<Reserva> getReservasDisponibles() {
 		return reservasDisponibles;
 	}
+
+
+	public void setModalidad(Modalidad modalidad) {
+		this.modalidad = modalidad;
+	}
+	
 	
 		
 }

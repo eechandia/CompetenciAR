@@ -13,4 +13,9 @@ public class FormaPuntuacionSets extends FormaPuntuacion {
 	@Column
 	private Integer cantidadMaxSets;
 	
+	public FormaPuntuacionSets(Modalidad m1, Integer cantidadMaxSets) {
+		super();
+		this.modalidad = m1;
+		this.cantidadMaxSets = cantidadMaxSets;
+	}
 }

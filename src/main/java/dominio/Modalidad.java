@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -27,5 +28,33 @@ public class Modalidad {
 	@ManyToOne()
     @JoinColumn(name = "idCompetencia")
 	private Competencia competencia;
+	
+	@OneToMany(mappedBy = "modalidad")
+	private SistemaDeCompetencia sistemaCompetencia;
+	
+	@OneToMany(mappedBy = "modalidad")
+	private FormaPuntuacion formaPuntuacion;
+
+	public Modalidad(Competencia competencia) {
+		super();
+		this.competencia = competencia;
+	}
+
+
+	public void setSistemaCompetencia(SistemaDeCompetencia sistemaCompetencia) {
+		this.sistemaCompetencia = sistemaCompetencia;
+	}
+
+
+	public void setFormaPuntuacion(FormaPuntuacion formaPuntuacion) {
+		this.formaPuntuacion = formaPuntuacion;
+	}
+
+
+	
+	
+	
+	
+	
 	
 }

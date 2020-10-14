@@ -22,5 +22,7 @@ public abstract class SistemaDeCompetencia {
 	
 	@ManyToOne()
     @JoinColumn(name = "idModalidad")
-	private Modalidad modalidad;
+	protected Modalidad modalidad;
+	
+	
 }

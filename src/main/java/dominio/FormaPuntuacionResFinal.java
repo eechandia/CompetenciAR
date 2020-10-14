@@ -11,6 +11,10 @@ import javax.persistence.Table;
 @Table(name="FormaPuntuacionResFinal", schema = "tp")
 public class FormaPuntuacionResFinal extends FormaPuntuacion{
 	
-
+	public FormaPuntuacionResFinal(Modalidad m1) {
+		super();
+		this.modalidad = m1;
+	
+	}
 
 }

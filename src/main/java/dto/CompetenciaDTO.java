@@ -57,7 +57,7 @@ public class CompetenciaDTO implements Serializable {
 
 	private List<Reserva> reservasDisponibles;
 
-	private Deporte deporteDeCompetencia;
+	private Integer deporteDeCompetencia;
 	
 	
 	
@@ -72,7 +72,7 @@ public class CompetenciaDTO implements Serializable {
 			LocalDate fechaBaja, 
 			Usuario usuarioAsociado, 
 			List<Reserva> reservasDisponibles, 
-			Deporte deporteDeCompetencia
+			Integer deporteDeCompetencia
 			){
 		this.id = id;
 		this.nombre = nombre;
@@ -103,6 +103,58 @@ public class CompetenciaDTO implements Serializable {
 		this.reservasDisponibles = reservasDisponibles;
 		this.deporteDeCompetencia = deporteDeCompetencia;
 	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public Competencia.Estado getEstadoCompetencia() {
+		return estadoCompetencia;
+	}
+
+	public SistemaDeCompetencia.Tipo getTipoSistemaDeCompetencia() {
+		return tipoSistemaDeCompetencia;
+	}
+
+	public FormaPuntuacion.Tipo getTipoFormaPuntuacion() {
+		return tipoFormaPuntuacion;
+	}
+
+	public List<Participante> getParticipantes() {
+		return participantes;
+	}
+
+	public String getReglamento() {
+		return reglamento;
+	}
+
+	public Boolean getDadaDeBaja() {
+		return dadaDeBaja;
+	}
+
+	public LocalDate getFechaBaja() {
+		return fechaBaja;
+	}
+
+	public Usuario getUsuarioAsociado() {
+		return usuarioAsociado;
+	}
+
+	public List<Reserva> getReservasDisponibles() {
+		return reservasDisponibles;
+	}
+
+	public Integer getDeporteDeCompetencia() {
+		return deporteDeCompetencia;
+	}
+	
+	
+	
+	
 	
 	
 

@@ -54,5 +54,17 @@ public class Usuario {
 
 	@OneToMany(mappedBy = "usuarioAsociado")
 	private List<Competencia> competencias;
+
+
+	public Usuario(Integer id, String correoElectronico, String contraseña, String apellido, String nombre) {
+		super();
+		this.id = id;
+		this.correoElectronico = correoElectronico;
+		this.contraseña = contraseña;
+		this.apellido = apellido;
+		this.nombre = nombre;
+	}
+	
+	
 	
 }
