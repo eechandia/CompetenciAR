@@ -44,33 +44,34 @@ public class App extends JFrame {
 		repaint();
 	}
 	
+	
 	public static void main(String[] args) {
 
 		
-//		App aplicacion = new App();
-//		aplicacion.setSize(1000, 600);
-//		aplicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		aplicacion.armarApp();
-//		aplicacion.setTitle("Gestor Camiones");
-//		aplicacion.setVisible(true);
+		App aplicacion = new App();
+		aplicacion.setSize(1000, 600);
+		aplicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		aplicacion.armarApp();
+		aplicacion.setTitle("Gestor Camiones");
+		aplicacion.setVisible(true);
 
 		
-		SessionFactory factory = new Configuration()
-								.configure("hibernate.cfg.xml")
-								.buildSessionFactory();
-		
-		Deporte dep = new Deporte("Sumo");
-		Competencia comp = new Competencia("Compe10", "vale todo pa!");
-		comp.setDeporteDeCompetencia(dep);
-		
-		try {
-			Session session = factory.openSession();
-			session.beginTransaction();
-			session.save(comp); 
-		//	session.save(temp);
-			session.getTransaction().commit();
-			} finally {
-				factory.close();
+//		SessionFactory factory = new Configuration()
+//								.configure("hibernate.cfg.xml")
+//								.buildSessionFactory();
+//		
+//		Deporte dep = new Deporte("Sumo");
+//		Competencia comp = new Competencia("Compe10", "vale todo pa!");
+//		comp.setDeporteDeCompetencia(dep);
+//		
+//		try {
+//			Session session = factory.openSession();
+//			session.beginTransaction();
+//			session.save(comp); 
+//		//	session.save(temp);
+//			session.getTransaction().commit();
+//			} finally {
+//				factory.close();
 		
 		}
 		
@@ -88,7 +89,7 @@ public class App extends JFrame {
 		
 		
 
-	}
+//	}
 
 
 

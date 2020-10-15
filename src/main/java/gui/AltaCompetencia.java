@@ -17,8 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.awt.EventQueue;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -29,12 +31,19 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -45,23 +54,31 @@ public class AltaCompetencia extends JPanel {
 	    private JPanel cards; 
 	    private JPanel primero;
 	    
-	    public CardLayoutPersonalizado(JLabel etiquetaBox, List<JPanel> paneles, String[] nombres, JComboBox<String> box, boolean axis) {
+	    public CardLayoutPersonalizado(JLabel asterisco,JLabel etiquetaBox, List<JPanel> paneles, String[] nombres, JComboBox<String> box, boolean axis) {
 	        if(axis) {
 	        	this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+	        	this.setBackground(Color.WHITE);
 	        }
 	        else {
 	        	this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
+	        	this.setBackground(Color.WHITE);
 	        }
 	        
 	        //creo el panel con el JComboBox
-	        primero = new JPanel(new GridBagLayout());
 	        
+	        primero = new JPanel(new GridBagLayout());
+	        primero.setBackground(Color.WHITE); 
 			GridBagConstraints auxConstraints = new GridBagConstraints();
 			auxConstraints.insets = new Insets(3, 10, 3, 3);
 			auxConstraints.fill = GridBagConstraints.WEST;
 			
+			auxConstraints.gridx = 0;
+			auxConstraints.gridy = 0;
+			primero.add(asterisco, auxConstraints);
+			
 			auxConstraints.gridx = 1;
 			auxConstraints.gridy = 0;
+			auxConstraints.anchor=GridBagConstraints.WEST;
 			primero.add(etiquetaBox, auxConstraints);
 			
 	    	box.addItemListener(this);
@@ -71,6 +88,7 @@ public class AltaCompetencia extends JPanel {
 
 			//Creo el panel con CardLayout
 	        cards = new JPanel(new CardLayout(0,0));
+	        cards.setBackground(Color.WHITE);
 	        cards.add(new JPanel(), " ");
 	        
 	        for(int i = 0; i < paneles.size(); i++) {
@@ -79,6 +97,7 @@ public class AltaCompetencia extends JPanel {
 	       
 	        this.add(primero);
 	        this.add(cards);
+	        this.setBackground(Color.WHITE);
 	    }
 	    
 	    public void itemStateChanged(ItemEvent evt) {
@@ -144,12 +163,23 @@ public class AltaCompetencia extends JPanel {
 		//Panel del titulo y boton volver		
 		tituloPanel = new JPanel(new GridBagLayout());
 		tituloPanel.setMinimumSize(new Dimension(1200, 75));
+		tituloPanel.setBackground(Color.WHITE);
 		GridBagConstraints volverConstraints = new GridBagConstraints();
 		volverConstraints.insets = new Insets(10, 10, 10, 10);
-		volverConstraints.fill = GridBagConstraints.WEST;
+		volverConstraints.fill = GridBagConstraints.NONE;
 		volverConstraints.gridx = 1;
 		volverConstraints.gridy = 0;
-		JButton volver = new JButton("Volver");
+		volverConstraints.anchor = GridBagConstraints.WEST;
+		ImageIcon iconoVolver= new ImageIcon("IconoVolver.JPG");
+		JButton volver = new JButton();
+		volver.setPreferredSize(new Dimension(33,33));
+		volver.setIcon(iconoVolver);
+		
+		Border line = new LineBorder(Color.WHITE);
+		Border margin = new EmptyBorder(0, 0, 0, 0);
+		Border compound = new CompoundBorder(line, margin);
+		volver.setBorder(compound);
+		
 		volver.addActionListener( new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -157,52 +187,91 @@ public class AltaCompetencia extends JPanel {
 			}
 			
 		});
+		
 		tituloPanel.add(volver, volverConstraints);
 		
-		JLabel titulo = new JLabel("Nueva Competencia");
-		titulo.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		volverConstraints.gridx = 2;
+		tituloPanel.add(Box.createRigidArea(new Dimension(300,0)),volverConstraints);
 		
-		volverConstraints.gridx = 5;
+		JLabel titulo = new JLabel("Nueva Competencia");
+		titulo.setFont(new Font("Tahoma", Font.BOLD, 22));
+		
+		volverConstraints.gridx = 3;
 		tituloPanel.add(titulo, volverConstraints);
+		
+		volverConstraints.gridx = 4;
+		tituloPanel.add(Box.createRigidArea(new Dimension(600,0)), volverConstraints);
+		
+		
+		volverConstraints.gridx = 0;
+		tituloPanel.add(Box.createRigidArea(new Dimension(234,0)),volverConstraints);
 		
 		//Panel de la info que ingresa el usuario
 		infoPanel = new JPanel(new GridBagLayout());
 		
 		//Panel de los campos a rellenar 
 		camposPanel = new JPanel(new GridBagLayout());
+		camposPanel.setBackground(Color.WHITE);
 		GridBagConstraints infoConstraints = new GridBagConstraints();
 		infoConstraints.insets = new Insets(3, 10, 3, 3);
 		infoConstraints.fill = GridBagConstraints.WEST;
 		
-		JLabel nombre = new JLabel("Nombre de la Competencia");
+		JLabel asterisco1 = new JLabel("*");
+		asterisco1.setForeground(Color.red);
+		JLabel asterisco2 = new JLabel("*");
+		asterisco2.setForeground(Color.red);
+		JLabel asterisco3 = new JLabel("*");
+		asterisco3.setForeground(Color.red);
+		JLabel asterisco4 = new JLabel("*");
+		asterisco4.setForeground(Color.red);
+		JLabel asterisco5 = new JLabel("*");
+		asterisco5.setForeground(Color.red);
+		JLabel asterisco6 = new JLabel("*");
+		asterisco6.setForeground(Color.red);
+		JLabel asterisco7 = new JLabel("*");
+		asterisco7.setForeground(Color.red);
+		JLabel asterisco8 = new JLabel("*");
+		asterisco8.setForeground(Color.red);
+		JLabel nombre = new JLabel();
+		
+		nombre.setText("Nombre de la Competencia");
 		JLabel deporte = new JLabel("Deporte Asociado");
 		JLabel modalidad = new JLabel("Modalidad de la Competencia");
 		JLabel formaP = new JLabel("Forma de Puntuación");
 		JLabel reglamentoL = new JLabel("Reglamento");
 		JLabel cantidadMaxSets = new JLabel("Cantidad Máxima Sets");
 		JLabel puntosAusente = new JLabel("Puntos si Rival Ausente");
-		JLabel puntosGanado = new JLabel("Puntos por Partido Ganado");
-		JLabel puntosPresentarse = new JLabel("Puntos por Presentarse");
+		JLabel puntosGanado = new JLabel("<html><font color='red'>*</font> Puntos por Partido Ganado</html>");
+		JLabel puntosPresentarse = new JLabel("<html><font color='red'>*</font> Puntos por Presentarse</html>");
 		JLabel puntosEmpate = new JLabel("Puntos Empate");
+		puntosEmpate.setEnabled(false);
 		
 		final JTextField nombreTexto = new JTextField(150);
 		nombreTexto.setMinimumSize(new Dimension(200, 30));
 		nombreTexto.setMaximumSize(new Dimension(200, 30));
 		nombreTexto.setPreferredSize(new Dimension(200, 30));
 		final JComboBox<String> deporteBox = new JComboBox<String>(); 
+		
 		//Pedir al gestor de deporte
+		
 		deporteBox.addItem(" ");
 		deporteBox.setMinimumSize(new Dimension(200, 30));
 		deporteBox.setMaximumSize(new Dimension(200, 30));
 		deporteBox.setPreferredSize(new Dimension(200, 30));
+		deporteBox.setBackground(Color.WHITE);
+		
 		final JComboBox<String> modalidadBox = new JComboBox<String>(arregloM);
 		modalidadBox.setMinimumSize(new Dimension(200, 30));
 		modalidadBox.setMaximumSize(new Dimension(200, 30));
 		modalidadBox.setPreferredSize(new Dimension(200, 30));
+		modalidadBox.setBackground(Color.WHITE);
+		
+		
 		final JComboBox<String> puntuacionBox = new JComboBox<String>(arregloP);
 		puntuacionBox.setMinimumSize(new Dimension(200, 30));
 		puntuacionBox.setMaximumSize(new Dimension(200, 30));
 		puntuacionBox.setPreferredSize(new Dimension(200, 30));
+		puntuacionBox.setBackground(Color.WHITE);
 		
 		final JSpinner puntosAu = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
 		puntosAu.setMinimumSize(new Dimension (30, 35));
@@ -214,32 +283,60 @@ public class AltaCompetencia extends JPanel {
 		puntosPorPresentarse.setMinimumSize(new Dimension (30, 20));
 		final JSpinner puntosEmp = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
 		puntosEmp.setMinimumSize(new Dimension (30, 20));
+		puntosEmp.setEnabled(false);
 		
 		final JCheckBox empate = new JCheckBox("Empate Permitido");
+		empate.setBackground(Color.WHITE);
 		empate.setBounds(16, 23, 97, 23);
+		empate.addActionListener(e -> {
+			if(empate.isSelected()) {
+				puntosEmp.setEnabled(true);
+				puntosEmpate.setEnabled(true);
+			}
+			else {
+				puntosEmp.setEnabled(false);
+				puntosEmpate.setEnabled(false);
+			}
+		});
 		
-		JTextPane reglamento = new JTextPane();
+		JTextArea reglamento = new JTextArea();
+		line = new LineBorder(Color.BLACK);
+		margin = new EmptyBorder(4, 4, 4, 4);
+		compound = new CompoundBorder(line, margin);
+		reglamento.setBorder(compound);
 		reglamento.setMinimumSize(new Dimension(415, 270));
 		reglamento.setMaximumSize(new Dimension(415, 270));
 		reglamento.setPreferredSize(new Dimension(415, 270));
-		
+		reglamento.setLineWrap(true);
+		reglamento.setFont(new Font("Plain", Font.PLAIN, 12));
 		//parte de arriba: nombre, deporte, forma de puntuacion y pantalla con CardLayout
 		JPanel arriba = new JPanel(new GridBagLayout());
+		arriba.setBackground(Color.WHITE);
 		
 		//panel con nombre y deporte
 		JPanel auxArriba = new JPanel(new GridBagLayout());
+		auxArriba.setBackground(Color.WHITE);
 		GridBagConstraints auxConstraints = new GridBagConstraints();
 		auxConstraints.insets = new Insets(3, 3, 3, 3);
 		auxConstraints.fill = GridBagConstraints.WEST;
 		
 		auxConstraints.gridx = 0;
 		auxConstraints.gridy = 0;
+		auxArriba.add(asterisco1, auxConstraints);
+		
+		auxConstraints.gridx = 1;
+		auxConstraints.gridy = 0;
+		auxConstraints.anchor = GridBagConstraints.WEST;
 		auxArriba.add(nombre, auxConstraints);
 		
 		auxConstraints.gridy = 1;
 		auxArriba.add(nombreTexto, auxConstraints);
 		
+		auxConstraints.gridx = 0;
 		auxConstraints.gridy = 3;
+		auxArriba.add(asterisco2, auxConstraints);
+		
+		auxConstraints.gridx = 1;
 		auxArriba.add(deporte, auxConstraints);
 		
 		auxConstraints.gridy = 4;
@@ -253,15 +350,27 @@ public class AltaCompetencia extends JPanel {
 	    JPanel sets = new JPanel(new GridBagLayout());
 	    JPanel puntuacion = new JPanel(new GridBagLayout());
 	    JPanel resultadofinal = new JPanel();
+	    
+	    sets.setBackground(Color.WHITE);
+	    puntuacion.setBackground(Color.WHITE);
+	    resultadofinal.setBackground(Color.WHITE);
 
-		auxConstraints.gridx = 0;
+	    auxConstraints.gridx = 0;
+		auxConstraints.gridy = 0;
+	    sets.add(asterisco5, auxConstraints);
+	    
+		auxConstraints.gridx = 1;
 		auxConstraints.gridy = 0;
 	    sets.add(cantidadMaxSets, auxConstraints);
 	        
 		auxConstraints.gridy = 1;
 	    sets.add(cantMaxSets, auxConstraints);
 	    
-		auxConstraints.gridx = 0;
+	    auxConstraints.gridx = 0;
+		auxConstraints.gridy = 0;
+		puntuacion.add(asterisco6, auxConstraints);
+	    
+		auxConstraints.gridx = 1;
 		auxConstraints.gridy = 0;
 	    puntuacion.add(puntosAusente, auxConstraints);
 	        
@@ -274,27 +383,40 @@ public class AltaCompetencia extends JPanel {
 	    panelesPun.add(resultadofinal);
 	    String[] nombresPun = {"Sets", "Puntuación", "Resultado Final"};
 	    
-	    JPanel auxPunt = new CardLayoutPersonalizado(formaP, panelesPun, nombresPun, puntuacionBox, true);
+	    JPanel auxPunt = new CardLayoutPersonalizado(asterisco3,formaP, panelesPun, nombresPun, puntuacionBox, true);
+	    auxPunt.setBackground(Color.WHITE);
 	    infoConstraints.gridx = 1;
 		infoConstraints.gridy = 0;
 		arriba.add(auxPunt, infoConstraints);
 		
 		//Panel del medio: modalidad y puntos		
-	    JPanel sistemadeliga = new JPanel(new GridBagLayout());
+	    
+		JPanel sistemadeliga = new JPanel(new GridBagLayout());
 	    JPanel sistemadeeliminatoriasimple = new JPanel();
 	    JPanel sistemadeeliminatoriadoble = new JPanel();
-	      
+	    
+	    sistemadeliga.setBackground(Color.WHITE);
+	    sistemadeeliminatoriasimple.setBackground(Color.WHITE);
+	    sistemadeeliminatoriadoble.setBackground(Color.WHITE);
+		
 		auxConstraints.gridx = 1;
+		auxConstraints.gridwidth=1;
 		auxConstraints.gridy = 0;
+		puntosGanado.setPreferredSize(new Dimension(140,10));
+		puntosGanado.setMinimumSize(new Dimension(140,30));
 		sistemadeliga.add(puntosGanado, auxConstraints);
 	        
+		auxConstraints.gridwidth=1;
 		auxConstraints.gridy = 1;
 		sistemadeliga.add(puntosG, auxConstraints);
 	    
 		auxConstraints.gridy = 2;
+		puntosPresentarse.setPreferredSize(new Dimension(140,10));
+		puntosPresentarse.setMinimumSize(new Dimension(140,10));
 		sistemadeliga.add(puntosPresentarse, auxConstraints);
 	        
 		auxConstraints.gridy = 3;
+		auxConstraints.gridwidth=1;
 		sistemadeliga.add(puntosPorPresentarse, auxConstraints);
 
 		auxConstraints.gridy = 4;
@@ -302,9 +424,13 @@ public class AltaCompetencia extends JPanel {
 	    
 		auxConstraints.gridx = 2;
 		auxConstraints.gridy = 3;
+		auxConstraints.gridwidth=1;
+		puntosPresentarse.setPreferredSize(new Dimension(140,10));
+		puntosPresentarse.setMinimumSize(new Dimension(140,10));
 		sistemadeliga.add(puntosEmpate, auxConstraints);
 	        
 		auxConstraints.gridy = 4;
+		auxConstraints.gridwidth=1;
 		sistemadeliga.add(puntosEmp, auxConstraints);
 		
 		List<JPanel> panelesMod = new ArrayList<JPanel>();
@@ -314,10 +440,13 @@ public class AltaCompetencia extends JPanel {
 		
 		String[] nombresMod = {"Sistema de Liga", "Sistema de Eliminatoria Simple", "Sistema de Eliminatoria Doble"};
 		
-		JPanel medio = new CardLayoutPersonalizado(modalidad, panelesMod, nombresMod, modalidadBox, false);
+		JPanel medio = new CardLayoutPersonalizado(asterisco4, modalidad, panelesMod, nombresMod, modalidadBox, false);
+		medio.setBackground(Color.WHITE);
+		
 		
 		//Panel de abajo: reglamento
 		JPanel abajo = new JPanel(new GridBagLayout());
+		abajo.setBackground(Color.WHITE);
 		
 		auxConstraints.gridx = 0;
 		auxConstraints.gridy = 0;
@@ -332,9 +461,10 @@ public class AltaCompetencia extends JPanel {
 		camposPanel.add(arriba, infoConstraints);
 		
 		infoConstraints.gridy = 2;
-		
+		infoConstraints.anchor= GridBagConstraints.WEST;
 		camposPanel.add(medio, infoConstraints);
 		
+		infoConstraints.anchor= GridBagConstraints.CENTER;
 		infoConstraints.gridy = 3;
 		
 		camposPanel.add(abajo, infoConstraints);
@@ -342,6 +472,7 @@ public class AltaCompetencia extends JPanel {
 		//Panel lugar de realizacion y boton aceptar
 		lugarPanel = new JPanel();
 		lugarPanel.setLayout(new GridBagLayout());
+		lugarPanel.setBackground(Color.WHITE);
 		final List<List<String>> lugares = new ArrayList<List<String>>();
 		GridBagConstraints lugarConstraints = new GridBagConstraints();
 		lugarConstraints.insets = new Insets(10, 3, 10, 3);
@@ -406,12 +537,15 @@ public class AltaCompetencia extends JPanel {
 		//Panel tabla con lugares de realizacion seleccionados
 		//Crear tabla
 		tablaLugares = new JTable(modeloLugar);
+		tablaLugares.setBackground(Color.WHITE);
 		lugarPanel.add(tablaLugares);
 		actualizarTablaLugar(lugares);
 		tablaLugares.setDefaultEditor(Object.class, null);
 		
 		JScrollPane tableSP = new JScrollPane(tablaLugares);
+		tableSP.setBackground(Color.WHITE);
 		tableSP.setMinimumSize(new Dimension(500, 300));
+		
 		
 		eliminar = new JButton("X");
 		eliminar.addActionListener( new ActionListener() {
@@ -436,6 +570,7 @@ public class AltaCompetencia extends JPanel {
 		});
 		
 		JPanel panelTabla = new JPanel(new GridBagLayout());
+		panelTabla.setBackground(Color.WHITE);
 	    GridBagConstraints constraintsTabla = new GridBagConstraints();
 	    constraintsTabla.anchor = GridBagConstraints.BOTH;
 	    constraintsTabla.insets = new Insets(0, 0, 0, 5);
@@ -483,6 +618,7 @@ public class AltaCompetencia extends JPanel {
 	    
 	    //Agregar paneles al Panel de AltaCompetencia
 		JPanel aux3 = new JPanel();
+		aux3.setBackground(Color.WHITE);
 		aux3.setMinimumSize(new Dimension(1200, 15));
 		aux3.setMaximumSize(new Dimension(1200, 15));
 		aux3.setPreferredSize(new Dimension(1200, 15));
@@ -492,24 +628,32 @@ public class AltaCompetencia extends JPanel {
 		this.add(aux3, BorderLayout.NORTH);
 		this.add(tituloPanel);
 	    infoConstraints.gridx = 1;
+	    
+	    infoPanel.setForeground(Color.WHITE);
 		infoPanel.add(lugarPanel, infoConstraints);
 		this.add(infoPanel, BorderLayout.CENTER);
 		JPanel aux = new JPanel();
+		aux.setBackground(Color.WHITE);
 		aux.setMinimumSize(new Dimension(1200, 50));
 		aux.setMaximumSize(new Dimension(1200, 50));
 		aux.setPreferredSize(new Dimension(1200, 50));
 		JPanel aux1 = new JPanel();
+		aux1.setBackground(Color.WHITE);
 		aux1.setMinimumSize(new Dimension(25, 600));
 		aux1.setMaximumSize(new Dimension(25, 600));
 		aux1.setPreferredSize(new Dimension(25, 600));
 		JPanel aux2 = new JPanel();
+		aux2.setBackground(Color.WHITE);
 		aux2.setMinimumSize(new Dimension(25, 600));
 		aux2.setMaximumSize(new Dimension(25, 600));
 		aux2.setPreferredSize(new Dimension(25, 600));
 		this.add(aux, BorderLayout.SOUTH);
 		this.add(aux1, BorderLayout.EAST);
 		this.add(aux2, BorderLayout.WEST);
+		
+		this.setBackground(Color.WHITE);
 		altaCompetenciaFrame.add(this);
+		altaCompetenciaFrame.setBackground(Color.WHITE);
 	}
 	
 	public void actualizarTablaLugar(final List<List<String>> lugares) {

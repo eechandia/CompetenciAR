@@ -99,14 +99,16 @@ public GridBagConstraints gbc;
 		gbc.gridy = 0;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
+		gbc.anchor=GridBagConstraints.NORTHWEST;
 		panel.add(volver,gbc);
 		
 
 		gbc.gridx = 1;
-		gbc.gridy = 0;
+		gbc.gridy = 1;
 		gbc.gridwidth=1;
 		gbc.gridheight=1;
-		panel.add(Box.createRigidArea(new Dimension(117,20)),gbc);
+		gbc.anchor=GridBagConstraints.CENTER;
+		panel.add(Box.createRigidArea(new Dimension(150,200)),gbc);
 		
 		gbc.gridx = 2;
 		gbc.gridy = 2;
@@ -157,6 +159,20 @@ public GridBagConstraints gbc;
 		//gbc.weightx=0.1;
 
 		panel.add(aceptar,gbc);
+		
+		gbc.gridx = 3;
+		gbc.gridy = 7;
+		gbc.gridwidth=1;
+		gbc.gridheight=1;
+
+		panel.add(Box.createRigidArea(new Dimension(100,150)),gbc);
+		
+		gbc.gridx = 4;
+		gbc.gridy = 4;
+		gbc.gridwidth=1;
+		gbc.gridheight=1;
+
+		panel.add(Box.createRigidArea(new Dimension(200,0)),gbc);
 
 		setContentPane(panel);
 		revalidate();
