@@ -41,10 +41,10 @@ public class GestorCompetencia {
 			
 				case LIGA:
 					SistemaDeLiga sLiga = new SistemaDeLiga(modalidad, 
-															competenciaDto.getPuntosPorPartido, 
-															competenciaDto.getEmpatePermitido, 
-															competenciaDto.getPuntosPorEmpate, 
-															competenciaDto.getPuntosPorPresentarse);
+															competenciaDto.getPuntosPorPartido(), 
+															competenciaDto.getEmpatePermitido(), 
+															competenciaDto.getPuntosPorEmpate(), 
+															competenciaDto.getPuntosPorPresentarse());
 					modalidad.setSistemaCompetencia(sLiga);
 					break;
 					
@@ -61,12 +61,12 @@ public class GestorCompetencia {
 			
 			switch(competenciaDto.getTipoFormaPuntuacion()) {
 				case SETS:
-					FormaPuntuacionSets formaSets = new FormaPuntuacionSets(modalidad, competenciaDto.getCantidadMaxSets);
+					FormaPuntuacionSets formaSets = new FormaPuntuacionSets(modalidad, competenciaDto.getCantidadMaxSets());
 					modalidad.setFormaPuntuacion(formaSets);
 					break;
 					
 				case PUNTUACION:
-					FormaPuntuacionPuntuacion formaPuntuacion = new FormaPuntuacionPuntuacion(modalidad, competenciaDto.PuntosSiRivalAusente);
+					FormaPuntuacionPuntuacion formaPuntuacion = new FormaPuntuacionPuntuacion(modalidad, competenciaDto.getPuntosSiRivalAusente());
 					modalidad.setFormaPuntuacion(formaPuntuacion);
 					
 					break;

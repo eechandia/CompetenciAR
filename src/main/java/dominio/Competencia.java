@@ -81,7 +81,6 @@ public class Competencia {
 		this.reglamento = compeDTO.getReglamento();
 		this.dadaDeBaja = false;
 		this.fechaBaja = null;
-		this.reservasDisponibles = compeDTO.getReservasDisponibles();
 	
 	};
 	
@@ -114,7 +113,9 @@ public class Competencia {
 		this.modalidad = modalidad;
 	}
 	
-	
+	public void setReservasDisponibles(List<Reserva> reservas) {
+		this.reservasDisponibles = reservas;
+	}
 		
 }
 

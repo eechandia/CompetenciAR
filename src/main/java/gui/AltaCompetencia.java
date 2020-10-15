@@ -15,10 +15,12 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.EventQueue;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -32,11 +34,21 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+
+import dominio.Deporte;
+import dominio.FormaPuntuacion;
+import dominio.Reserva;
+import dominio.SistemaDeCompetencia;
+import dominio.Usuario;
+import dto.CompetenciaDTO;
+import gestor.GestorCompetencia;
+import gestor.GestorDeporte;
 
 public class AltaCompetencia extends JPanel {
 
@@ -114,7 +126,6 @@ public class AltaCompetencia extends JPanel {
 			}
 		}
 	
-	private JFrame altaCompetenciaFrame = new JFrame();
 	private JPanel tituloPanel;
 	private JPanel camposPanel;
 	private JPanel lugarPanel;
@@ -122,23 +133,20 @@ public class AltaCompetencia extends JPanel {
 	private String[] arregloM = {" ", "Sistema de Liga", "Sistema de Eliminatoria Simple", "Sistema de Eliminatoria Doble"};
 	private String[] arregloP = {" ", "Resultado Final", "Puntuación", "Sets"};
 	private JTable tablaLugares;
-	private  DefaultTableModel modeloLugar;
+	private DefaultTableModel modeloLugar;
 	public JButton eliminar;
+	private GestorDeporte gestorDeporte;
+	private GestorCompetencia gestorCompetencia;
+	private JPanel tpPanel;
 	
-	public AltaCompetencia() {
+	public AltaCompetencia(JPanel tp, GestorDeporte deporteG, GestorCompetencia competenciaG) {
+		this.gestorDeporte = deporteG;
+		this.gestorCompetencia = competenciaG;
+		this.tpPanel = tp;
 		this.armarPantalla();
 	}
 	
-	private void armarPantalla() {
-		//testeo, despues cardLayout
-		// Frame properties
-		altaCompetenciaFrame.setResizable(false);
-		altaCompetenciaFrame.setBackground(Color.WHITE);
-		altaCompetenciaFrame.setTitle("Trabajo Práctico 2020 - DIED");
-		altaCompetenciaFrame.setMinimumSize(new Dimension(1280, 720));
-		altaCompetenciaFrame.setBounds(100, 100, 450, 300);
-		altaCompetenciaFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
+	private void armarPantalla() {		
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
 		//Panel del titulo y boton volver		
@@ -149,21 +157,50 @@ public class AltaCompetencia extends JPanel {
 		volverConstraints.fill = GridBagConstraints.WEST;
 		volverConstraints.gridx = 1;
 		volverConstraints.gridy = 0;
-		JButton volver = new JButton("Volver");
+		
+		JPanel rellenoPanel = new JPanel();
+		rellenoPanel.setMinimumSize(new Dimension(400, 30));
+		rellenoPanel.setMaximumSize(new Dimension(400, 30));
+		rellenoPanel.setPreferredSize(new Dimension(400, 30));
+		
+		JPanel rellenoPanel2 = new JPanel();
+		rellenoPanel2.setMinimumSize(new Dimension(400, 30));
+		rellenoPanel2.setMaximumSize(new Dimension(400, 30));
+		rellenoPanel2.setPreferredSize(new Dimension(400, 30));
+		
+		ImageIcon iconoVolver= new ImageIcon("IconoVolver.JPG");
+		JButton volver = new JButton();
+		volver.setPreferredSize(new Dimension(33,33));
+		volver.setIcon(iconoVolver);
+		Border line = new LineBorder(Color.WHITE);
+		Border margin = new EmptyBorder(0, 0, 0, 0);
+		Border compound = new CompoundBorder(line, margin);
+		volver.setBorder(compound);
+		
 		volver.addActionListener( new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				//cl.show(frameTrabajoPractico.getContentPane(), "card__MainMenu");
+				CardLayout layout = (CardLayout)tpPanel.getLayout();
+		        layout.show(tpPanel, "Card__");
 			}
 			
 		});
 		tituloPanel.add(volver, volverConstraints);
+		
+
+		volverConstraints.gridx = 2;
+		volverConstraints.gridy = 0;
+		tituloPanel.add(rellenoPanel, volverConstraints);
 		
 		JLabel titulo = new JLabel("Nueva Competencia");
 		titulo.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		
 		volverConstraints.gridx = 5;
 		tituloPanel.add(titulo, volverConstraints);
+		
+		volverConstraints.gridx = 6;
+		volverConstraints.gridy = 0;
+		tituloPanel.add(rellenoPanel2, volverConstraints);
 		
 		//Panel de la info que ingresa el usuario
 		infoPanel = new JPanel(new GridBagLayout());
@@ -192,6 +229,10 @@ public class AltaCompetencia extends JPanel {
 		final JComboBox<String> deporteBox = new JComboBox<String>(); 
 		//Pedir al gestor de deporte
 		deporteBox.addItem(" ");
+		final List<List<String>> deportes = gestorDeporte.getDeportesInterfaz();
+		for(List<String> dep: deportes) {
+			deporteBox.addItem(dep.get(1));
+		}
 		deporteBox.setMinimumSize(new Dimension(200, 30));
 		deporteBox.setMaximumSize(new Dimension(200, 30));
 		deporteBox.setPreferredSize(new Dimension(200, 30));
@@ -218,7 +259,7 @@ public class AltaCompetencia extends JPanel {
 		final JCheckBox empate = new JCheckBox("Empate Permitido");
 		empate.setBounds(16, 23, 97, 23);
 		
-		JTextPane reglamento = new JTextPane();
+		final JTextPane reglamento = new JTextPane();
 		reglamento.setMinimumSize(new Dimension(415, 270));
 		reglamento.setMaximumSize(new Dimension(415, 270));
 		reglamento.setPreferredSize(new Dimension(415, 270));
@@ -359,6 +400,7 @@ public class AltaCompetencia extends JPanel {
 		
 		final JTextField buscar = new JTextField(150);
 		buscar.setMinimumSize(new Dimension(150, 20));
+		buscar.setText("");
 		
 		final JSpinner encuentros = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		encuentros.setBounds(100, 202, 30, 20);
@@ -367,7 +409,7 @@ public class AltaCompetencia extends JPanel {
 	    agregar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if(buscar.getText() != null && (Integer) encuentros.getValue() > 0) {
+				if(!buscar.getText().toString().equals("") && (Integer) encuentros.getValue() > 0) {
 					List<String> aux = new ArrayList<String>();
 					aux.add(buscar.getText().toString());
 					aux.add( encuentros.getValue().toString());
@@ -376,7 +418,6 @@ public class AltaCompetencia extends JPanel {
 					encuentros.setValue(0);
 					actualizarTablaLugar(lugares);
 				}
-
 			}
 	    	
 	    });
@@ -459,7 +500,7 @@ public class AltaCompetencia extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 				//crear DTO
-				if(		nombreTexto.getText().toString() == null ||
+				if(		nombreTexto.getText() == null ||
 						deporteBox.getSelectedItem().toString().equals(" ") ||
 						modalidadBox.getSelectedItem().toString().equals(" ") ||
 						puntuacionBox.getSelectedItem().toString().equals(" ") ||
@@ -472,6 +513,47 @@ public class AltaCompetencia extends JPanel {
 				}
 				else {
 					//mandar al gestor
+					SistemaDeCompetencia.Tipo tipoCompetencia = null;
+					switch(modalidadBox.getSelectedIndex()) { //"Sistema de Liga", "Sistema de Eliminatoria Simple", "Sistema de Eliminatoria Doble"
+					case 1:
+						tipoCompetencia = SistemaDeCompetencia.Tipo.LIGA;
+						break;
+					case 2: 
+						tipoCompetencia = SistemaDeCompetencia.Tipo.ELIMIN_SIMPLE;
+						break;
+					case 3:
+						tipoCompetencia = SistemaDeCompetencia.Tipo.ELIMIN_DOBLE;
+						break;
+					default:
+						break;
+					}
+					FormaPuntuacion.Tipo tipoPuntuacion = null;
+					switch(modalidadBox.getSelectedIndex()) { //"Resultado Final", "Puntuación", "Sets"
+					case 1:
+						tipoPuntuacion = FormaPuntuacion.Tipo.RESULTADO_FINAL;
+						break;
+					case 2: 
+						tipoPuntuacion = FormaPuntuacion.Tipo.PUNTUACION;
+						break;
+					case 3:
+						tipoPuntuacion = FormaPuntuacion.Tipo.SETS;
+						break;
+					default:
+						break;
+					}
+					Integer deporteSeleccionado = (Integer) deportes.stream().filter(new Predicate<List<String>>() {
+						public boolean test(List<String> e) {
+							return e.get(1).equals(deporteBox.getSelectedItem().toString());
+						}
+					}).collect(Collectors.toList()).get(0);
+					
+					CompetenciaDTO competenciaDTO = new CompetenciaDTO( //usuario
+							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), new Usuario(0, "", "", "", ""), 
+							lugares, deporteSeleccionado, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
+							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
+					gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
+//					CardLayout layout = (CardLayout)tpPanel.getLayout();
+//			        layout.show(tpPanel, "Card__");
 				}					
 			}
 	    	
@@ -509,7 +591,6 @@ public class AltaCompetencia extends JPanel {
 		this.add(aux, BorderLayout.SOUTH);
 		this.add(aux1, BorderLayout.EAST);
 		this.add(aux2, BorderLayout.WEST);
-		altaCompetenciaFrame.add(this);
 	}
 	
 	public void actualizarTablaLugar(final List<List<String>> lugares) {
@@ -527,44 +608,5 @@ public class AltaCompetencia extends JPanel {
 				tablaLugares.getColumn("Eliminar").setCellRenderer(new ButtonRenderer());
 				tablaLugares.getColumn("Eliminar").setCellEditor(new ButtonEditor(new JCheckBox()));
 	}
+}
 
-	
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				  try {
-					  UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-					  
-				  }  
-			    catch (UnsupportedLookAndFeelException e) {
-			    	e.printStackTrace();
-			       // handle exception
-			    }
-			    catch (ClassNotFoundException e) {
-			    	e.printStackTrace();
-			       // handle exception
-			    }
-			    catch (InstantiationException e) {
-			    	e.printStackTrace();
-			       // handle exception
-			    }
-			    catch (IllegalAccessException e) {
-			    	e.printStackTrace();
-			       // handle exception
-			    }
-				  
-				  EventQueue.invokeLater(new Runnable() {
-						public void run() {
-							try {
-								AltaCompetencia ventana = new AltaCompetencia();
-								ventana.altaCompetenciaFrame.setVisible(true);
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-					});
-				System.out.println("app creada");
-			}
-		});
-}
-}

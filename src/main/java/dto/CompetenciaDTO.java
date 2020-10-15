@@ -55,13 +55,24 @@ public class CompetenciaDTO implements Serializable {
 	
 	private Usuario usuarioAsociado;
 
-	private List<Reserva> reservasDisponibles;
+	private List<List<String>> reservasDisponibles;
 
 	private Integer deporteDeCompetencia;
+
+	private Integer puntosSiRivalAusente;
+	
+	private Integer cantidadMaxSets;
+	
+	private Integer puntosPorPartido;
+	
+	private Boolean empatePermitido;
+	
+	private Integer puntosPorEmpate;
+	
+	private Integer puntosPorPresentarse;
 	
 	
-	
-	CompetenciaDTO(
+	public CompetenciaDTO(
 			Integer id,	String nombre, 
 			Competencia.Estado estadoCompetencia, 
 			SistemaDeCompetencia.Tipo tipoSistemaDeCompetencia,
@@ -71,8 +82,14 @@ public class CompetenciaDTO implements Serializable {
 			Boolean dadaDeBaja, 
 			LocalDate fechaBaja, 
 			Usuario usuarioAsociado, 
-			List<Reserva> reservasDisponibles, 
-			Integer deporteDeCompetencia
+			List<List<String>> reservasDisponibles, 
+			Integer deporteDeCompetencia,
+			Integer puntosSiRivalAusente,
+			Integer cantidadMaxSets,
+			Integer puntosPorPartido,
+			Boolean empatePermitido,
+			Integer puntosPorEmpate,
+			Integer puntosPorPresentarse
 			){
 		this.id = id;
 		this.nombre = nombre;
@@ -86,22 +103,40 @@ public class CompetenciaDTO implements Serializable {
 		this.usuarioAsociado = usuarioAsociado;
 		this.reservasDisponibles = reservasDisponibles;
 		this.deporteDeCompetencia = deporteDeCompetencia;
+		this.puntosSiRivalAusente = puntosSiRivalAusente;
+		this.cantidadMaxSets = cantidadMaxSets;
+		this.puntosPorPartido = puntosPorPartido;
+		this.empatePermitido = empatePermitido;
+		this.puntosPorEmpate = puntosPorEmpate;
+		this.puntosPorPresentarse = puntosPorPresentarse;
 	}
 	
-	CompetenciaDTO(
+	public CompetenciaDTO(
 			String nombre,
 			SistemaDeCompetencia.Tipo tipoSistemaDeCompetencia,
 			FormaPuntuacion.Tipo tipoFormaPuntuacion,
 			String reglamento, 
 			Usuario usuarioAsociado, 
-			List<Reserva> reservasDisponibles,
-			Deporte deporteDeCompetencia
+			List<List<String>> reservasDisponibles,
+			Integer deporteDeCompetencia,
+			Integer puntosSiRivalAusente,
+			Integer cantidadMaxSets,
+			Integer puntosPorPartido,
+			Boolean empatePermitido,
+			Integer puntosPorEmpate,
+			Integer puntosPorPresentarse
 			){
 		this.nombre = nombre;
 		this.reglamento = reglamento;
 		this.usuarioAsociado = usuarioAsociado;
 		this.reservasDisponibles = reservasDisponibles;
 		this.deporteDeCompetencia = deporteDeCompetencia;
+		this.puntosSiRivalAusente = puntosSiRivalAusente;
+		this.cantidadMaxSets = cantidadMaxSets;
+		this.puntosPorPartido = puntosPorPartido;
+		this.empatePermitido = empatePermitido;
+		this.puntosPorEmpate = puntosPorEmpate;
+		this.puntosPorPresentarse = puntosPorPresentarse;
 	}
 
 	public Integer getId() {
@@ -144,18 +179,37 @@ public class CompetenciaDTO implements Serializable {
 		return usuarioAsociado;
 	}
 
-	public List<Reserva> getReservasDisponibles() {
+	public List<List<String>> getReservasDisponibles() {
 		return reservasDisponibles;
 	}
 
 	public Integer getDeporteDeCompetencia() {
 		return deporteDeCompetencia;
 	}
-	
-	
-	
-	
-	
-	
+
+	public Integer getPuntosSiRivalAusente() {
+		return puntosSiRivalAusente;
+	}
+
+	public Integer getCantidadMaxSets() {
+		return cantidadMaxSets;
+	}
+
+	public Integer getPuntosPorPartido() {
+		return puntosPorPartido;
+	}
+
+	public Boolean getEmpatePermitido() {
+		return empatePermitido;
+	}
+
+	public Integer getPuntosPorEmpate() {
+		return puntosPorEmpate;
+	}
+
+	public Integer getPuntosPorPresentarse() {
+		return puntosPorPresentarse;
+	}
+
 
 }
