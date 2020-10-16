@@ -236,10 +236,6 @@ public class AltaCompetencia extends JPanel {
 		asterisco5.setForeground(Color.red);
 		JLabel asterisco6 = new JLabel("*");
 		asterisco6.setForeground(Color.red);
-		JLabel asterisco7 = new JLabel("*");
-		asterisco7.setForeground(Color.red);
-		JLabel asterisco8 = new JLabel("*");
-		asterisco8.setForeground(Color.red);
 		
 		JLabel nombre = new JLabel("Nombre de la Competencia");
 		JLabel deporte = new JLabel("Deporte Asociado");
@@ -251,6 +247,7 @@ public class AltaCompetencia extends JPanel {
 		JLabel puntosGanado = new JLabel("Puntos por Partido Ganado");
 		JLabel puntosPresentarse = new JLabel("Puntos por Presentarse");
 		final JLabel puntosEmpate = new JLabel("Puntos Empate");
+		puntosEmpate.setEnabled(false);
 		
 		final JTextField nombreTexto = new JTextField(150);
 		nombreTexto.setMinimumSize(new Dimension(200, 30));
@@ -285,6 +282,7 @@ public class AltaCompetencia extends JPanel {
 		puntosPorPresentarse.setMinimumSize(new Dimension (30, 20));
 		final JSpinner puntosEmp = new JSpinner(new SpinnerNumberModel(0, 0, 1000, 1));
 		puntosEmp.setMinimumSize(new Dimension (30, 20));
+		puntosEmp.setEnabled(false);
 		
 		final JCheckBox empate = new JCheckBox("Empate Permitido");
 		empate.setBackground(Color.WHITE);
@@ -314,10 +312,12 @@ public class AltaCompetencia extends JPanel {
 		reglamento.setFont(new Font("Plain", Font.PLAIN, 12));
 		
 		//parte de arriba: nombre, deporte, forma de puntuacion y pantalla con CardLayout
+		
 		JPanel arriba = new JPanel(new GridBagLayout());
 		arriba.setBackground(Color.WHITE);
 		
 		//panel con nombre y deporte
+		
 		JPanel auxArriba = new JPanel(new GridBagLayout());
 		auxArriba.setBackground(Color.WHITE);
 		GridBagConstraints auxConstraints = new GridBagConstraints();

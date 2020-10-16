@@ -56,12 +56,14 @@ public class App extends JFrame {
 		this.setBackground(Color.WHITE);
 		this.setTitle("Trabajo Práctico 2020 - Diseño de Sistemas");
 		this.setMinimumSize(new Dimension(1280, 720));
-		this.setBounds(100, 100, 450, 300);
+		this.setMaximumSize(new Dimension(1280, 720));
+		this.setPreferredSize(new Dimension(1280, 720));
+		this.setBounds(43, 43, 1280, 720);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Inicializar gestores
 		gestorDeporte = new GestorDeporte();
-		gestorCompetencia = new GestorCompetencia();
+		//gestorCompetencia = new GestorCompetencia();
 		
 		//Inicializar paneles y CardLayout
 		tpPanel = new JPanel();
