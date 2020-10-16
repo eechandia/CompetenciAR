@@ -20,11 +20,13 @@ import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -488,16 +490,43 @@ public class AltaCompetencia extends JPanel {
 		JLabel buscarLabel = new JLabel("Lugar");
 		JLabel cantidad = new JLabel("Cantidad de Encuentros");
 		
-		final JTextField buscar = new JTextField(150);
-		buscar.setMinimumSize(new Dimension(150, 20));
-		buscar.setText("");
+		
+		List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
+		
+		class LugarDeRealizacionComboRenderer extends DefaultListCellRenderer {
+
+		    public Component getListCellRendererComponent(
+		                                   JList list,
+		                                   Object value,
+		                                   int index,
+		                                   boolean isSelected,
+		                                   boolean cellHasFocus) {
+		        if (value instanceof Triplet<?, ?, ?>) {
+		            value = ((Triplet<Integer, String, Integer>)value).getSecond();
+		        }
+		        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		        return this;
+		    }
+		}
+		
+
+		final JComboBox<Triplet<Integer, String, Integer>> comboLugares = new JComboBox<Triplet<Integer, String, Integer>>();
+		
+		comboLugares.setRenderer(new LugarDeRealizacionComboRenderer());
+		
+		for(Triplet<Integer, String, Integer> elemento : listaLugares) {
+			comboLugares.addItem(elemento);
+		}
+		
+		comboLugares.setMinimumSize(new Dimension(150, 20));
+		comboLugares.setMaximumSize(new Dimension(150, 20));
+		comboLugares.setPreferredSize(new Dimension(150, 20));
+		//comboLugares.setText("");
 		
 		final JSpinner encuentros = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		encuentros.setBounds(100, 202, 30, 20);
 		
-		List<LugarDeRealizacion> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
-		
-		
+	
 		
 		
 	    JButton agregar = new JButton("+");
@@ -526,7 +555,7 @@ public class AltaCompetencia extends JPanel {
 		lugarDeRealizacion.add(buscarLabel, auxConstraints);
 		
 		auxConstraints.gridy = 1;
-		lugarDeRealizacion.add(buscar, auxConstraints);
+		lugarDeRealizacion.add(comboLugares, auxConstraints);
 		
 		auxConstraints.gridy = 3;
 		lugarDeRealizacion.add(cantidad, auxConstraints);
@@ -545,6 +574,7 @@ public class AltaCompetencia extends JPanel {
 		
 		//Panel tabla con lugares de realizacion seleccionados
 		//Crear tabla
+		
 		tablaLugares = new JTable(modeloLugar);
 		lugarPanel.add(tablaLugares);
 		actualizarTablaLugar(lugares);

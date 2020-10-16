@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import dominio.LugarDeRealizacion;
 
 public interface LugarDeRealizacionDAO {
@@ -13,5 +15,7 @@ public interface LugarDeRealizacionDAO {
 	public abstract void guardarLugarDeRealizacion();
 	
 	public abstract LugarDeRealizacion recuperarLugarDeRealizacion();
+	
+	public abstract List<LugarDeRealizacion> recuperarLugaresDeRealizacion();
 	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,9 +20,10 @@ import javax.persistence.Table;
 @Table(name="usuario", schema = "tp")
 public class Usuario {
 
-	public enum TipoDoc{
-		DNI, PASAPORTE, PART_DE_NACIMIENTO
-	}
+	
+//	public enum TipoDoc{
+//		DNI, PASAPORTE, PART_DE_NACIMIENTO
+//	}
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +34,7 @@ public class Usuario {
 	private String correoElectronico;
 	
 	@Column
-	private String contraseña;
+	private String contrasena;
 	
 	@Column
 	private String apellido;
@@ -40,9 +42,9 @@ public class Usuario {
 	@Column
 	private String nombre;
 	
-	@Enumerated
-	@Column
-	private TipoDoc tipoDocumento;
+//	@Enumerated(EnumType.STRING)
+//	@Column
+//	private TipoDoc tipoDocumento;
 	
 	@Column
 	private String documento;
@@ -56,13 +58,17 @@ public class Usuario {
 	private List<Competencia> competencias;
 
 
-	public Usuario(Integer id, String correoElectronico, String contraseña, String apellido, String nombre) {
+	public Usuario(Integer id, String correoElectronico, String contrasena, String apellido, String nombre) {
 		super();
 		this.id = id;
 		this.correoElectronico = correoElectronico;
-		this.contraseña = contraseña;
+		this.contrasena = contrasena;
 		this.apellido = apellido;
 		this.nombre = nombre;
+	}
+	
+	public Usuario() {
+		
 	}
 	
 	

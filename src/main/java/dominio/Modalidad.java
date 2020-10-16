@@ -25,14 +25,14 @@ public class Modalidad {
 	private Integer id;
 
 	
-	@ManyToOne()
+	@OneToOne()
     @JoinColumn(name = "idCompetencia")
 	private Competencia competencia;
 	
-	@OneToMany(mappedBy = "modalidad")
+	@OneToOne(mappedBy = "modalidad")
 	private SistemaDeCompetencia sistemaCompetencia;
 	
-	@OneToMany(mappedBy = "modalidad")
+	@OneToOne(mappedBy = "modalidad")
 	private FormaPuntuacion formaPuntuacion;
 
 	public Modalidad(Competencia competencia) {
