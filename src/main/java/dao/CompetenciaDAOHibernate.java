@@ -17,9 +17,9 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	
 	private SessionFactory factory = null;
 	
-	public CompetenciaDAOHibernate(SessionFactory factory) {
+	public CompetenciaDAOHibernate() {
 		super();
-		this.factory = factory;
+		
 	}
 	
 

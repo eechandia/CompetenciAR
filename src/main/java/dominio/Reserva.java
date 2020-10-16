@@ -16,6 +16,14 @@ import javax.persistence.Table;
 @Table(name="reserva", schema = "tp")
 public class Reserva  implements Serializable{
 	
+	
+	
+	
+	public Reserva(LugarDeRealizacion lugarDeRealizacion, Integer disponibilidad) {
+		this.lugarDeRealizacion=lugarDeRealizacion;
+		this.disponibilidad=disponibilidad;
+	}
+
 	@Id
 	@ManyToOne()
     @JoinColumn(name = "codigoLugarDeRealizacion")

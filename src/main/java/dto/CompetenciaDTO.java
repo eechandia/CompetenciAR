@@ -18,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Tuple;
+
+
 
 import dominio.Competencia;
 import dominio.Deporte;
@@ -27,6 +30,7 @@ import dominio.Participante;
 import dominio.Reserva;
 import dominio.SistemaDeCompetencia;
 import dominio.Usuario;
+import utils.Pair;
 
 /**
  * @author josesei
@@ -55,7 +59,7 @@ public class CompetenciaDTO implements Serializable {
 	
 	private Usuario usuarioAsociado;
 
-	private List<List<String>> reservasDisponibles;
+	private List<Pair<Integer, Integer>> reservasDisponibles;
 
 	private Integer deporteDeCompetencia;
 
@@ -82,7 +86,7 @@ public class CompetenciaDTO implements Serializable {
 			Boolean dadaDeBaja, 
 			LocalDate fechaBaja, 
 			Usuario usuarioAsociado, 
-			List<List<String>> reservasDisponibles, 
+			List<Pair<Integer, Integer>> reservasDisponibles, 
 			Integer deporteDeCompetencia,
 			Integer puntosSiRivalAusente,
 			Integer cantidadMaxSets,
@@ -117,7 +121,7 @@ public class CompetenciaDTO implements Serializable {
 			FormaPuntuacion.Tipo tipoFormaPuntuacion,
 			String reglamento, 
 			Usuario usuarioAsociado, 
-			List<List<String>> reservasDisponibles,
+			List<Pair<Integer, Integer>> reservasDisponibles,
 			Integer deporteDeCompetencia,
 			Integer puntosSiRivalAusente,
 			Integer cantidadMaxSets,
@@ -179,7 +183,7 @@ public class CompetenciaDTO implements Serializable {
 		return usuarioAsociado;
 	}
 
-	public List<List<String>> getReservasDisponibles() {
+	public List<Pair<Integer, Integer>> getReservasDisponibles() {
 		return reservasDisponibles;
 	}
 

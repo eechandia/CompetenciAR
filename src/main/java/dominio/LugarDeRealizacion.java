@@ -21,6 +21,10 @@ import javax.persistence.Table;
 @Table(name="LugarDeRealizacion", schema = "tp")
 public class LugarDeRealizacion {
 
+	
+	public LugarDeRealizacion(Integer codigo) {
+		this.codigo=codigo;
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

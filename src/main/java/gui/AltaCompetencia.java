@@ -41,11 +41,14 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import dominio.FormaPuntuacion;
+import dominio.LugarDeRealizacion;
 import dominio.SistemaDeCompetencia;
 import dominio.Usuario;
 import dto.CompetenciaDTO;
 import gestor.GestorCompetencia;
 import gestor.GestorDeporte;
+import gestor.GestorLugarDeRealizacion;
+import utils.Triplet;
 
 public class AltaCompetencia extends JPanel {
 
@@ -470,7 +473,7 @@ public class AltaCompetencia extends JPanel {
 		lugarPanel = new JPanel();
 		lugarPanel.setBackground(Color.WHITE);
 		lugarPanel.setLayout(new GridBagLayout());
-		final List<List<String>> lugares = new ArrayList<List<String>>();
+		final List<Triplet<Integer, String, Integer>> lugares = new ArrayList<Triplet<Integer, String, Integer>>();
 		GridBagConstraints lugarConstraints = new GridBagConstraints();
 		lugarConstraints.insets = new Insets(10, 3, 10, 3);
 		lugarConstraints.fill = GridBagConstraints.WEST;
@@ -492,19 +495,28 @@ public class AltaCompetencia extends JPanel {
 		final JSpinner encuentros = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		encuentros.setBounds(100, 202, 30, 20);
 		
+		List<LugarDeRealizacion> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
+		
+		
+		
+		
 	    JButton agregar = new JButton("+");
 	    agregar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if(!buscar.getText().toString().equals("") && (Integer) encuentros.getValue() > 0) {
-					List<String> aux = new ArrayList<String>();
-					aux.add(buscar.getText().toString());
-					aux.add( encuentros.getValue().toString());
-					lugares.add(aux);			
-					buscar.setText("");
-					encuentros.setValue(0);
-					actualizarTablaLugar(lugares);
-				}
+//				if(!buscar.getText().toString().equals("") && (Integer) encuentros.getValue() > 0) {
+//					List<String> aux = new ArrayList<String>();
+//					aux.add(buscar.getText().toString());
+//					aux.add( encuentros.getValue().toString());
+//					lugares.add(aux);			
+//					buscar.setText("");
+//					encuentros.setValue(0);
+//					actualizarTablaLugar(lugares);
+//				}
+				
+//				List<Triplet<Integer, String, Integer>>lugares = new ArrayList<Triplet<Integer,String,Integer>>(); 
+//				lugares.add(new Triplet<Integer, String, Integer>(0,"Prueba",2));
+//				actualizarTablaLugar(lugares);
 			}
 	    	
 	    });
@@ -639,7 +651,12 @@ public class AltaCompetencia extends JPanel {
 							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), new Usuario(0, "", "", "", ""), 
 							lugares, deporteSeleccionado, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
-					gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
+					try {
+						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 //					CardLayout layout = (CardLayout)tpPanel.getLayout();
 //			        layout.show(tpPanel, "Card__");
 				}					
@@ -685,13 +702,13 @@ public class AltaCompetencia extends JPanel {
 		this.add(aux2, BorderLayout.WEST);
 	}
 	
-	public void actualizarTablaLugar(final List<List<String>> lugares) {
+	public void actualizarTablaLugar(final List<Triplet<Integer, String, Integer>> lugares) {
 		//crear modelo tabla
 				String[] columnas = { "Establecimientos", "Encuentros", "Eliminar"};
 				modeloLugar = new DefaultTableModel(columnas, 0);		
 
-				for(List<String> lug: lugares) {
-					Object[] renglon = { lug.get(0), lug.get(1)};
+				for(Triplet<Integer, String, Integer> lug: lugares) {
+					Object[] renglon = { lug.getSecond(), lug.getThird()};
 					modeloLugar.addRow(renglon);
 				}
 				
