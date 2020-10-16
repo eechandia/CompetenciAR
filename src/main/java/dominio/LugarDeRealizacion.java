@@ -49,5 +49,35 @@ public class LugarDeRealizacion {
 	@ManyToOne()
     @JoinColumn(name = "idUsuario")
 	private Usuario usuario;
+
+	public Integer getCodigo() {
+		return codigo;
+	}
+
+	public List<Reserva> getReservas() {
+		return reservas;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public List<Deporte> getDeportes() {
+		return deportes;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	
+	
 	
 }

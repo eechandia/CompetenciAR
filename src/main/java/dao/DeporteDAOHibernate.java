@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
@@ -45,7 +47,7 @@ public class DeporteDAOHibernate implements DeporteDAO{
 		
 	}
 
-	public Deporte recuperarDeporte() {
+	public List<Deporte> recuperarDeportes() {
 		// TODO Auto-generated method stub
 		return null;
 	}

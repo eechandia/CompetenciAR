@@ -120,7 +120,6 @@ public class CompetenciaDTO implements Serializable {
 			SistemaDeCompetencia.Tipo tipoSistemaDeCompetencia,
 			FormaPuntuacion.Tipo tipoFormaPuntuacion,
 			String reglamento, 
-			Usuario usuarioAsociado, 
 			List<Pair<Integer, Integer>> reservasDisponibles,
 			Integer deporteDeCompetencia,
 			Integer puntosSiRivalAusente,
@@ -132,7 +131,7 @@ public class CompetenciaDTO implements Serializable {
 			){
 		this.nombre = nombre;
 		this.reglamento = reglamento;
-		this.usuarioAsociado = usuarioAsociado;
+//		this.usuarioAsociado = usuarioAsociado;
 		this.reservasDisponibles = reservasDisponibles;
 		this.deporteDeCompetencia = deporteDeCompetencia;
 		this.puntosSiRivalAusente = puntosSiRivalAusente;

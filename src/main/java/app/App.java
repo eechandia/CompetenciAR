@@ -63,7 +63,7 @@ public class App extends JFrame {
 		
 		//Inicializar gestores
 		gestorDeporte = new GestorDeporte();
-		//gestorCompetencia = new GestorCompetencia();
+		gestorCompetencia = new GestorCompetencia();
 		
 		//Inicializar paneles y CardLayout
 		tpPanel = new JPanel();

@@ -48,6 +48,7 @@ import dto.CompetenciaDTO;
 import gestor.GestorCompetencia;
 import gestor.GestorDeporte;
 import gestor.GestorLugarDeRealizacion;
+import utils.Pair;
 import utils.Triplet;
 
 public class AltaCompetencia extends JPanel {
@@ -259,9 +260,9 @@ public class AltaCompetencia extends JPanel {
 		final JComboBox<String> deporteBox = new JComboBox<String>(); 
 		//Pedir al gestor de deporte
 		deporteBox.addItem(" ");
-		final List<List<String>> deportes = gestorDeporte.getDeportesInterfaz();
-		for(List<String> dep: deportes) {
-			deporteBox.addItem(dep.get(1));
+		final List<Pair<Integer, String>> deportes = gestorDeporte.getDeportesInterfaz();
+		for(Pair<Integer, String> dep: deportes) {
+			deporteBox.addItem(dep.getSecond());
 		}
 		deporteBox.setMinimumSize(new Dimension(200, 30));
 		deporteBox.setMaximumSize(new Dimension(200, 30));
@@ -495,28 +496,34 @@ public class AltaCompetencia extends JPanel {
 		final JSpinner encuentros = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		encuentros.setBounds(100, 202, 30, 20);
 		
-		List<LugarDeRealizacion> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
+		final List<Pair<Integer, String>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
 		
-		
+		//anda?
 		
 		
 	    JButton agregar = new JButton("+");
 	    agregar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-//				if(!buscar.getText().toString().equals("") && (Integer) encuentros.getValue() > 0) {
-//					List<String> aux = new ArrayList<String>();
-//					aux.add(buscar.getText().toString());
-//					aux.add( encuentros.getValue().toString());
-//					lugares.add(aux);			
-//					buscar.setText("");
-//					encuentros.setValue(0);
-//					actualizarTablaLugar(lugares);
-//				}
-				
-//				List<Triplet<Integer, String, Integer>>lugares = new ArrayList<Triplet<Integer,String,Integer>>(); 
-//				lugares.add(new Triplet<Integer, String, Integer>(0,"Prueba",2));
-//				actualizarTablaLugar(lugares);
+				if(!buscar.getText().toString().equals("") && (Integer) encuentros.getValue() > 0) {
+					Triplet<Integer, String, Integer> aux = new Triplet<Integer, String, Integer>();
+					Pair<Integer, String> lugarAux = (Pair<Integer, String>) listaLugares.stream().filter(new Predicate<Pair<Integer, String>>() {
+						public boolean test(Pair<Integer, String> t) {
+							// TODO Auto-generated method stub
+							return t.getSecond().equals(buscar.getText());
+						}
+					}).collect(Collectors.toList()).get(0);
+					aux.setFirst(lugarAux.getFirst());
+					aux.setSecond(lugarAux.getSecond());
+					aux.setThird((Integer) encuentros.getValue());
+					lugares.add(aux);			
+					buscar.setText("");
+					encuentros.setValue(0);
+					actualizarTablaLugar(lugares);
+				}
+				lugares.add(new Triplet<Integer, String, Integer>(0,"Prueba",2));
+				actualizarTablaLugar(lugares);
+
 			}
 	    	
 	    });
@@ -559,12 +566,12 @@ public class AltaCompetencia extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				int renglonSeleccionado = tablaLugares.getSelectedRow();
 				String lugar = tablaLugares.getValueAt(renglonSeleccionado, 0).toString();
-				String encuentro = tablaLugares.getValueAt(renglonSeleccionado, 1).toString();
+				Integer encuentro = (Integer) tablaLugares.getValueAt(renglonSeleccionado, 1);
 				//borrarlo de la lista y llamar a actualizar tabla
 				boolean borrado = false;
 				int i = 0;
 				while(!borrado) {
-					if( lugares.get(i).get(0).equals(lugar) && lugares.get(i).get(1).equals(encuentro)) {
+					if( lugares.get(i).getSecond().equals(lugar) && lugares.get(i).getThird() == encuentro) {
 						lugares.remove(i);
 						borrado = true;
 					}
@@ -641,15 +648,22 @@ public class AltaCompetencia extends JPanel {
 					default:
 						break;
 					}
-					Integer deporteSeleccionado = (Integer) deportes.stream().filter(new Predicate<List<String>>() {
-						public boolean test(List<String> e) {
-							return e.get(1).equals(deporteBox.getSelectedItem().toString());
+					Integer deporteSeleccionado = ((Pair<Integer, String> )deportes.stream().filter(new Predicate<Pair<Integer, String>>() {
+						public boolean test(Pair<Integer, String> e) {
+							return e.getSecond().equals(deporteBox.getSelectedItem().toString());
 						}
-					}).collect(Collectors.toList()).get(0);
+					}).collect(Collectors.toList()).get(0)).getFirst();
 					
-					CompetenciaDTO competenciaDTO = new CompetenciaDTO( //usuario
-							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), new Usuario(0, "", "", "", ""), 
-							lugares, deporteSeleccionado, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
+					List<Pair<Integer, Integer>> reservas = new ArrayList<Pair<Integer, Integer>>();
+					for (Triplet<Integer, String, Integer> t: lugares) {
+						Pair<Integer, Integer> r = new Pair<Integer, Integer>();
+						r.setFirst(t.getFirst());
+						r.setSecond(t.getThird());
+						reservas.add(r);
+					}
+					CompetenciaDTO competenciaDTO = new CompetenciaDTO( 
+							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), reservas, 
+							deporteSeleccionado, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
 					try {
 						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
