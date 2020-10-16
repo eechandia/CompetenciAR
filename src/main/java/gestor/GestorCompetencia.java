@@ -1,5 +1,8 @@
 package gestor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dao.CompetenciaDAOHibernate;
 import dao.DeporteDAOHibernate;
 import dominio.Competencia;
@@ -8,6 +11,7 @@ import dominio.FormaPuntuacionPuntuacion;
 import dominio.FormaPuntuacionResFinal;
 import dominio.FormaPuntuacionSets;
 import dominio.Modalidad;
+import dominio.Reserva;
 import dominio.SistemaDeEliminatoriaDoble;
 import dominio.SistemaDeEliminatoriaSimple;
 import dominio.SistemaDeLiga;
@@ -16,16 +20,16 @@ import dto.CompetenciaDTO;
 
 public class GestorCompetencia {
 	
-	private CompetenciaDAOHibernate daoCompetencia = new CompetenciaDAOHibernate();
+	private CompetenciaDAOHibernate daoCompetencia = new CompetenciaDAOHibernate(null);
 	private DeporteDAOHibernate daoDeporte = new DeporteDAOHibernate();
 	
-	public void darDeAltaCompetencia(CompetenciaDTO competenciaDto){
+	public void darDeAltaCompetencia(CompetenciaDTO competenciaDto) throws Exception{
 		
 		Usuario usuario = new Usuario(1, "ChecoPerez@gmail.com", "hunter12", "Perez", "Checo");
 		Competencia competencia = new Competencia();
 		
 		if(daoCompetencia.verificarSiExiste(competenciaDto.getNombre())){
-			throw new Exception("Nombre ya existe");
+			throw new Exception("El nombre de la Competencia ya existe");
 		}
 		else {
 			
@@ -82,6 +86,15 @@ public class GestorCompetencia {
 			
 			
 			//ACA FALTA LO DE RESERVA -------
+			List<Reserva> reservas = new ArrayList<Reserva>();
+			for(List<String> s: competenciaDto.getReservasDisponibles()) { //0:nombre lugar de realizacion 1:cantidad encuentros 
+				Reserva reserva = new Reserva();
+				//buscar lugar de realizacion en db
+				reserva.setCompetencia(competencia);
+				reserva.setDisponibilidad(Integer.valueOf(s.get(1)));
+				reservas.add(reserva);
+			}
+			competencia.setReservasDisponibles(reservas);
 			
 			daoCompetencia.guardarCompetencia(competencia);
 			

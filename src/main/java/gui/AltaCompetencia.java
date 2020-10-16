@@ -14,17 +14,20 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -32,6 +35,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
@@ -39,6 +43,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.text.JTextComponent;
 
 import dominio.FormaPuntuacion;
 import dominio.SistemaDeCompetencia;
@@ -179,7 +184,7 @@ public class AltaCompetencia extends JPanel {
 		rellenoPanel2.setPreferredSize(new Dimension(400, 30));
 		rellenoPanel2.setBackground(Color.WHITE);
 		
-		ImageIcon iconoVolver= new ImageIcon("IconoVolver.JPG");
+		ImageIcon iconoVolver= new ImageIcon("src/main/resources/IconoVolver.JPG");
 		JButton volver = new JButton();
 		volver.setPreferredSize(new Dimension(33,33));
 		volver.setIcon(iconoVolver);
@@ -487,16 +492,19 @@ public class AltaCompetencia extends JPanel {
 		
 		final JTextField buscar = new JTextField(150);
 		buscar.setMinimumSize(new Dimension(150, 20));
-		buscar.setText("");
+		buscar.setText("");	
 		
 		final JSpinner encuentros = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		encuentros.setBounds(100, 202, 30, 20);
+		
+		//ver dao
+		final List<String> listaLugares = new ArrayList<String>();
 		
 	    JButton agregar = new JButton("+");
 	    agregar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if(!buscar.getText().toString().equals("") && (Integer) encuentros.getValue() > 0) {
+				if(!buscar.getText().equals("") && (Integer) encuentros.getValue() > 0 && listaLugares.contains(buscar.getText())) {
 					List<String> aux = new ArrayList<String>();
 					aux.add(buscar.getText().toString());
 					aux.add( encuentros.getValue().toString());
@@ -639,7 +647,11 @@ public class AltaCompetencia extends JPanel {
 							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), new Usuario(0, "", "", "", ""), 
 							lugares, deporteSeleccionado, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
-					gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
+					try {
+						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
+					} catch (Exception e1) {
+						JOptionPane.showMessageDialog(new JPanel(), "Error: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
 //					CardLayout layout = (CardLayout)tpPanel.getLayout();
 //			        layout.show(tpPanel, "Card__");
 				}					
@@ -701,4 +713,3 @@ public class AltaCompetencia extends JPanel {
 				tablaLugares.getColumn("Eliminar").setCellEditor(new ButtonEditor(new JCheckBox()));
 	}
 }
-

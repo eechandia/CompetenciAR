@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import dominio.Deporte;
 
 public interface DeporteDAO {
@@ -12,5 +14,5 @@ public interface DeporteDAO {
 
 	public abstract void guardarDeporte();
 
-	public abstract Deporte recuperarDeporte();
+	public abstract List<Deporte> recuperarDeportes();
 }

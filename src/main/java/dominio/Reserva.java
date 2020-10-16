@@ -27,5 +27,31 @@ public class Reserva  implements Serializable{
 	private Competencia competencia;
 	
 	@Column
-	private Integer disponibilidad; 
+	private Integer disponibilidad;
+
+	public LugarDeRealizacion getLugarDeRealizacion() {
+		return lugarDeRealizacion;
+	}
+
+	public void setLugarDeRealizacion(LugarDeRealizacion lugarDeRealizacion) {
+		this.lugarDeRealizacion = lugarDeRealizacion;
+	}
+
+	public Competencia getCompetencia() {
+		return competencia;
+	}
+
+	public void setCompetencia(Competencia competencia) {
+		this.competencia = competencia;
+	}
+
+	public Integer getDisponibilidad() {
+		return disponibilidad;
+	}
+
+	public void setDisponibilidad(Integer disponibilidad) {
+		this.disponibilidad = disponibilidad;
+	} 
+	
+	
 }

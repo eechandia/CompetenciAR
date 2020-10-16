@@ -2,11 +2,17 @@ package app;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -100,6 +106,8 @@ public class App extends JFrame {
 
 		// TODO Auto-generated method stub
 /*		System.out.println("testeando");
+ * 
+ * 		
 		
 		
 		SessionFactory factory = new Configuration()
