@@ -20,11 +20,13 @@ import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -475,6 +477,7 @@ public class AltaCompetencia extends JPanel {
 		lugarPanel.setBackground(Color.WHITE);
 		lugarPanel.setLayout(new GridBagLayout());
 		final List<Triplet<Integer, String, Integer>> lugares = new ArrayList<Triplet<Integer, String, Integer>>();
+		List<Triplet<Integer, String, Integer>> reservas = new ArrayList<Triplet<Integer,String,Integer>>();
 		GridBagConstraints lugarConstraints = new GridBagConstraints();
 		lugarConstraints.insets = new Insets(10, 3, 10, 3);
 		lugarConstraints.fill = GridBagConstraints.WEST;
@@ -489,45 +492,49 @@ public class AltaCompetencia extends JPanel {
 		JLabel buscarLabel = new JLabel("Lugar");
 		JLabel cantidad = new JLabel("Cantidad de Encuentros");
 		
-		final JTextField buscar = new JTextField(150);
-		buscar.setMinimumSize(new Dimension(150, 20));
-		buscar.setText("");
+List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
+		
+		class LugarDeRealizacionComboRenderer extends DefaultListCellRenderer {
+
+		    public Component getListCellRendererComponent(
+		                                   JList list,
+		                                   Object value,
+		                                   int index,
+		                                   boolean isSelected,
+		                                   boolean cellHasFocus) {
+		        if (value instanceof Triplet<?, ?, ?>) {
+		            value = ((Triplet<Integer, String, Integer>)value).getSecond();
+		        }
+		        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+		        return this;
+		    }
+		}
+		
+
+		final JComboBox<Triplet<Integer, String, Integer>> comboLugares = new JComboBox<Triplet<Integer, String, Integer>>();
+		
+		comboLugares.setRenderer(new LugarDeRealizacionComboRenderer());
+		
+		for(Triplet<Integer, String, Integer> elemento : listaLugares) {
+			comboLugares.addItem(elemento);
+		}
+		
+		comboLugares.setMinimumSize(new Dimension(150, 20));
+		comboLugares.setMaximumSize(new Dimension(150, 20));
+		comboLugares.setPreferredSize(new Dimension(150, 20));
 		
 		final JSpinner encuentros = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		encuentros.setBounds(100, 202, 30, 20);
-		
-		final List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
-		
-		//anda?
+
 		
 		
 	    JButton agregar = new JButton("+");
 	    agregar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if(!buscar.getText().toString().equals("") && (Integer) encuentros.getValue() > 0) {
-					Triplet<Integer, String, Integer> aux = new Triplet<Integer, String, Integer>();
-					@SuppressWarnings("unchecked")
-					Triplet<Integer, String, Integer> lugarAux = (Triplet<Integer, String, Integer>) listaLugares.stream().filter(new Predicate<Triplet<Integer, String, Integer>>() {
-						public boolean test(Triplet<Integer, String, Integer> t) {
-							// TODO Auto-generated method stub
-							return t.getSecond().equals(buscar.getText());
-						}
-					}).collect(Collectors.toList()).get(0);
-					if(lugarAux.getThird() >= (Integer) encuentros.getValue()) {
-						aux.setFirst(lugarAux.getFirst());
-						aux.setSecond(lugarAux.getSecond());
-						aux.setThird((Integer) encuentros.getValue());
-						lugares.add(aux);			
-						buscar.setText("");
-						encuentros.setValue(0);
-						actualizarTablaLugar(lugares);
-					}
-				}
-				//borrar
-				lugares.add(new Triplet<Integer, String, Integer>(0,"Prueba",2));
-				actualizarTablaLugar(lugares);
-//borrar
+				Triplet<Integer, String, Integer> lugarSeleccionado = comboLugares.getItemAt(comboLugares.getSelectedIndex());
+				reservas.add(new Triplet<Integer, String, Integer>(lugarSeleccionado.getFirst(), lugarSeleccionado.getSecond(), (Integer) encuentros.getValue()));
+				actualizarTablaLugar(reservas);
 			}
 	    	
 	    });
@@ -537,7 +544,7 @@ public class AltaCompetencia extends JPanel {
 		lugarDeRealizacion.add(buscarLabel, auxConstraints);
 		
 		auxConstraints.gridy = 1;
-		lugarDeRealizacion.add(buscar, auxConstraints);
+		lugarDeRealizacion.add(comboLugares, auxConstraints);
 		
 		auxConstraints.gridy = 3;
 		lugarDeRealizacion.add(cantidad, auxConstraints);
@@ -569,19 +576,9 @@ public class AltaCompetencia extends JPanel {
 
 			public void actionPerformed(ActionEvent e) {
 				int renglonSeleccionado = tablaLugares.getSelectedRow();
-				String lugar = tablaLugares.getValueAt(renglonSeleccionado, 0).toString();
-				Integer encuentro = (Integer) tablaLugares.getValueAt(renglonSeleccionado, 1);
 				//borrarlo de la lista y llamar a actualizar tabla
-				boolean borrado = false;
-				int i = 0;
-				while(!borrado) {
-					if( lugares.get(i).getSecond().equals(lugar) && lugares.get(i).getThird() == encuentro) {
-						lugares.remove(i);
-						borrado = true;
-					}
-					i++;
-				}
-				actualizarTablaLugar(lugares);
+				reservas.remove(renglonSeleccionado);
+				actualizarTablaLugar(reservas);
 			}
 			
 		});
@@ -615,38 +612,42 @@ public class AltaCompetencia extends JPanel {
 						deporteBox.getSelectedItem().toString().equals(" ") ||
 						modalidadBox.getSelectedItem().toString().equals(" ") ||
 						puntuacionBox.getSelectedItem().toString().equals(" ") ||
-						lugares.size() == 0 ||
+						reservas.size() == 0 ||
 						puntuacionBox.getSelectedItem().toString().equals("Puntuación") && (Integer) puntosAu.getValue() == 0 ||
 						puntuacionBox.getSelectedItem().toString().equals("Sets") && (Integer) cantMaxSets.getValue() == 0 ||
-						modalidadBox.getSelectedItem().toString().equals("Sistema de Liga") && ((Integer) puntosG.getValue() == 0 || (Integer) puntosPorPresentarse.getValue() == 0 || (empate.isSelected() && (Integer) puntosEmp.getValue() == 0))) {
-					
+						modalidadBox.getSelectedItem().toString().equals("Sistema de Liga") && ((Integer) puntosG.getValue() == 0 ||
+						(Integer) puntosPorPresentarse.getValue() == 0 || 
+						(empate.isSelected() && (Integer) puntosEmp.getValue() == 0))
+						
+						) {
+						
 					JOptionPane.showMessageDialog(new JPanel(), "Error: Uno o más de los campos se encuentra vacío", "Error", JOptionPane.ERROR_MESSAGE);					
 				}
 				else {
 					//mandar al gestor
 					SistemaDeCompetencia.Tipo tipoCompetencia = null;
 					switch(modalidadBox.getSelectedIndex()) { //"Sistema de Liga", "Sistema de Eliminatoria Simple", "Sistema de Eliminatoria Doble"
-					case 1:
+					case 0:
 						tipoCompetencia = SistemaDeCompetencia.Tipo.LIGA;
 						break;
-					case 2: 
+					case 1: 
 						tipoCompetencia = SistemaDeCompetencia.Tipo.ELIMIN_SIMPLE;
 						break;
-					case 3:
+					case 2:
 						tipoCompetencia = SistemaDeCompetencia.Tipo.ELIMIN_DOBLE;
 						break;
 					default:
 						break;
 					}
 					FormaPuntuacion.Tipo tipoPuntuacion = null;
-					switch(modalidadBox.getSelectedIndex()) { //"Resultado Final", "Puntuación", "Sets"
-					case 1:
+					switch(puntuacionBox.getSelectedIndex()) { //"Resultado Final", "Puntuación", "Sets"
+					case 0:
 						tipoPuntuacion = FormaPuntuacion.Tipo.RESULTADO_FINAL;
 						break;
-					case 2: 
+					case 1: 
 						tipoPuntuacion = FormaPuntuacion.Tipo.PUNTUACION;
 						break;
-					case 3:
+					case 2:
 						tipoPuntuacion = FormaPuntuacion.Tipo.SETS;
 						break;
 					default:
@@ -658,15 +659,12 @@ public class AltaCompetencia extends JPanel {
 						}
 					}).collect(Collectors.toList()).get(0)).getFirst();
 					
-					List<Pair<Integer, Integer>> reservas = new ArrayList<Pair<Integer, Integer>>();
-					for (Triplet<Integer, String, Integer> t: lugares) {
-						Pair<Integer, Integer> r = new Pair<Integer, Integer>();
-						r.setFirst(t.getFirst());
-						r.setSecond(t.getThird());
-						reservas.add(r);
+					List<Pair<Integer, Integer>> reservasDTO = new ArrayList<Pair<Integer, Integer>>();
+					for (Triplet<Integer, String, Integer> reserva: reservas) {
+						reservasDTO.add(new Pair<Integer, Integer>(reserva.getFirst(), reserva.getThird()));
 					}
 					CompetenciaDTO competenciaDTO = new CompetenciaDTO( 
-							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), reservas, 
+							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), reservasDTO, 
 							deporteSeleccionado, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
 					try {

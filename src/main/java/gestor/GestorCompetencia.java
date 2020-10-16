@@ -28,7 +28,7 @@ public class GestorCompetencia {
 	
 	public void darDeAltaCompetencia(CompetenciaDTO competenciaDto) throws Exception{
 		
-		Usuario usuario = new Usuario(1, "ChecoPerez@gmail.com", "hunter12", "Perez", "Checo");
+		Usuario usuario = new Usuario(0, "ChecoPerez@gmail.com", "hunter12", "Perez", "Checo");
 		Competencia competencia = new Competencia();
 		
 		if(daoCompetencia.verificarSiExiste(competenciaDto.getNombre())){
@@ -93,9 +93,6 @@ public class GestorCompetencia {
 			}
 			
 			competencia.setReservasDisponibles(reservas);
-			
-			
-			//ACA FALTA LO DE RESERVA -------
 			
 			daoCompetencia.guardarCompetencia(competencia);
 			

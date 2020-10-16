@@ -37,7 +37,7 @@ public class Localidad {
     @JoinColumn(name = "idProvincia")
 	private Provincia provincia;
 	
-	@OneToMany(mappedBy = "localidad")
-	private List<Usuario> usuarios;
+//	@OneToMany(mappedBy = "localidad")
+//	private List<Usuario> usuarios;
 	
 }

@@ -130,8 +130,9 @@ public class CompetenciaDTO implements Serializable {
 			Integer puntosPorPresentarse
 			){
 		this.nombre = nombre;
+		this.tipoSistemaDeCompetencia = tipoSistemaDeCompetencia;
+		this.tipoFormaPuntuacion = tipoFormaPuntuacion;
 		this.reglamento = reglamento;
-//		this.usuarioAsociado = usuarioAsociado;
 		this.reservasDisponibles = reservasDisponibles;
 		this.deporteDeCompetencia = deporteDeCompetencia;
 		this.puntosSiRivalAusente = puntosSiRivalAusente;

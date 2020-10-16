@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,6 +24,10 @@ public class Usuario {
 		DNI, PASAPORTE, PART_DE_NACIMIENTO
 	}
 	
+	public Usuario() {
+		
+	}
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column
@@ -32,7 +37,7 @@ public class Usuario {
 	private String correoElectronico;
 	
 	@Column
-	private String contraseña;
+	private String contrasena;
 	
 	@Column
 	private String apellido;
@@ -40,27 +45,27 @@ public class Usuario {
 	@Column
 	private String nombre;
 	
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	@Column
 	private TipoDoc tipoDocumento;
 	
 	@Column
 	private String documento;
 	
-	@ManyToOne()
-    @JoinColumn(name = "idLocalidad")
-	private Localidad localidad;
-	
+//	@ManyToOne()
+//	@JoinColumn(name = "idLocalidad")
+//	private Localidad localidad;
+//	
 
 	@OneToMany(mappedBy = "usuarioAsociado")
 	private List<Competencia> competencias;
 
 
-	public Usuario(Integer id, String correoElectronico, String contraseña, String apellido, String nombre) {
+	public Usuario(Integer id, String correoElectronico, String contrasena, String apellido, String nombre) {
 		super();
 		this.id = id;
 		this.correoElectronico = correoElectronico;
-		this.contraseña = contraseña;
+		this.contrasena = contrasena;
 		this.apellido = apellido;
 		this.nombre = nombre;
 	}

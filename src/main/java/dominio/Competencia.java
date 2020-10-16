@@ -20,7 +20,7 @@ import javax.persistence.Table;
 import dto.CompetenciaDTO;
 
 @Entity
-@Table(name="Competencia", schema = "tp")
+@Table(name="competencia", schema = "tp")
  
 public class Competencia {
 
@@ -65,8 +65,7 @@ public class Competencia {
 	@JoinColumn(name="iddeporte")
 	private Deporte deporteDeCompetencia;
 	
-	@OneToOne @MapsId
-	@JoinColumn(name="idmodalidad")
+	@OneToOne(mappedBy = "competencia")
 	private Modalidad modalidad;
 
 	

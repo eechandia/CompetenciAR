@@ -2,19 +2,23 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import dominio.Competencia;
 import dominio.Deporte;
+import dominio.LugarDeRealizacion;
+import utils.HibernateUtils;
 
 public class DeporteDAOHibernate implements DeporteDAO{
 
-	private SessionFactory factory = null;
 
 	public Deporte recuperarDeporte(Integer id) {
 		
-		Session session = factory.openSession();
+		Session session = HibernateUtils.getSessionFactory().openSession();
 		try {
 		session.beginTransaction();
 		Deporte deporte = session.get(Deporte.class, id);
@@ -48,8 +52,20 @@ public class DeporteDAOHibernate implements DeporteDAO{
 	}
 
 	public List<Deporte> recuperarDeportes() {
-		// TODO Auto-generated method stub
-		return null;
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		try {	
+			
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+		    CriteriaQuery<Deporte> criteria = builder.createQuery(Deporte.class);
+		    criteria.from(Deporte.class);
+		    List<Deporte> deportes = session.createQuery(criteria).getResultList();
+		    
+			return deportes;
+		}
+		finally {
+			session.close();
+		}
+
 	}
 	
 
