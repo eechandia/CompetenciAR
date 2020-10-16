@@ -16,8 +16,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import dominio.Competencia;
-import dominio.Deporte;
 import gestor.*;
 import gui.*;
 
