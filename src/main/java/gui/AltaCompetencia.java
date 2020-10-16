@@ -496,7 +496,7 @@ public class AltaCompetencia extends JPanel {
 		final JSpinner encuentros = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		encuentros.setBounds(100, 202, 30, 20);
 		
-		final List<Pair<Integer, String>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
+		final List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
 		
 		//anda?
 		
@@ -507,23 +507,27 @@ public class AltaCompetencia extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(!buscar.getText().toString().equals("") && (Integer) encuentros.getValue() > 0) {
 					Triplet<Integer, String, Integer> aux = new Triplet<Integer, String, Integer>();
-					Pair<Integer, String> lugarAux = (Pair<Integer, String>) listaLugares.stream().filter(new Predicate<Pair<Integer, String>>() {
-						public boolean test(Pair<Integer, String> t) {
+					@SuppressWarnings("unchecked")
+					Triplet<Integer, String, Integer> lugarAux = (Triplet<Integer, String, Integer>) listaLugares.stream().filter(new Predicate<Triplet<Integer, String, Integer>>() {
+						public boolean test(Triplet<Integer, String, Integer> t) {
 							// TODO Auto-generated method stub
 							return t.getSecond().equals(buscar.getText());
 						}
 					}).collect(Collectors.toList()).get(0);
-					aux.setFirst(lugarAux.getFirst());
-					aux.setSecond(lugarAux.getSecond());
-					aux.setThird((Integer) encuentros.getValue());
-					lugares.add(aux);			
-					buscar.setText("");
-					encuentros.setValue(0);
-					actualizarTablaLugar(lugares);
+					if(lugarAux.getThird() >= (Integer) encuentros.getValue()) {
+						aux.setFirst(lugarAux.getFirst());
+						aux.setSecond(lugarAux.getSecond());
+						aux.setThird((Integer) encuentros.getValue());
+						lugares.add(aux);			
+						buscar.setText("");
+						encuentros.setValue(0);
+						actualizarTablaLugar(lugares);
+					}
 				}
+				//borrar
 				lugares.add(new Triplet<Integer, String, Integer>(0,"Prueba",2));
 				actualizarTablaLugar(lugares);
-
+//borrar
 			}
 	    	
 	    });
