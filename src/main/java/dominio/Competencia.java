@@ -80,6 +80,7 @@ public class Competencia {
 		this.reglamento = compeDTO.getReglamento();
 		this.dadaDeBaja = false;
 		this.fechaBaja = null;
+		this.estadoCompetencia = Estado.CREADA;
 	
 	};
 	

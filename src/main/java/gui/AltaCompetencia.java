@@ -185,7 +185,7 @@ public class AltaCompetencia extends JPanel {
 		rellenoPanel2.setPreferredSize(new Dimension(400, 30));
 		rellenoPanel2.setBackground(Color.WHITE);
 		
-		ImageIcon iconoVolver= new ImageIcon("IconoVolver.JPG");
+		ImageIcon iconoVolver= new ImageIcon("src/main/resources/IconoVolver.JPG");
 		JButton volver = new JButton();
 		volver.setPreferredSize(new Dimension(33,33));
 		volver.setIcon(iconoVolver);
@@ -615,10 +615,7 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 						reservas.size() == 0 ||
 						puntuacionBox.getSelectedItem().toString().equals("Puntuación") && (Integer) puntosAu.getValue() == 0 ||
 						puntuacionBox.getSelectedItem().toString().equals("Sets") && (Integer) cantMaxSets.getValue() == 0 ||
-						modalidadBox.getSelectedItem().toString().equals("Sistema de Liga") && ((Integer) puntosG.getValue() == 0 ||
-						(Integer) puntosPorPresentarse.getValue() == 0 || 
-						(empate.isSelected() && (Integer) puntosEmp.getValue() == 0))
-						
+						modalidadBox.getSelectedItem().toString().equals("Sistema de Liga") && (Integer) puntosG.getValue() == 0
 						) {
 						
 					JOptionPane.showMessageDialog(new JPanel(), "Error: Uno o más de los campos se encuentra vacío", "Error", JOptionPane.ERROR_MESSAGE);					
@@ -627,13 +624,13 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 					//mandar al gestor
 					SistemaDeCompetencia.Tipo tipoCompetencia = null;
 					switch(modalidadBox.getSelectedIndex()) { //"Sistema de Liga", "Sistema de Eliminatoria Simple", "Sistema de Eliminatoria Doble"
-					case 0:
+					case 1:
 						tipoCompetencia = SistemaDeCompetencia.Tipo.LIGA;
 						break;
-					case 1: 
+					case 2: 
 						tipoCompetencia = SistemaDeCompetencia.Tipo.ELIMIN_SIMPLE;
 						break;
-					case 2:
+					case 3:
 						tipoCompetencia = SistemaDeCompetencia.Tipo.ELIMIN_DOBLE;
 						break;
 					default:
@@ -641,13 +638,13 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 					}
 					FormaPuntuacion.Tipo tipoPuntuacion = null;
 					switch(puntuacionBox.getSelectedIndex()) { //"Resultado Final", "Puntuación", "Sets"
-					case 0:
+					case 1:
 						tipoPuntuacion = FormaPuntuacion.Tipo.RESULTADO_FINAL;
 						break;
-					case 1: 
+					case 2: 
 						tipoPuntuacion = FormaPuntuacion.Tipo.PUNTUACION;
 						break;
-					case 2:
+					case 3:
 						tipoPuntuacion = FormaPuntuacion.Tipo.SETS;
 						break;
 					default:
@@ -671,7 +668,7 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
-						e1.printStackTrace();
+						JOptionPane.showMessageDialog(new JPanel(), "Error: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 //					CardLayout layout = (CardLayout)tpPanel.getLayout();
 //			        layout.show(tpPanel, "Card__");
