@@ -2,7 +2,11 @@ package dao;
 
 import java.util.List;
 
+import org.hibernate.Session;
+
+import dominio.Competencia;
 import dominio.LugarDeRealizacion;
+import dominio.Reserva;
 
 public interface LugarDeRealizacionDAO {
 
@@ -15,5 +19,13 @@ public interface LugarDeRealizacionDAO {
 	public abstract void guardarLugarDeRealizacion();
 	
 	public abstract List<LugarDeRealizacion> recuperarLugaresDeRealizacion();
+
+	/**
+	 * @param reservasDisponibles
+	 * @param competencia
+	 * @param session
+	 * @throws Exception 
+	 */
+	public abstract void guardarReservas(List<Reserva> reservasDisponibles, Competencia competencia, Session session) throws Exception;
 	
 }

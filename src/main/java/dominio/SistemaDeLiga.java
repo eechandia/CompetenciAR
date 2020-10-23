@@ -5,17 +5,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
-@Entity(name="SistemaDeLiga")
+@Entity
+@Table(name="sistemadeliga", schema = "tp")
 public class SistemaDeLiga extends SistemaDeCompetencia {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
-	private Integer id;
+	@JoinColumn(name = "idsistemacompetencia")
+	protected Integer id;
 	
-	@Column
+	@Column(name="puntosPorPartidoGanado")
 	private Integer puntosPorPartido;
 	@Column
 	private Boolean empatePermitido;

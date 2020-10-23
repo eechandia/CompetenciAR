@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -30,8 +31,8 @@ public class LugarDeRealizacion {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@SequenceGenerator(name="lugar-de-realizacion-seq",sequenceName="tp.lugarderealizacion_codigo_seq", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="lugar-de-realizacion-seq")
 	private Integer codigo;
 	
 	@OneToMany(mappedBy = "competencia")
