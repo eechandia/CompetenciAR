@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Embeddable
@@ -17,8 +18,8 @@ import javax.persistence.Table;
 public class Participante {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@SequenceGenerator(name="participante-seq",sequenceName="tp.participante_id_seq", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="participante-seq")
 	private Integer idParticipante;
 	@Column
 	private String nombre;

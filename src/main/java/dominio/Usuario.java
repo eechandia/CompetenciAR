@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -29,7 +30,8 @@ public class Usuario {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@SequenceGenerator(name="usuario-seq",sequenceName="tp.usuario_id_seq", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="usuario-seq")
 	@Column
 	private Integer id;
 	

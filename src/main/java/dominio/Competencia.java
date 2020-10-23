@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import dto.CompetenciaDTO;
@@ -29,8 +30,8 @@ public class Competencia {
 	}
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@SequenceGenerator(name="competencia-seq",sequenceName="tp.competencia_id_seq", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="competencia-seq")
 	private Integer id;
 	
 	@Column(name="nombre")
@@ -74,6 +75,7 @@ public class Competencia {
 
 	
 	public void inicializarCompetencia(CompetenciaDTO compeDTO) {
+		this.id=null;
 		this.nombre = compeDTO.getNombre();
 		this.estadoCompetencia = compeDTO.getEstadoCompetencia();
 		this.participantes = compeDTO.getParticipantes();
@@ -116,6 +118,83 @@ public class Competencia {
 	public void setReservasDisponibles(List<Reserva> reservas) {
 		this.reservasDisponibles = reservas;
 	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+	public Estado getEstadoCompetencia() {
+		return estadoCompetencia;
+	}
+
+
+	public void setEstadoCompetencia(Estado estadoCompetencia) {
+		this.estadoCompetencia = estadoCompetencia;
+	}
+
+
+	public List<Participante> getParticipantes() {
+		return participantes;
+	}
+
+
+	public void setParticipantes(List<Participante> participantes) {
+		this.participantes = participantes;
+	}
+
+
+	public String getReglamento() {
+		return reglamento;
+	}
+
+
+	public void setReglamento(String reglamento) {
+		this.reglamento = reglamento;
+	}
+
+
+	public Boolean getDadaDeBaja() {
+		return dadaDeBaja;
+	}
+
+
+	public void setDadaDeBaja(Boolean dadaDeBaja) {
+		this.dadaDeBaja = dadaDeBaja;
+	}
+
+
+	public LocalDate getFechaBaja() {
+		return fechaBaja;
+	}
+
+
+	public void setFechaBaja(LocalDate fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+
+
+	public Usuario getUsuarioAsociado() {
+		return usuarioAsociado;
+	}
+
+
+	public Modalidad getModalidad() {
+		return modalidad;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	
 		
 }
 

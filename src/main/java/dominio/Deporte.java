@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 
@@ -20,8 +21,8 @@ import javax.persistence.JoinColumn;
 public class Deporte {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@SequenceGenerator(name="deporte-seq",sequenceName="tp.deporte_id_seq", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="deporte-seq")
 	private Integer id;
 	@Column
 	private String nombre;

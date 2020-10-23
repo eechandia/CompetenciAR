@@ -5,13 +5,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
-
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="sistemaCompetencia", schema = "tp")
 public abstract class SistemaDeCompetencia {
 	
@@ -21,13 +25,31 @@ public abstract class SistemaDeCompetencia {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@SequenceGenerator(name="sistema-de-competencia-seq",sequenceName="tp.sistemacompetencia_id_seq", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sistema-de-competencia-seq")
 	protected Integer id;
 	
-	@ManyToOne()
+	@OneToOne()
     @JoinColumn(name = "idModalidad")
 	protected Modalidad modalidad;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Modalidad getModalidad() {
+		return modalidad;
+	}
+
+	public void setModalidad(Modalidad modalidad) {
+		this.modalidad = modalidad;
+	}
+	
+	
 	
 	
 }

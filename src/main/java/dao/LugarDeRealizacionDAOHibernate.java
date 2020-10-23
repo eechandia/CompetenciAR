@@ -8,12 +8,24 @@ import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import dominio.Competencia;
 import dominio.Deporte;
 import dominio.LugarDeRealizacion;
+import dominio.Reserva;
 import utils.HibernateUtils;
 
 public class LugarDeRealizacionDAOHibernate implements LugarDeRealizacionDAO{
 
+	
+	public static synchronized LugarDeRealizacionDAO getInstance() {
+		if(lugarDeRealizacionDAO==null) {
+			lugarDeRealizacionDAO = new LugarDeRealizacionDAOHibernate();
+		}
+		return lugarDeRealizacionDAO;		
+	}
+	
+	private static LugarDeRealizacionDAO lugarDeRealizacionDAO = null;
+	
 	
 	
 	public LugarDeRealizacion darDeAltaLugarDeRealizacion() {
@@ -59,6 +71,17 @@ public class LugarDeRealizacionDAOHibernate implements LugarDeRealizacionDAO{
 			session.close();
 		}
 
+	}
+	
+	public void guardarReservas(List<Reserva> reservas, Competencia competencia, Session session) throws Exception {
+		try {
+			for(Reserva reserva : reservas) {
+				reserva.setCompetencia(competencia);
+				session.save(reserva);
+			}
+		}catch(Exception ex){
+			throw ex;
+		}
 	}
 
 	

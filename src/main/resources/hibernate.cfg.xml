@@ -9,6 +9,8 @@
         <property name="hibernate.connection.username">dchqgbyd</property>
         <property name="hibernate.connection.password">NhtBV0fJkxswJU_wnGShHGwMDup5cj_6</property>
         <property name="hibernate.connection.url">jdbc:postgresql://tuffi.db.elephantsql.com:5432/dchqgbyd</property>
+        <property name="hibernate.connection.autocommit">true</property>
+
         
 		
         <property name="connection_pool_size">2</property>

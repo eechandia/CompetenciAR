@@ -17,7 +17,7 @@ public interface CompetenciaDAO {
 
 	public abstract void modificarCompetencia();
 	
-	public abstract Boolean guardarCompetencia(Competencia competencia);
+	public abstract Boolean guardarCompetencia(Competencia competencia) throws Exception;
 
 	
 	public abstract Boolean verificarSiExiste(String nombre);

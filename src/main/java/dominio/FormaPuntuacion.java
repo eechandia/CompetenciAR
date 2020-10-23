@@ -10,6 +10,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -22,12 +24,29 @@ public abstract class FormaPuntuacion {
 	}
 	
 	@Id
-	@Column
+	@SequenceGenerator(name="forma-de-puntuacion-seq",sequenceName="tp.formapuntuacion_id_seq", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="forma-de-puntuacion-seq")
 	protected Integer id;
 	
-	@ManyToOne()
+	@OneToOne()
     @JoinColumn(name = "idModalidad")
 	protected Modalidad modalidad;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Modalidad getModalidad() {
+		return modalidad;
+	}
+
+	public void setModalidad(Modalidad modalidad) {
+		this.modalidad = modalidad;
+	}
 	
 	
 }

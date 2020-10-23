@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 
@@ -20,8 +21,8 @@ import javax.persistence.Table;
 public class Modalidad {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@SequenceGenerator(name="modalidad-seq",sequenceName="tp.modalidad_id_seq", initialValue=1, allocationSize=1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="modalidad-seq")
 	private Integer id;
 
 	
@@ -49,6 +50,38 @@ public class Modalidad {
 	public void setFormaPuntuacion(FormaPuntuacion formaPuntuacion) {
 		this.formaPuntuacion = formaPuntuacion;
 	}
+
+
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+	public Competencia getCompetencia() {
+		return competencia;
+	}
+
+
+	public void setCompetencia(Competencia competencia) {
+		this.competencia = competencia;
+	}
+
+
+	public SistemaDeCompetencia getSistemaCompetencia() {
+		return sistemaCompetencia;
+	}
+
+
+	public FormaPuntuacion getFormaPuntuacion() {
+		return formaPuntuacion;
+	}
+	
+	
 
 
 	
