@@ -62,7 +62,7 @@ public class Competencia {
 	private List<Reserva> reservasDisponibles;
 	
 	
-	@OneToOne @MapsId
+	@OneToOne 
 	@JoinColumn(name="iddeporte")
 	private Deporte deporteDeCompetencia;
 	
