@@ -514,6 +514,7 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 		final JComboBox<Triplet<Integer, String, Integer>> comboLugares = new JComboBox<Triplet<Integer, String, Integer>>();
 		
 		comboLugares.setRenderer(new LugarDeRealizacionComboRenderer());
+		comboLugares.addItem(new Triplet<Integer, String, Integer>(-1, " ", -1));
 		
 		for(Triplet<Integer, String, Integer> elemento : listaLugares) {
 			comboLugares.addItem(elemento);
@@ -526,15 +527,29 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 		final JSpinner encuentros = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		encuentros.setBounds(100, 202, 30, 20);
 
-		
+		List<Triplet<Integer, String, Integer>> lugaresSeleccionados = new ArrayList<Triplet<Integer, String, Integer>>();
 		
 	    JButton agregar = new JButton("+");
 	    agregar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
 				Triplet<Integer, String, Integer> lugarSeleccionado = comboLugares.getItemAt(comboLugares.getSelectedIndex());
-				reservas.add(new Triplet<Integer, String, Integer>(lugarSeleccionado.getFirst(), lugarSeleccionado.getSecond(), (Integer) encuentros.getValue()));
-				actualizarTablaLugar(reservas);
+				if(lugarSeleccionado.getFirst() >= 0 && (Integer) encuentros.getValue() > 0) {
+					if((Integer) encuentros.getValue() <= lugarSeleccionado.getThird()) {
+						reservas.add(new Triplet<Integer, String, Integer>(lugarSeleccionado.getFirst(), lugarSeleccionado.getSecond(), (Integer) encuentros.getValue()));
+						actualizarTablaLugar(reservas);
+						lugaresSeleccionados.add(lugarSeleccionado);
+						comboLugares.removeItemAt(comboLugares.getSelectedIndex());
+						encuentros.setValue(0);
+						comboLugares.setSelectedIndex(0);	
+					}
+					else {
+						JOptionPane.showMessageDialog(new JPanel(), "La disponibilidad de este lugar es de: " + lugarSeleccionado.getThird(), "Advertencia", JOptionPane.WARNING_MESSAGE);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(new JPanel(), "Uno o más de los campos se encuentran vacíos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+				}
 			}
 	    	
 	    });
@@ -577,6 +592,8 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 			public void actionPerformed(ActionEvent e) {
 				int renglonSeleccionado = tablaLugares.getSelectedRow();
 				//borrarlo de la lista y llamar a actualizar tabla
+				comboLugares.addItem(lugaresSeleccionados.stream().filter(f-> reservas.get(renglonSeleccionado).getFirst() == f.getFirst()).collect(Collectors.toList()).get(0));
+				lugaresSeleccionados.remove(lugaresSeleccionados.stream().filter(f-> reservas.get(renglonSeleccionado).getFirst() == f.getFirst()).collect(Collectors.toList()).get(0));
 				reservas.remove(renglonSeleccionado);
 				actualizarTablaLugar(reservas);
 			}
