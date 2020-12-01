@@ -2,7 +2,6 @@ package app;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -19,6 +18,7 @@ import org.hibernate.cfg.Configuration;
 import gestor.*;
 import gui.*;
 
+@SuppressWarnings("serial")
 public class App extends JFrame {
 
 	private JPanel tpPanel;
@@ -29,6 +29,9 @@ public class App extends JFrame {
 	private PantallaIniciarSesion iniciarSesion;
 	private PantallaPrincipalUsuarioAutenticado usuarioA;
 	private AltaCompetencia altaCompetencia;
+	private ListarCompetencias listarCompetencias;
+	private ListarCompetencias listarMisCompetencias;
+	
 	
 //	public static void main(String[] args) {
 //		// TODO Auto-generated method stub
@@ -70,15 +73,19 @@ public class App extends JFrame {
 		cl = new CardLayout(0,0);
 		tpPanel.setLayout(cl);
 		
-//		usuarioNoA = new PantallaPrincipalUsuarioNoAutenticado(tpPanel);
-//		iniciarSesion = new PantallaIniciarSesion(tpPanel);
-//		usuarioA = new PantallaPrincipalUsuarioAutenticado(tpPanel);
+		usuarioNoA = new PantallaPrincipalUsuarioNoAutenticado(tpPanel);
+		iniciarSesion = new PantallaIniciarSesion(tpPanel);
+		usuarioA = new PantallaPrincipalUsuarioAutenticado(tpPanel);
 		altaCompetencia = new AltaCompetencia(tpPanel, gestorDeporte, gestorCompetencia);
+		listarCompetencias = new ListarCompetencias(tpPanel, gestorDeporte, gestorCompetencia);
+		listarMisCompetencias = new ListarCompetencias(tpPanel, gestorDeporte, gestorCompetencia);
 		
-//		tpPanel.add(usuarioNoA, "Card__UsuarionNoAutenticado");
-//		tpPanel.add(iniciarSesion, "Card__IniciarSesion");
-//		tpPanel.add(usuarioA, "Card__UsuarioAutenticado");
+		tpPanel.add(usuarioNoA, "Card__UsuarionNoAutenticado");
+		tpPanel.add(iniciarSesion, "Card__IniciarSesion");
+		tpPanel.add(usuarioA, "Card__UsuarioAutenticado");
 		tpPanel.add(altaCompetencia, "Card__AltaCompetencia");
+		tpPanel.add(listarCompetencias, "Card__ListarCompetencias");
+		tpPanel.add(listarMisCompetencias, "Card__MisCompetencias");
 
 		this.setContentPane(tpPanel);
 		this.pack();

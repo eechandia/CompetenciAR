@@ -29,5 +29,21 @@ public class Participante {
 	@ManyToOne()
     @JoinColumn(name = "idCompetencia")
 	private Competencia competencia;
+
+	public Integer getIdParticipante() {
+		return idParticipante;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public Competencia getCompetencia() {
+		return competencia;
+	}
 	
 }

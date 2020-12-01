@@ -90,7 +90,17 @@ public class PantallaPrincipalUsuarioNoAutenticado extends JPanel{
 			}
 		});
 		
-		
+		competencias.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				CardLayout layout = (CardLayout)tpPanel.getLayout();
+				//if con el usuario autenticado 
+		        layout.show(tpPanel, "Card__ListarCompetencias");
+				
+			}
+			
+		});
 		this.addMouseListener(new MouseListener() {
 			
 			public void mouseReleased(MouseEvent e) {

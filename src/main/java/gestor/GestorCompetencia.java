@@ -38,7 +38,7 @@ public class GestorCompetencia {
 			
 			competencia.inicializarCompetencia(competenciaDto);
 			competencia.setUsuarioAsociado(usuario);
-			Deporte deporte = daoDeporte.recuperarDeporte(competenciaDto.getDeporteDeCompetencia());
+			Deporte deporte = daoDeporte.recuperarDeporte(competenciaDto.getDeporteDeCompetencia()); //cambiar deporte
 			competencia.setDeporteDeCompetencia(deporte);
 			
 			
@@ -100,4 +100,20 @@ public class GestorCompetencia {
 	
 	}
 
+
+	public List<CompetenciaDTO> obtenerCompetencias(){
+		return null;
+	}
+	
+	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr){
+		return null;
+	}
+	
+	public CompetenciaDTO obtenerCompetencia(String nombre) {
+		return null;
+	}
+	
+	public boolean eliminarCompetencia ( CompetenciaDTO competencia ) {
+		return false;
+	}
 }

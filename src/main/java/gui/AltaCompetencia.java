@@ -15,7 +15,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import javax.swing.BoxLayout;
@@ -43,9 +42,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import dominio.FormaPuntuacion;
-import dominio.LugarDeRealizacion;
 import dominio.SistemaDeCompetencia;
-import dominio.Usuario;
 import dto.CompetenciaDTO;
 import gestor.GestorCompetencia;
 import gestor.GestorDeporte;
@@ -53,6 +50,7 @@ import gestor.GestorLugarDeRealizacion;
 import utils.Pair;
 import utils.Triplet;
 
+@SuppressWarnings("serial")
 public class AltaCompetencia extends JPanel {
 
 	//Clases auxiliares
@@ -262,9 +260,9 @@ public class AltaCompetencia extends JPanel {
 		final JComboBox<String> deporteBox = new JComboBox<String>(); 
 		//Pedir al gestor de deporte
 		deporteBox.addItem(" ");
-		final List<Pair<Integer, String>> deportes = gestorDeporte.getDeportesInterfaz();
-		for(Pair<Integer, String> dep: deportes) {
-			deporteBox.addItem(dep.getSecond());
+		final List<String> deportes = gestorDeporte.getDeportesInterfaz();
+		for(String dep: deportes) {
+			deporteBox.addItem(dep);
 		}
 		deporteBox.setMinimumSize(new Dimension(200, 30));
 		deporteBox.setMaximumSize(new Dimension(200, 30));
@@ -492,11 +490,12 @@ public class AltaCompetencia extends JPanel {
 		JLabel buscarLabel = new JLabel("Lugar");
 		JLabel cantidad = new JLabel("Cantidad de Encuentros");
 		
-List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
+		List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
 		
 		class LugarDeRealizacionComboRenderer extends DefaultListCellRenderer {
 
-		    public Component getListCellRendererComponent(
+		    @SuppressWarnings({ "rawtypes", "unchecked" })
+			public Component getListCellRendererComponent(
 		                                   JList list,
 		                                   Object value,
 		                                   int index,
@@ -667,11 +666,6 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 					default:
 						break;
 					}
-					Integer deporteSeleccionado = ((Pair<Integer, String> )deportes.stream().filter(new Predicate<Pair<Integer, String>>() {
-						public boolean test(Pair<Integer, String> e) {
-							return e.getSecond().equals(deporteBox.getSelectedItem().toString());
-						}
-					}).collect(Collectors.toList()).get(0)).getFirst();
 					
 					List<Pair<Integer, Integer>> reservasDTO = new ArrayList<Pair<Integer, Integer>>();
 					for (Triplet<Integer, String, Integer> reserva: reservas) {
@@ -679,7 +673,7 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 					}
 					CompetenciaDTO competenciaDTO = new CompetenciaDTO( 
 							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), reservasDTO, 
-							deporteSeleccionado, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
+							deporteBox.getSelectedItem().toString(), (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
 					try {
 						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
@@ -687,8 +681,8 @@ List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(new JPanel(), "Error: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
-//					CardLayout layout = (CardLayout)tpPanel.getLayout();
-//			        layout.show(tpPanel, "Card__");
+					CardLayout layout = (CardLayout)tpPanel.getLayout();
+			        layout.show(tpPanel, "Card__ListarCompetencia");
 				}					
 			}
 	    	
