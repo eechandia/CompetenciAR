@@ -15,6 +15,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import dao.ParticipanteDAO;
+import dao.ParticipanteDAOHibernate;
+import dto.CompetenciaDTO;
+import dto.ParticipanteDTO;
 import gestor.*;
 import gui.*;
 
@@ -91,13 +95,20 @@ public class App extends JFrame {
 		this.pack();
 		//revalidate();
 		//repaint();
-	}
+	} 
 	
 	private App(){
 		armarApp();
 	}
 	
 	public static void main(String[] args) {
+		
+		
+//		Para probar metodo de participanteDAO
+//		ParticipanteDTO participante = new ParticipanteDTO("esteban", "esteban@gmail.com");
+//		CompetenciaDTO competencia = new CompetenciaDTO(5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+//		ParticipanteDAO participanteDAO = new ParticipanteDAOHibernate();
+//		System.out.println(participanteDAO.nombreOEmailYaExiste(participante, competencia));
 
 		
 //		App aplicacion = new App();
