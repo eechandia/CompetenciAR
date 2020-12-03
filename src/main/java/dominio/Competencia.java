@@ -54,6 +54,9 @@ public class Competencia {
 	@Column(name="fechadebaja")
 	private LocalDate fechaBaja;
 	
+	@Column(name="fixture")
+	private Fixture fixture;
+	
 	@ManyToOne()
     @JoinColumn(name = "idUsuario")
 	private Usuario usuarioAsociado;
@@ -194,6 +197,16 @@ public class Competencia {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+
+	public Fixture getFixture() {
+		return fixture;
+	}
+
+
+	public void setFixture(Fixture fixture) {
+		this.fixture = fixture;
 	}
 	
 	
