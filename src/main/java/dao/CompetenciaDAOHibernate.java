@@ -112,6 +112,12 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	}
 
 
+	public void update(Competencia competencia) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 	
 	

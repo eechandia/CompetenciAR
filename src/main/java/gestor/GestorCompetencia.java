@@ -8,23 +8,31 @@ import dao.CompetenciaDAOHibernate;
 import dao.DeporteDAOHibernate;
 import dominio.Competencia;
 import dominio.Deporte;
+import dominio.Fixture;
 import dominio.FormaPuntuacionPuntuacion;
 import dominio.FormaPuntuacionResFinal;
 import dominio.FormaPuntuacionSets;
 import dominio.LugarDeRealizacion;
 import dominio.Modalidad;
+import dominio.Participante;
 import dominio.Reserva;
+import dominio.SistemaDeCompetencia;
 import dominio.SistemaDeEliminatoriaDoble;
 import dominio.SistemaDeEliminatoriaSimple;
 import dominio.SistemaDeLiga;
 import dominio.Usuario;
+import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
+import exceptions.EstadoCompetenciaException;
+import exceptions.ReservasInsuficientesException;
 import utils.Pair;
 
 public class GestorCompetencia {
 	
 	private CompetenciaDAOHibernate daoCompetencia = new CompetenciaDAOHibernate();
 	private DeporteDAOHibernate daoDeporte = new DeporteDAOHibernate();
+	private GestorReserva gestorReserva = new GestorReserva();
+	private GestorFixture gestorFixture = new GestorFixture();
 	
 	public void darDeAltaCompetencia(CompetenciaDTO competenciaDto) throws Exception{
 		
@@ -100,7 +108,39 @@ public class GestorCompetencia {
 	
 	}
 
-
+	public void generarFixture(CompetenciaDTO compDto) throws EstadoCompetenciaException, ReservasInsuficientesException {
+		Competencia competencia = daoCompetencia.recuperarCompetencia();
+		
+		if(competencia.getEstadoCompetencia() != Estado.CREADA || competencia.getEstadoCompetencia() != Estado.PLANIFICADA) {
+			throw new EstadoCompetenciaException();
+		}
+		
+		List<Reserva> reservas = competencia.getReservasDisponibles();
+		List<Participante> participantes = competencia.getParticipantes();
+		
+		SistemaDeCompetencia sist = competencia.getModalidad().getSistemaCompetencia();
+		if (sist instanceof SistemaDeLiga) {
+			
+			if(gestorReserva.cantidadDeReservasSuficientesSistDeLiga(reservas,participantes) == false) {
+				throw new ReservasInsuficientesException();
+			}
+			
+			List<LugarDeRealizacion> lugaresDeRealizacion = gestorReserva.convertirReservasAListaDeLugares(reservas);
+			
+			Fixture fixture = gestorFixture.generarFixture(participantes,lugaresDeRealizacion);
+			
+			if (competencia.getFixture() == null) {
+				competencia.setFixture(fixture);
+				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+				daoCompetencia.update(competencia);
+			}
+			else {
+				//mensaje de confirmacion
+				
+			}
+		}
+	}
+	
 	public List<CompetenciaDTO> obtenerCompetencias(){
 		return null;
 	}
