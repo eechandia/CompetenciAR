@@ -10,12 +10,10 @@ import dominio.Reserva;
 import dto.CompetenciaDTO;
 
 public interface CompetenciaDAO {
-
-	public abstract Competencia darDeAltaCompetencia(CompetenciaDTO compeDTO);
 	
 	public abstract void darDeBajaCompetencia();
 
-	public abstract void modificarCompetencia();
+	public abstract void modificarCompetencia(Competencia competencia);
 	
 	public abstract Boolean guardarCompetencia(Competencia competencia) throws Exception;
 

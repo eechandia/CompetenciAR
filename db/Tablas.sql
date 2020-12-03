@@ -220,6 +220,19 @@ ENUM('LIGA','ELIMIN_SIMPLE','ELIMIN_DOBLE_GANADORES','ELIMIN_DOBLE_PERDEDORES');
 		);	
 
 
+	CREATE TABLE tp.fecha
+	{
+	idFecha integer,
+	numeroFecha integer,
+	idFixture integer,
+	ronda integer,
+	CONSTRAINT pk_fecha PRIMARY KEY (idFecha),
+	CONSTRAINT fk_fixtureFecha FOREIGN KEY (idFixture) REFERENCES tp.fixture(id)
+
+	}
+	
+
+
 
 
 

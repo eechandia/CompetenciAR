@@ -17,6 +17,7 @@ import org.hibernate.cfg.Configuration;
 
 import dao.ParticipanteDAO;
 import dao.ParticipanteDAOHibernate;
+import dominio.Deporte;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
 import gestor.*;
@@ -151,6 +152,35 @@ public class App extends JFrame {
 			} finally {
 			factory.close();
 		}*/
+		
+		SessionFactory factory = new Configuration()
+				.configure("hibernate.cfg.xml")
+				.buildSessionFactory();
+		
+		Deporte temp = new Deporte("Boleibol");
+
+		
+		try {
+			Session session = factory.openSession();
+			session.beginTransaction(); 
+			session.save(temp);
+			session.getTransaction().commit();
+			} finally {
+				factory.close();
+		}
+		
+		System.out.println("probando updatear");
+		
+		try {
+			Session session = factory.openSession();
+			session.beginTransaction(); 
+			temp.setNombre("Baseboll");
+			session.update(temp);
+			session.getTransaction().commit();
+			} finally {
+				factory.close();
+		}
+		
 		
 		
 		SwingUtilities.invokeLater(new Runnable() {

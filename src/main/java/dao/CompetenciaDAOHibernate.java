@@ -34,11 +34,6 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		
 	}
 	
-
-	public Competencia darDeAltaCompetencia(CompetenciaDTO compeDTO) {
-	
-		return null;
-	}
 	
 	public Boolean guardarCompetencia(Competencia competencia) throws Exception{
 		
@@ -120,9 +115,17 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	}
 
 
-	public void modificarCompetencia() {
-		// TODO Auto-generated method stub
-		
+	public void modificarCompetencia(Competencia competencia) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		try {	
+			session.update(competencia);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();
+		}		
 	}
 
 

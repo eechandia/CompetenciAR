@@ -56,7 +56,10 @@ public class LugarDeRealizacion {
 	@ManyToOne()
     @JoinColumn(name = "idUsuario")
 	private Usuario usuario;
-
+	
+	@OneToMany(mappedBy = "lugarDeRealizacion")
+	private List<EncuentroDeportivo> encuentrosDeportivos;
+	
 	public Integer getCodigo() {
 		return codigo;
 	}

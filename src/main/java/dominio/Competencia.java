@@ -54,7 +54,7 @@ public class Competencia {
 	@Column(name="fechadebaja")
 	private LocalDate fechaBaja;
 	
-	@Column(name="fixture")
+	@OneToOne(mappedBy = "competencia")
 	private Fixture fixture;
 	
 	@ManyToOne()
@@ -63,7 +63,6 @@ public class Competencia {
 	
 	@OneToMany(mappedBy = "competencia")
 	private List<Reserva> reservasDisponibles;
-	
 	
 	@OneToOne 
 	@JoinColumn(name="iddeporte")

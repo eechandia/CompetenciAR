@@ -24,10 +24,10 @@ public class Deporte {
 	@SequenceGenerator(name="deporte-seq",sequenceName="tp.deporte_id_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="deporte-seq")
 	private Integer id;
+	
 	@Column
 	private String nombre;
 
-	
 	@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
         name = "deportelugarderealizacion", 
