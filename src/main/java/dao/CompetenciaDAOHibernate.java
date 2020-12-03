@@ -72,7 +72,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			throw ex;
 		}
 		finally {
-			
+			if(session!=null && session.isOpen())
 			session.close();
 			
 		}
@@ -92,6 +92,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			return deportes.size()>0;
 		}
 		finally {
+			if(session!=null && session.isOpen())
 			session.close();
 		}
 	}
@@ -105,7 +106,6 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		finally {
 			if(session!=null && session.isOpen())
 			session.close();
