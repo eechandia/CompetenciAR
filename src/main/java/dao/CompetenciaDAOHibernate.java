@@ -7,6 +7,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -94,9 +95,22 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			session.close();
 		}
 	}
-	public Competencia recuperarCompetencia() {
-	
-		return null;
+	public Competencia obtenerCompetencia(CompetenciaDTO competencia) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		Competencia competenciaObtenida = null;
+		try {	
+			competenciaObtenida = (Competencia) session.load(Competencia.class, competencia.getId());
+			Hibernate.initialize(competenciaObtenida);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();
+		}
+		return competenciaObtenida;
 	}
 
 
@@ -110,6 +124,9 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		// TODO Auto-generated method stub
 		
 	}
+
+
+
 
 
 

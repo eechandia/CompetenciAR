@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import dto.CompetenciaDTO;
+import dto.ParticipanteDTO;
+
 @Embeddable
 @Entity
 @Table(name="participante", schema = "tp")
@@ -21,11 +24,12 @@ public class Participante {
 	@SequenceGenerator(name="participante-seq",sequenceName="tp.participante_id_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="participante-seq")
 	private Integer idParticipante;
+	
 	@Column
 	private String nombre;
 	@Column
 	private String email;
-	
+
 	@ManyToOne()
     @JoinColumn(name = "idCompetencia")
 	private Competencia competencia;
@@ -46,4 +50,13 @@ public class Participante {
 		return competencia;
 	}
 	
+	public void inicializarParticipante(ParticipanteDTO participanteDto) {
+		this.nombre = participanteDto.getNombre();
+		this.email = participanteDto.getEmail();
+	}
+
+	public void setCompetencia(Competencia competencia) {
+		this.competencia = competencia;
+	}
+		
 }

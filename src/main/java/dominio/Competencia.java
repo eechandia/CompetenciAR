@@ -86,7 +86,9 @@ public class Competencia {
 	
 	};
 	
-	
+	public void addParticipante(Participante nuevoParticipante) {
+		this.participantes.add(nuevoParticipante);
+	}
 
 
 

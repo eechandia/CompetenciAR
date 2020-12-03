@@ -13,11 +13,13 @@ import dominio.FormaPuntuacionResFinal;
 import dominio.FormaPuntuacionSets;
 import dominio.LugarDeRealizacion;
 import dominio.Modalidad;
+import dominio.Participante;
 import dominio.Reserva;
 import dominio.SistemaDeEliminatoriaDoble;
 import dominio.SistemaDeEliminatoriaSimple;
 import dominio.SistemaDeLiga;
 import dominio.Usuario;
+import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import utils.Pair;
 
@@ -99,7 +101,29 @@ public class GestorCompetencia {
 		}
 	
 	}
-
+	
+	public void validarEstado(CompetenciaDTO competencia) throws Exception {
+		Estado ESTADO = competencia.getEstadoCompetencia();
+		if(ESTADO != Estado.CREADA || ESTADO != Estado.PLANIFICADA) {
+			throw new Exception("La competencia no se encuentra en estado Creada o Planificada.");
+		}
+	}
+	
+	public void agregarParticipante(Competencia competencia, Participante nuevoParticipante) {
+		competencia.addParticipante(nuevoParticipante);
+		
+		competencia.setEstadoCompetencia(Estado.CREADA);
+		
+//		Fixture fixture = competencia.getFixture();
+//		
+//		if(fixture != null) {
+//			competencia.setFixture(null);
+//			daoCompetencia.modificarCompetencia(competencia, fixture);
+//			}
+//		else {
+//			daoCompetencia.modificarCompetencia(competencia);
+//		}
+	}
 
 	public List<CompetenciaDTO> obtenerCompetencias(){
 		return null;
@@ -109,11 +133,14 @@ public class GestorCompetencia {
 		return null;
 	}
 	
-	public CompetenciaDTO obtenerCompetencia(String nombre) {
-		return null;
+	public Competencia obtenerCompetencia(CompetenciaDTO competencia) {
+		return daoCompetencia.obtenerCompetencia( competencia);
+	
 	}
 	
 	public boolean eliminarCompetencia ( CompetenciaDTO competencia ) {
 		return false;
 	}
+	
+	
 }
