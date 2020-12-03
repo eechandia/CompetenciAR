@@ -126,6 +126,13 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	}
 
 
+	@Override
+	public Competencia recuperarCompetencia() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 
 
