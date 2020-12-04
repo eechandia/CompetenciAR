@@ -18,5 +18,9 @@ public class SistemaDeEliminatoriaDoble extends SistemaDeCompetencia {
 		super();
 		this.modalidad = modalidad;
 	}
+	
+	public SistemaDeEliminatoriaDoble() {
+		super();
+	}
 
 }

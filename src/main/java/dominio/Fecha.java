@@ -15,7 +15,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="fecha", schema = "tp")
+@Table(name="Fecha", schema = "tp")
 
 public class Fecha {
 
@@ -27,20 +27,17 @@ public class Fecha {
 	@Column(name="numeroFecha")
 	private Integer numeroFecha;
 	
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "fecha")
 	private List<EncuentroDeportivo> encuentros;
 	
 	@ManyToOne()
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "idFixture")
 	private Fixture fixture;
-	
 	
 	
 	public Fecha() {
 		encuentros = new ArrayList<EncuentroDeportivo>();
 	}
-	
-	
 	
 	public Integer getId() {
 		return id;

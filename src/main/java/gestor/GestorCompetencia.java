@@ -132,7 +132,7 @@ public class GestorCompetencia {
 			if (competencia.getFixture() == null) {
 				competencia.setFixture(fixture);
 				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
-				daoCompetencia.update(competencia);
+				daoCompetencia.modificarCompetencia(competencia);
 			}
 			else {
 				//mensaje de confirmacion
@@ -159,8 +159,12 @@ public class GestorCompetencia {
 		
 		if(fixture != null) {
 			competencia.setFixture(null);
+			daoCompetencia.modificarCompetencia(competencia, fixture);
 		}
+		
 		daoCompetencia.modificarCompetencia(competencia);
+		
+		//Mensaje de exito
 	
 	}
 

@@ -19,5 +19,8 @@ public class FormaPuntuacionPuntuacion extends FormaPuntuacion {
 		this.puntosSiRivalAusente = puntosSiRivalAusente;
 	}
 	
+	public FormaPuntuacionPuntuacion() {
+		super();
+	}
 	
 }

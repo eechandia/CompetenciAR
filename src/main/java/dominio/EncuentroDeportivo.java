@@ -50,7 +50,7 @@ public class EncuentroDeportivo {
 	@OneToOne(mappedBy = "siguienteEncuentroPerdedor")
 	private EncuentroDeportivo anteriorEncuentroPerdedor;
 	
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "encuentroAsociado")
 	private List<Resultado> resultados;
 	
 	@ManyToOne()

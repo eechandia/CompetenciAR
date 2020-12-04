@@ -12,7 +12,7 @@ public class GestorParticipante {
 	GestorCompetencia gestorCompetencia = new GestorCompetencia();
 	
 	
-	public void CrearParticipante(ParticipanteDTO participanteDto, CompetenciaDTO competenciaDto) throws Exception {
+	public void crearParticipante(ParticipanteDTO participanteDto, CompetenciaDTO competenciaDto) throws Exception {
 		this.validar(participanteDto);
 		
 		if(participanteDAO.nombreOEmailYaExiste(participanteDto, competenciaDto)) {

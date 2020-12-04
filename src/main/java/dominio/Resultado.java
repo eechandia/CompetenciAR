@@ -24,7 +24,7 @@ public class Resultado {
 	@Column(name="participante1Presente")
 	private Boolean participante1Presente;
 	
-	@Column(name="participante1Presente")
+	@Column(name="participante2Presente")
 	private Boolean participante2Presente;
 	
 	@Column(name="participante1Ganador")

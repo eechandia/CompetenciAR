@@ -15,13 +15,16 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import dao.CompetenciaDAOHibernate;
 import dao.ParticipanteDAO;
 import dao.ParticipanteDAOHibernate;
 import dominio.Deporte;
+import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
 import gestor.*;
 import gui.*;
+import utils.HibernateUtils;
 
 @SuppressWarnings("serial")
 public class App extends JFrame {
@@ -104,82 +107,57 @@ public class App extends JFrame {
 	
 	public static void main(String[] args) {
 		
+		/*
+		###########Para probar metodo de participanteDAO###########
 		
-//		Para probar metodo de participanteDAO
-//		ParticipanteDTO participante = new ParticipanteDTO("esteban", "esteban@gmail.com");
-//		CompetenciaDTO competencia = new CompetenciaDTO(5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-//		ParticipanteDAO participanteDAO = new ParticipanteDAOHibernate();
-//		System.out.println(participanteDAO.nombreOEmailYaExiste(participante, competencia));
+		ParticipanteDTO participante = new ParticipanteDTO("esteban", "esteban@gmail.com");
+		CompetenciaDTO competencia = new CompetenciaDTO(5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		ParticipanteDAO participanteDAO = new ParticipanteDAOHibernate();
+		System.out.println(participanteDAO.nombreOEmailYaExiste(participante, competencia));
 
-		
-//		App aplicacion = new App();
-//		aplicacion.setSize(1000, 600);
-//		aplicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		aplicacion.armarApp();
-//		aplicacion.setTitle("Gestor Camiones");
-//		aplicacion.setVisible(true);
 
 		// TODO Auto-generated method stub
-/*		System.out.println("testeando");
+		System.out.println("testeando");
 		
 		
 		SessionFactory factory = new Configuration()
 				.configure("hibernate.cfg.xml")
 				.buildSessionFactory();
+		###########Para probar metodo de modificar###########
+		Session session = HibernateUtils.getSessionFactory().openSession();
 		
-		Deporte temp = new Deporte("Hockey");
-		Competencia comp = new Competencia("Compe1", "vale todo pa!");
-		comp.setDeporteDeCompetencia(temp);
-		
-		try {
-			Session session = factory.openSession();
-			session.beginTransaction();
-			session.save(comp); 
-			session.save(temp);
-			session.getTransaction().commit();
-			} finally {
-		
-		}
-		
-		
-		
-		try {
-			Session session = factory.openSession();
-			session.beginTransaction();
-			Competencia comp1 = session.get(Competencia.class, comp.getId());
-			System.out.println(comp1.getDeporteDeCompetencia().getId());
-			session.getTransaction().commit();
-			} finally {
-			factory.close();
-		}*/
-		
-		SessionFactory factory = new Configuration()
-				.configure("hibernate.cfg.xml")
-				.buildSessionFactory();
-		
-		Deporte temp = new Deporte("Boleibol");
+		Deporte temp = new Deporte("PES");
 
 		
 		try {
-			Session session = factory.openSession();
 			session.beginTransaction(); 
 			session.save(temp);
 			session.getTransaction().commit();
-			} finally {
-				factory.close();
-		}
-		
-		System.out.println("probando updatear");
-		
-		try {
-			Session session = factory.openSession();
 			session.beginTransaction(); 
 			temp.setNombre("Baseboll");
 			session.update(temp);
 			session.getTransaction().commit();
-			} finally {
-				factory.close();
+		} finally {
+				session.close();
 		}
+	
+		
+		//###########Para probar metodo de alta Participante###########
+		CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
+		
+		//Esta fallando esto de competenciaDTO
+		CompetenciaDTO competencia = new CompetenciaDTO(7, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+		ParticipanteDTO participante = new ParticipanteDTO("Esteban Echandia", "esteban123@gmail.com");
+		
+		GestorParticipante gestorParticipante = new GestorParticipante();
+		try {
+			gestorParticipante.crearParticipante(participante, competencia);
+			System.out.println("funciono");
+		} catch (Exception e1) {
+			System.out.println("F");
+			e1.printStackTrace();
+		}
+		*/
 		
 		
 		

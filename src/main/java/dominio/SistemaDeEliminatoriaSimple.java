@@ -19,6 +19,8 @@ public class SistemaDeEliminatoriaSimple extends SistemaDeCompetencia {
 		this.modalidad = modalidad;
 	}
 
-	
+	public SistemaDeEliminatoriaSimple() {
+		super();
+	}
 	
 }
