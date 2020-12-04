@@ -25,6 +25,7 @@ public class GestorParticipante {
 		
 		Competencia competencia = gestorCompetencia.obtenerCompetencia(competenciaDto);
 		participante.setCompetencia(competencia);
+
 		
 		gestorCompetencia.agregarParticipante(competencia, participante);
 		

@@ -7,11 +7,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="sistemadeeliminatoriasimple", schema = "tp")
+@Table(name="sistema_de_eliminatoria_simple", schema = "tp")
 public class SistemaDeEliminatoriaSimple extends SistemaDeCompetencia {
 	
 	@Id
-	@JoinColumn(name = "idsistemacompetencia")
+	@JoinColumn(name = "id_sistema_competencia")
 	protected Integer id;
 
 	public SistemaDeEliminatoriaSimple(Modalidad modalidad) {

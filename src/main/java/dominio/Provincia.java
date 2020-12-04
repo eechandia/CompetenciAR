@@ -34,7 +34,7 @@ public class Provincia {
 	private List<Localidad> localidades;
 	
 	@ManyToOne()
-    @JoinColumn(name = "idPais")
+    @JoinColumn(name = "id_pais")
 	private Pais pais;
 	
 	public Provincia() {

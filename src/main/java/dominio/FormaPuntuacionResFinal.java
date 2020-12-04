@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="FormaPuntuacionResFinal", schema = "tp")
+@Table(name="forma_puntuacion_res_final", schema = "tp")
 public class FormaPuntuacionResFinal extends FormaPuntuacion{
 	
 	public FormaPuntuacionResFinal(Modalidad m1) {

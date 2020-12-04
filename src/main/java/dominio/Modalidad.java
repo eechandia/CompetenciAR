@@ -27,7 +27,7 @@ public class Modalidad {
 
 	
 	@OneToOne()
-    @JoinColumn(name = "idCompetencia")
+    @JoinColumn(name = "id_competencia")
 	private Competencia competencia;
 	
 	@OneToOne(mappedBy = "modalidad")

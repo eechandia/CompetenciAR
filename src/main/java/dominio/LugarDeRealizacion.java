@@ -19,7 +19,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="LugarDeRealizacion", schema = "tp")
+@Table(name="lugar_de_realizacion", schema = "tp")
 public class LugarDeRealizacion {
 
 	
@@ -54,7 +54,7 @@ public class LugarDeRealizacion {
 	private List<Deporte> deportes = new ArrayList<Deporte>();
 	
 	@ManyToOne()
-    @JoinColumn(name = "idUsuario")
+    @JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	
 	@OneToMany(mappedBy = "lugarDeRealizacion")

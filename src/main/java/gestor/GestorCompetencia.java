@@ -151,8 +151,8 @@ public class GestorCompetencia {
 	}
 	
 	public void agregarParticipante(Competencia competencia, Participante nuevoParticipante) {
-		competencia.addParticipante(nuevoParticipante);
 		
+		competencia.addParticipante(nuevoParticipante);	
 		competencia.setEstadoCompetencia(Estado.CREADA);
 		
 		Fixture fixture = competencia.getFixture();
@@ -167,6 +167,7 @@ public class GestorCompetencia {
 		//Mensaje de exito
 	
 	}
+	
 
 
 	public List<CompetenciaDTO> obtenerCompetencias(){

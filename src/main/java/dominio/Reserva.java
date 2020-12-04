@@ -26,12 +26,12 @@ public class Reserva  implements Serializable{
 
 	@Id
 	@ManyToOne()
-    @JoinColumn(name = "codigoLugarDeRealizacion")
+    @JoinColumn(name = "codigo_lugar_de_realizacion")
 	private LugarDeRealizacion lugarDeRealizacion;
 	
     @Id
 	@ManyToOne()
-    @JoinColumn(name = "idCompetencia")
+    @JoinColumn(name = "id_competencia")
 	private Competencia competencia;
 	
 	@Column

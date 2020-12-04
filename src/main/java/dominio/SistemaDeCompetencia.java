@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="sistemaCompetencia", schema = "tp")
+@Table(name="sistema_competencia", schema = "tp")
 public abstract class SistemaDeCompetencia {
 	
 	public enum Tipo {
@@ -30,7 +30,7 @@ public abstract class SistemaDeCompetencia {
 	protected Integer id;
 	
 	@OneToOne()
-    @JoinColumn(name = "idModalidad")
+    @JoinColumn(name = "id_modalidad")
 	protected Modalidad modalidad;
 	
 	

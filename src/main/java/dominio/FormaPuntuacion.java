@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name="FormaPuntuacion", schema = "tp")
+@Table(name= "forma_puntuacion", schema = "tp")
 public abstract class FormaPuntuacion {
 	
 	public enum Tipo {
@@ -29,7 +29,7 @@ public abstract class FormaPuntuacion {
 	protected Integer id;
 	
 	@OneToOne()
-    @JoinColumn(name = "idModalidad")
+    @JoinColumn(name = "id_modalidad")
 	protected Modalidad modalidad;
 	
 	

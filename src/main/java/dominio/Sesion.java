@@ -28,13 +28,13 @@ public class Sesion {
 	private Integer id;
 	
 
-	@Column(name="fechabaja")
+	@Column(name="fecha_baja")
 	private LocalDateTime fechaInicio;
 	
-
+	@Column(name="fecha_fin")
 	private LocalDateTime fechaFin;	
 	
 	@ManyToOne()
-    @JoinColumn(name = "idUsuario")
+    @JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 }

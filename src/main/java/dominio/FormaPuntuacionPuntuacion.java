@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 
-@Table(name="FormaPuntuacionPuntuacion", schema = "tp")
+@Table(name="forma_puntuacion_puntuacion", schema = "tp")
 public class FormaPuntuacionPuntuacion extends FormaPuntuacion {
 	
 	@Column

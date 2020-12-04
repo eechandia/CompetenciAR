@@ -12,6 +12,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
+import com.sun.tools.sjavac.server.SysInfo;
+
 import dominio.Competencia;
 import dominio.Deporte;
 import dominio.Fixture;
@@ -96,8 +98,10 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Competencia competenciaObtenida = null;
 		try {	
-			competenciaObtenida = (Competencia) session.load(Competencia.class, competencia.getId());
-			Hibernate.initialize(competenciaObtenida);
+			session.beginTransaction();
+			competenciaObtenida = (Competencia) session.get(Competencia.class, competencia.getId());
+			System.out.println("Se obtuvo competencia id: "+ competenciaObtenida.getId());
+			session.getTransaction().commit();
 			
 		}catch (Exception e) {
 			e.printStackTrace();
