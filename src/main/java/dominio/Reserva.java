@@ -37,7 +37,7 @@ public class Reserva  implements Serializable{
     @JoinColumn(name = "id_competencia")
 	private Competencia competencia;
 	
-	@Column
+    @Column(name="disponibilidad")
 	private Integer disponibilidad;
 
 	public LugarDeRealizacion getLugarDeRealizacion() {

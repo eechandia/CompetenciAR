@@ -57,6 +57,10 @@ public class LugarDeRealizacion {
 	@OneToMany(mappedBy = "lugarDeRealizacion")
 	private List<EncuentroDeportivo> encuentrosDeportivos;
 	
+	@Column
+	private Integer disponibilidad;
+	
+	
 	public Integer getCodigo() {
 		return codigo;
 	}

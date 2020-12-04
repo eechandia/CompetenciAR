@@ -676,9 +676,12 @@ public class AltaCompetencia extends JPanel {
 					for (Triplet<Integer, String, Integer> reserva: reservas) {
 						reservasDTO.add(new Pair<Integer, Integer>(reserva.getFirst(), reserva.getThird()));
 					}
+					
+					Pair<Integer, String> dep = (Pair<Integer, String>) deporteBox.getSelectedItem();
+					
 					CompetenciaDTO competenciaDTO = new CompetenciaDTO( 
 							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), reservasDTO, 
-							deporteBox.getSelectedItem().toString(), (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
+							dep, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
 					try {
 						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);

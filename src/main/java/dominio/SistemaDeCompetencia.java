@@ -25,7 +25,7 @@ public abstract class SistemaDeCompetencia {
 	
 	
 	@Id
-	@SequenceGenerator(name="sistema-de-competencia-seq",sequenceName="tp.sistemacompetencia_id_seq", initialValue=1, allocationSize=1)
+	@SequenceGenerator(name="sistema-de-competencia-seq",sequenceName="tp.sistema_competencia_id_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="sistema-de-competencia-seq")
 	protected Integer id;
 	

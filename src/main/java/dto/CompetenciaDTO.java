@@ -61,7 +61,7 @@ public class CompetenciaDTO implements Serializable {
 
 	private List<Pair<Integer, Integer>> reservasDisponibles;
 
-	private String deporteDeCompetencia; //ver en gestores, mejor para la pantalla 
+	private Pair<Integer, String> deporteDeCompetencia; //ver en gestores, mejor para la pantalla 
 
 	private Integer puntosSiRivalAusente;
 	
@@ -87,7 +87,7 @@ public class CompetenciaDTO implements Serializable {
 			LocalDate fechaBaja, 
 			Usuario usuarioAsociado, 
 			List<Pair<Integer, Integer>> reservasDisponibles, 
-			String deporteDeCompetencia,
+			Pair<Integer, String> deporteDeCompetencia,
 			Integer puntosSiRivalAusente,
 			Integer cantidadMaxSets,
 			Integer puntosPorPartido,
@@ -121,7 +121,7 @@ public class CompetenciaDTO implements Serializable {
 			FormaPuntuacion.Tipo tipoFormaPuntuacion,
 			String reglamento, 
 			List<Pair<Integer, Integer>> reservasDisponibles,
-			String deporteDeCompetencia,
+			Pair<Integer, String> deporteDeCompetencia,
 			Integer puntosSiRivalAusente,
 			Integer cantidadMaxSets,
 			Integer puntosPorPartido,
@@ -187,8 +187,12 @@ public class CompetenciaDTO implements Serializable {
 		return reservasDisponibles;
 	}
 
-	public String getDeporteDeCompetencia() {
+	public Pair<Integer, String> getDeporteDeCompetencia() {
 		return deporteDeCompetencia;
+	}
+	
+	public Integer getIdDeporteDeCompetencia() {
+		return deporteDeCompetencia.getFirst();
 	}
 
 	public Integer getPuntosSiRivalAusente() {

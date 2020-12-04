@@ -12,7 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import com.sun.tools.sjavac.server.SysInfo;
+
 
 import dominio.Competencia;
 import dominio.Deporte;
