@@ -35,14 +35,11 @@ public class LugarDeRealizacion {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="lugar-de-realizacion-seq")
 	private Integer codigo;
 	
-	@OneToMany(mappedBy = "competencia")
+	@OneToMany(mappedBy = "lugarDeRealizacion")
 	private List<Reserva> reservas;
 	
 	@Column
 	private String nombre;
-	
-	@Column
-	private Integer disponibilidad;
 	
 	@Column
 	private String descripcion;
