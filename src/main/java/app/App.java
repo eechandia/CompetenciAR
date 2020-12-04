@@ -124,6 +124,7 @@ public class App extends JFrame {
 		SessionFactory factory = new Configuration()
 				.configure("hibernate.cfg.xml")
 				.buildSessionFactory();
+				
 		###########Para probar metodo de modificar###########
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		
@@ -142,7 +143,7 @@ public class App extends JFrame {
 				session.close();
 		}
 	
-		*/
+		
 		//###########Para probar metodo de alta Participante###########
 		CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
 		
@@ -163,7 +164,7 @@ public class App extends JFrame {
 			e1.printStackTrace();
 		}
 		
-		
+		*/
 		
 		
 		
