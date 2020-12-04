@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="FormaPuntuacionSets", schema = "tp")
+@Table(name="forma_puntuacion_sets", schema = "tp")
 public class FormaPuntuacionSets extends FormaPuntuacion {
 	@Column
 	private Integer cantidadMaxSets;

@@ -21,21 +21,21 @@ public class Resultado {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="resultado-seq")
 	private Integer id;
 	
-	@Column(name="participante1Presente")
+	@Column(name="participante1_presente")
 	private Boolean participante1Presente;
 	
-	@Column(name="participante2Presente")
+	@Column(name="participante2_presente")
 	private Boolean participante2Presente;
 	
-	@Column(name="participante1Ganador")
+	@Column(name="participante1_ganador")
 	private Boolean participante1Ganador;
 	
-	@Column(name="participante2Ganador")
+	@Column(name="participante2_ganador")
 	private Boolean participante2Ganador;
 	
 
 	@ManyToOne()
-    @JoinColumn(name = "idEncuentroDeportivo")
+    @JoinColumn(name = "id_encuentro_deportivo")
 	private EncuentroDeportivo encuentroAsociado;
 	
 }

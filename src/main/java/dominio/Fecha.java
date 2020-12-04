@@ -24,14 +24,14 @@ public class Fecha {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="fecha-seq")
 	private Integer id;
 
-	@Column(name="numeroFecha")
+	@Column(name="numero_fecha")
 	private Integer numeroFecha;
 	
 	@OneToMany(mappedBy = "fecha")
 	private List<EncuentroDeportivo> encuentros;
 	
 	@ManyToOne()
-    @JoinColumn(name = "idFixture")
+    @JoinColumn(name = "id_fixture")
 	private Fixture fixture;
 	
 	

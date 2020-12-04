@@ -9,20 +9,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="sistemadeliga", schema = "tp")
+@Table(name="sistema_de_liga", schema = "tp")
 public class SistemaDeLiga extends SistemaDeCompetencia {
 
 	@Id
-	@JoinColumn(name = "idsistemacompetencia")
+	@JoinColumn(name = "id_sistema_competencia")
 	protected Integer id;
 	
-	@Column(name="puntosPorPartidoGanado")
+	@Column(name="puntos_por_partido_ganado")
 	private Integer puntosPorPartido;
-	@Column
+	@Column(name="empate_permitido")
 	private Boolean empatePermitido;
-	@Column
+	@Column(name="puntos_por_empate")
 	private Integer puntosPorEmpate;
-	@Column
+	@Column(name="puntos_por_presentarse")
 	private Integer puntosPorPresentarse;
 	
 	public SistemaDeLiga(Modalidad modalidad, Integer puntosPorPartido, Boolean empatePermitido, Integer puntosPorEmpate,

@@ -34,12 +34,14 @@ public class Participante {
 	private String email;
 
 	@ManyToOne()
-    @JoinColumn(name = "idCompetencia")
+    @JoinColumn(name = "id_competencia")
 	private Competencia competencia;
 	
-	@OneToMany(mappedBy = "id")
-	private List<EncuentroDeportivo> encuentrosDeportivos;
+	@OneToMany(mappedBy = "participante1")
+	private List<EncuentroDeportivo> encuentrosDeportivoAsociado1;
 
+	@OneToMany(mappedBy = "participante2")
+	private List<EncuentroDeportivo> encuentrosDeportivoAsociado2;
 
 	public Integer getIdParticipante() {
 		return idParticipante;

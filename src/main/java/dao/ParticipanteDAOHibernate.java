@@ -47,7 +47,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO{
 		
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		try {	
-			String hql = "SELECT nombre FROM Participante p WHERE nombre = :nombre_participante and idCompetencia = :id_competencia";
+			String hql = "SELECT nombre FROM Participante p WHERE nombre = :nombre_participante and id_competencia = :id_competencia";
 			Query query = session.createQuery(hql);
 			query.setParameter("nombre_participante",participante.getNombre());
 			query.setParameter("id_competencia", competencia.getId());

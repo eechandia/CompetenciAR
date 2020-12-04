@@ -19,6 +19,7 @@ import dao.CompetenciaDAOHibernate;
 import dao.ParticipanteDAO;
 import dao.ParticipanteDAOHibernate;
 import dominio.Deporte;
+import dominio.Competencia;
 import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
@@ -141,14 +142,18 @@ public class App extends JFrame {
 				session.close();
 		}
 	
-		
+		*/
 		//###########Para probar metodo de alta Participante###########
 		CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
 		
 		//Esta fallando esto de competenciaDTO
-		CompetenciaDTO competencia = new CompetenciaDTO(7, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		ParticipanteDTO participante = new ParticipanteDTO("Esteban Echandia", "esteban123@gmail.com");
+		GestorCompetencia gestorCompetencia = new GestorCompetencia();
 		
+		
+		CompetenciaDTO competencia= new CompetenciaDTO(7,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+
+		
+		ParticipanteDTO participante = new ParticipanteDTO("Esteban Echandia", "esteban123@gmail.com");
 		GestorParticipante gestorParticipante = new GestorParticipante();
 		try {
 			gestorParticipante.crearParticipante(participante, competencia);
@@ -157,7 +162,7 @@ public class App extends JFrame {
 			System.out.println("F");
 			e1.printStackTrace();
 		}
-		*/
+		
 		
 		
 		

@@ -24,11 +24,11 @@ public class Fixture {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="fixture-seq")
 	private Integer id;
 	
-	@OneToMany(mappedBy = "id")
+	@OneToMany(mappedBy = "fixture")
 	private List<Fecha> fechas;
 	
 	@OneToOne()
-    @JoinColumn(name = "idCompetencia")
+    @JoinColumn(name = "id_competencia")
 	private Competencia competencia;
 	
 	public Fixture() {

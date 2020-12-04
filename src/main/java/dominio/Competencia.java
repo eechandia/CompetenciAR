@@ -3,10 +3,13 @@ package dominio;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,31 +44,31 @@ public class Competencia {
 	@Column(name="estado")
 	private Estado estadoCompetencia;
 
-	@OneToMany(mappedBy = "competencia")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "competencia", cascade = CascadeType.ALL)
 	private List<Participante> participantes;
 	
 	@Column(name="reglamento")
 	private String reglamento;
 	
-	@Column(name="dadadebaja")
+	@Column(name="dada_de_baja")
 	private Boolean dadaDeBaja;
 	
 	
-	@Column(name="fechadebaja")
+	@Column(name="fecha_de_baja")
 	private LocalDate fechaBaja;
 	
 	@OneToOne(mappedBy = "competencia")
 	private Fixture fixture;
 	
 	@ManyToOne()
-    @JoinColumn(name = "idUsuario")
+    @JoinColumn(name = "id_usuario")
 	private Usuario usuarioAsociado;
 	
 	@OneToMany(mappedBy = "competencia")
 	private List<Reserva> reservasDisponibles;
 	
 	@OneToOne 
-	@JoinColumn(name="iddeporte")
+	@JoinColumn(name="id_deporte")
 	private Deporte deporteDeCompetencia;
 	
 	@OneToOne(mappedBy = "competencia")
@@ -207,6 +210,7 @@ public class Competencia {
 	public void setFixture(Fixture fixture) {
 		this.fixture = fixture;
 	}
+	
 	
 	
 		

@@ -30,9 +30,9 @@ public class Deporte {
 
 	@ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
-        name = "deportelugarderealizacion", 
-        joinColumns = { @JoinColumn(name = "idDeporte") }, 
-        inverseJoinColumns = { @JoinColumn(name = "idLugarDeRealizacion") }
+        name = "deporte_lugar_de_realizacion", 
+        joinColumns = { @JoinColumn(name = "id_deporte") }, 
+        inverseJoinColumns = { @JoinColumn(name = "id_lugar_de_realizacion") }
     )
 	private List<LugarDeRealizacion> LugaresDeRealizacion;
 	

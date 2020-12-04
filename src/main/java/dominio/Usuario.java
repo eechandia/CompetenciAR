@@ -35,7 +35,7 @@ public class Usuario {
 	@Column
 	private Integer id;
 	
-	@Column
+	@Column(name="correo_electronico")
 	private String correoElectronico;
 	
 	@Column
@@ -48,7 +48,7 @@ public class Usuario {
 	private String nombre;
 	
 	@Enumerated(EnumType.STRING)
-	@Column
+	@Column(name="tipo_documento")
 	private TipoDoc tipoDocumento;
 	
 	@Column

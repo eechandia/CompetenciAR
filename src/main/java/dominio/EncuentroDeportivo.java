@@ -14,7 +14,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="EncuentroDeportivo", schema = "tp")
+@Table(name="encuentro_deportivo", schema = "tp")
 
 public class EncuentroDeportivo {
 	
@@ -33,15 +33,17 @@ public class EncuentroDeportivo {
 	private Participante participante2;
 	
 	@ManyToOne()
-    @JoinColumn(name = "CodigoLugarDeRealizacion")
+    @JoinColumn(name = "codigo_lugar_de_realizacion")
 	private LugarDeRealizacion lugarDeRealizacion;
 	
+	
+	
 	@OneToOne
-	@JoinColumn(name = "idSiguienteEncuentroGanador")
+	@JoinColumn(name = "id_siguiente_encuentro_ganador")
 	private EncuentroDeportivo siguienteEncuentroGanador;
 	
 	@OneToOne
-	@JoinColumn(name = "idSiguienteEncuentroPerdedor")
+	@JoinColumn(name = "id_siguiente_encuentro_perdedor")
 	private EncuentroDeportivo siguienteEncuentroPerdedor;
 	
 	@OneToOne(mappedBy = "siguienteEncuentroGanador")
@@ -54,10 +56,10 @@ public class EncuentroDeportivo {
 	private List<Resultado> resultados;
 	
 	@ManyToOne()
-    @JoinColumn(name = "idFecha")
+    @JoinColumn(name = "id_fecha")
 	private Fecha fecha;
 	
-	
+
 	
 	public Integer getId() {
 		return id;
