@@ -1,5 +1,7 @@
 package dominio;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -33,6 +36,10 @@ public class Participante {
 	@ManyToOne()
     @JoinColumn(name = "idCompetencia")
 	private Competencia competencia;
+	
+	@OneToMany(mappedBy = "id")
+	private List<EncuentroDeportivo> encuentrosDeportivos;
+
 
 	public Integer getIdParticipante() {
 		return idParticipante;

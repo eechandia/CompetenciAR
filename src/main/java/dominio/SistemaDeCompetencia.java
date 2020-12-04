@@ -32,6 +32,12 @@ public abstract class SistemaDeCompetencia {
 	@OneToOne()
     @JoinColumn(name = "idModalidad")
 	protected Modalidad modalidad;
+	
+	
+
+	public SistemaDeCompetencia() {
+		super();
+	}
 
 	public Integer getId() {
 		return id;

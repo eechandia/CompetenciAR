@@ -33,5 +33,13 @@
         <mapping class="dominio.Reserva"/>
         <mapping class="dominio.Sesion"/>
         <mapping class="dominio.Usuario"/>
+        <mapping class="dominio.Fecha"/>
+        <mapping class="dominio.Fixture"/>
+        <mapping class="dominio.EncuentroDeportivo"/>
+        <mapping class="dominio.SistemaDeCompetencia"/>
+        <mapping class="dominio.SistemaDeEliminatoriaDoble"/>
+        <mapping class="dominio.SistemaDeEliminatoriaSimple"/>
+        <mapping class="dominio.SistemaDeLiga"/>
+        <mapping class="dominio.Resultado"/>
     </session-factory>
 </hibernate-configuration>

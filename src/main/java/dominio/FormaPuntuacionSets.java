@@ -18,4 +18,8 @@ public class FormaPuntuacionSets extends FormaPuntuacion {
 		this.modalidad = m1;
 		this.cantidadMaxSets = cantidadMaxSets;
 	}
+	
+	public FormaPuntuacionSets() {
+		super();
+	}
 }

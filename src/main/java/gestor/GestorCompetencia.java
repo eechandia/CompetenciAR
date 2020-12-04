@@ -132,7 +132,7 @@ public class GestorCompetencia {
 			if (competencia.getFixture() == null) {
 				competencia.setFixture(fixture);
 				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
-				daoCompetencia.update(competencia);
+				daoCompetencia.modificarCompetencia(competencia);
 			}
 			else {
 				//mensaje de confirmacion
@@ -155,15 +155,17 @@ public class GestorCompetencia {
 		
 		competencia.setEstadoCompetencia(Estado.CREADA);
 		
-//		Fixture fixture = competencia.getFixture();
-//		
-//		if(fixture != null) {
-//			competencia.setFixture(null);
-//			daoCompetencia.modificarCompetencia(competencia, fixture);
-//			}
-//		else {
-//			daoCompetencia.modificarCompetencia(competencia);
-//		}
+		Fixture fixture = competencia.getFixture();
+		
+		if(fixture != null) {
+			competencia.setFixture(null);
+			daoCompetencia.modificarCompetencia(competencia, fixture);
+		}
+		
+		daoCompetencia.modificarCompetencia(competencia);
+		
+		//Mensaje de exito
+	
 	}
 
 

@@ -35,6 +35,9 @@ public class SistemaDeLiga extends SistemaDeCompetencia {
 		this.puntosPorPresentarse = puntosPorPresentarse;
 	}
 	
+	public SistemaDeLiga() {
+		super();
+	}
 	
 	
 }

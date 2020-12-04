@@ -17,4 +17,7 @@ public class FormaPuntuacionResFinal extends FormaPuntuacion{
 	
 	}
 
+	public FormaPuntuacionResFinal() {
+		super();
+	}
 }

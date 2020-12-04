@@ -40,7 +40,9 @@ public class Modalidad {
 		super();
 		this.competencia = competencia;
 	}
-
+	public Modalidad() {
+		super();
+	}
 
 	public void setSistemaCompetencia(SistemaDeCompetencia sistemaCompetencia) {
 		this.sistemaCompetencia = sistemaCompetencia;

@@ -31,6 +31,12 @@ public abstract class FormaPuntuacion {
 	@OneToOne()
     @JoinColumn(name = "idModalidad")
 	protected Modalidad modalidad;
+	
+	
+
+	public FormaPuntuacion() {
+		super();
+	}
 
 	public Integer getId() {
 		return id;
