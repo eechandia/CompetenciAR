@@ -127,15 +127,17 @@ public class ListarCompetencias extends JPanel {
 		filtrosPanel.setMinimumSize(new Dimension(1200, 75));
 		filtrosPanel.setBackground(Color.WHITE);
 		
-		final JComboBox<String> deporteBox = new JComboBox<String>(); 
+		final JComboBox<Pair<Integer,String>> deporteBox = new JComboBox<Pair<Integer,String>>(); 
 		//Pedir al gestor de deporte
-		deporteBox.addItem("Deporte");
-		deporteBox.addItem("Hello");
-		deporteBox.addItem("AHello");
-		final List<String> deportes = gestorDeporte.getDeportesInterfaz();
-		for(String dep: deportes) {
+		Pair<Integer,String> vacio = new Pair<Integer, String>();
+		vacio.setFirst(0);
+		vacio.setSecond(" ");
+		deporteBox.addItem(vacio);
+		final List<Pair<Integer,String>> deportes = gestorDeporte.getDeportesInterfaz();
+		for(Pair<Integer,String> dep: deportes) {
 			deporteBox.addItem(dep);
 		}
+		
 		deporteBox.setMinimumSize(new Dimension(200, 30));
 		deporteBox.setMaximumSize(new Dimension(200, 30));
 		deporteBox.setPreferredSize(new Dimension(200, 30));
