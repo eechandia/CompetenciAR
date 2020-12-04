@@ -23,6 +23,9 @@ public class Reserva  implements Serializable{
 		this.lugarDeRealizacion=lugarDeRealizacion;
 		this.disponibilidad=disponibilidad;
 	}
+	public Reserva() {
+		super();
+	}
 
 	@Id
 	@ManyToOne()
