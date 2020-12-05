@@ -13,8 +13,8 @@ import javax.persistence.Table;
 public class SistemaDeLiga extends SistemaDeCompetencia {
 
 	@Id
-	@JoinColumn(name = "id_sistema_competencia")
 	@Column(name="id_sistema_competencia")
+	@JoinColumn(name = "id_sistema_competencia")
 	protected Integer id;
 	
 	@Column(name="puntos_por_partido_ganado")
