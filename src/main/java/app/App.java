@@ -64,7 +64,7 @@ public class App extends JFrame {
 	
 	public void armarApp() {
 		this.setBackground(Color.WHITE);
-		this.setTitle("Trabajo Pr·ctico 2020 - DiseÒo de Sistemas");
+		this.setTitle("Trabajo Pr√°ctico 2020 - Dise√±o de Sistemas");
 		this.setMinimumSize(new Dimension(1280, 720));
 		this.setMaximumSize(new Dimension(1280, 720));
 		this.setPreferredSize(new Dimension(1280, 720));
@@ -161,34 +161,9 @@ public class App extends JFrame {
 		SessionFactory factory = new Configuration()
 				.configure("hibernate.cfg.xml")
 				.buildSessionFactory();
+
 		
-		Deporte temp = new Deporte("Hockey");
-		Competencia comp = new Competencia("Compe1", "vale todo pa!");
-		comp.setDeporteDeCompetencia(temp);
-		
-		try {
-			Session session = factory.openSession();
-			session.beginTransaction();
-			session.save(comp); 
-			session.save(temp);
-			session.getTransaction().commit();
-			} finally {
-		
-		}
-		
-		
-		
-		try {
-			Session session = factory.openSession();
-			session.beginTransaction();
-			Competencia comp1 = session.get(Competencia.class, comp.getId());
-			System.out.println(comp1.getDeporteDeCompetencia().getId());
-			session.getTransaction().commit();
-			} finally {
-			factory.close();
-		}*/
-		
-		
+		*/
 	
 	
 		
