@@ -46,7 +46,7 @@ ENUM('LIGA','ELIMIN_SIMPLE','ELIMIN_DOBLE_GANADORES','ELIMIN_DOBLE_PERDEDORES');
 			correo_electronico varchar(150),
 			contraseña varchar(50),
 			nombre varchar(30),
-			apellido boolean,
+			apellido varchar(30)
 			tipo_documento TipoDoc,
 			documento varchar(30),
 			id_localidad integer,
@@ -143,6 +143,7 @@ ENUM('LIGA','ELIMIN_SIMPLE','ELIMIN_DOBLE_GANADORES','ELIMIN_DOBLE_PERDEDORES');
 			codigo SERIAL,
 			nombre varchar(100),
 			descripcion varchar(200),
+			disponibilidad integer,
 			activo boolean,
 			id_usuario integer,
 
