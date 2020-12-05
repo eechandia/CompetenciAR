@@ -23,6 +23,8 @@ import dominio.Competencia;
 import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
+import exceptions.EstadoCompetenciaException;
+import exceptions.ReservasInsuficientesException;
 import gestor.*;
 import gui.*;
 import utils.HibernateUtils;
@@ -150,22 +152,34 @@ public class App extends JFrame {
 		GestorCompetencia gestorCompetencia = new GestorCompetencia();
 		
 		
-		CompetenciaDTO competencia= new CompetenciaDTO(7,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+//		CompetenciaDTO competencia= new CompetenciaDTO(20,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
 
 		
-		ParticipanteDTO participante = new ParticipanteDTO("Esteban Echandia", "esteban123@gmail.com");
-		GestorParticipante gestorParticipante = new GestorParticipante();
-		try {
-			gestorParticipante.crearParticipante(participante, competencia);
-			System.out.println("funciono");
-		} catch (Exception e1) {
-			System.out.println("F");
-			e1.printStackTrace();
-		}
+////		ParticipanteDTO participante = new ParticipanteDTO("Esteban Echandia", "esteban123@gmail.com");
+////		GestorParticipante gestorParticipante = new GestorParticipante();
+////		try {
+////			gestorParticipante.crearParticipante(participante, competencia);
+////			System.out.println("funciono");
+////		} catch (Exception e1) {
+////			System.out.println("F");
+////			e1.printStackTrace();
+////		}
+////		
+//		
 		
 		
-		
-		
+//		try {
+//			gestorCompetencia.generarFixture(competencia);
+//		} catch (EstadoCompetenciaException e1) {
+//			System.out.println(e1.getMessage());
+//		
+//		} catch (ReservasInsuficientesException e1) {
+//			System.out.println(e1.getMessage());
+//			
+//		}
+//		
+//		
+//		
 		
 		
 		SwingUtilities.invokeLater(new Runnable() {

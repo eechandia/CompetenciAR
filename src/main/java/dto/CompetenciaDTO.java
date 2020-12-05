@@ -143,6 +143,10 @@ public class CompetenciaDTO implements Serializable {
 		this.puntosPorPresentarse = puntosPorPresentarse;
 	}
 
+	public CompetenciaDTO() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -219,5 +223,79 @@ public class CompetenciaDTO implements Serializable {
 		return puntosPorPresentarse;
 	}
 
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public void setEstadoCompetencia(Competencia.Estado estadoCompetencia) {
+		this.estadoCompetencia = estadoCompetencia;
+	}
+
+	public void setTipoSistemaDeCompetencia(SistemaDeCompetencia.Tipo tipoSistemaDeCompetencia) {
+		this.tipoSistemaDeCompetencia = tipoSistemaDeCompetencia;
+	}
+
+	public void setTipoFormaPuntuacion(FormaPuntuacion.Tipo tipoFormaPuntuacion) {
+		this.tipoFormaPuntuacion = tipoFormaPuntuacion;
+	}
+
+	public void setParticipantes(List<Participante> participantes) {
+		this.participantes = participantes;
+	}
+
+	public void setReglamento(String reglamento) {
+		this.reglamento = reglamento;
+	}
+
+	public void setDadaDeBaja(Boolean dadaDeBaja) {
+		this.dadaDeBaja = dadaDeBaja;
+	}
+
+	public void setFechaBaja(LocalDate fechaBaja) {
+		this.fechaBaja = fechaBaja;
+	}
+
+	public void setUsuarioAsociado(Usuario usuarioAsociado) {
+		this.usuarioAsociado = usuarioAsociado;
+	}
+
+	public void setReservasDisponibles(List<Pair<Integer, Integer>> reservasDisponibles) {
+		this.reservasDisponibles = reservasDisponibles;
+	}
+
+	public void setDeporteDeCompetencia(Pair<Integer, String> deporteDeCompetencia) {
+		this.deporteDeCompetencia = deporteDeCompetencia;
+	}
+
+	public void setPuntosSiRivalAusente(Integer puntosSiRivalAusente) {
+		this.puntosSiRivalAusente = puntosSiRivalAusente;
+	}
+
+	public void setCantidadMaxSets(Integer cantidadMaxSets) {
+		this.cantidadMaxSets = cantidadMaxSets;
+	}
+
+	public void setPuntosPorPartido(Integer puntosPorPartido) {
+		this.puntosPorPartido = puntosPorPartido;
+	}
+
+	public void setEmpatePermitido(Boolean empatePermitido) {
+		this.empatePermitido = empatePermitido;
+	}
+
+	public void setPuntosPorEmpate(Integer puntosPorEmpate) {
+		this.puntosPorEmpate = puntosPorEmpate;
+	}
+
+	public void setPuntosPorPresentarse(Integer puntosPorPresentarse) {
+		this.puntosPorPresentarse = puntosPorPresentarse;
+	}
+
+	
+	
 
 }

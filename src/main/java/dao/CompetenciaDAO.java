@@ -20,6 +20,6 @@ public interface CompetenciaDAO {
 	
 	public abstract Boolean verificarSiExiste(String nombre);
 	
-	public abstract Competencia recuperarCompetencia();
+	public abstract Competencia recuperarCompetencia(CompetenciaDTO competencia);
 	
 }

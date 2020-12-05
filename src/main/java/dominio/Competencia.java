@@ -21,6 +21,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.Type;
 
 import dto.CompetenciaDTO;
@@ -214,9 +216,7 @@ public class Competencia {
 	public void setFixture(Fixture fixture) {
 		this.fixture = fixture;
 	}
-	
-	
-	
+
 		
 }
 

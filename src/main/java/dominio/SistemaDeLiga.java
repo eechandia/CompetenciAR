@@ -6,17 +6,19 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "id")
 @Table(name="sistema_de_liga", schema = "tp")
 public class SistemaDeLiga extends SistemaDeCompetencia {
 
-	@Id
-	@Column(name="id_sistema_competencia")
-	@JoinColumn(name = "id_sistema_competencia")
-	protected Integer id;
-	
+//	@Id
+//	@Column(name="id_sistema_competencia")
+//	@JoinColumn(name = "id_sistema_competencia")
+//	protected Integer id;
+//	
 	@Column(name="puntos_por_partido_ganado")
 	private Integer puntosPorPartido;
 	@Column(name="empate_permitido")

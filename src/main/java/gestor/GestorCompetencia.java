@@ -109,8 +109,8 @@ public class GestorCompetencia {
   }
 
 	public void generarFixture(CompetenciaDTO compDto) throws EstadoCompetenciaException, ReservasInsuficientesException {
-		Competencia competencia = daoCompetencia.recuperarCompetencia();
-		
+		Competencia competencia = daoCompetencia.recuperarCompetencia(compDto);
+		System.out.println(competencia);
 		if(competencia.getEstadoCompetencia() != Estado.CREADA || competencia.getEstadoCompetencia() != Estado.PLANIFICADA) {
 			throw new EstadoCompetenciaException();
 		}

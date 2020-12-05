@@ -20,6 +20,7 @@ import dominio.Fixture;
 import dominio.Reserva;
 import dto.CompetenciaDTO;
 import utils.HibernateUtils;
+import utils.Pair;
 
 public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	
@@ -94,21 +95,38 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			session.close();
 		}
 	}
-	public Competencia obtenerCompetencia(CompetenciaDTO competencia) {
+	public Competencia recuperarCompetencia(CompetenciaDTO competencia) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Competencia competenciaObtenida = null;
 		try {	
-			session.beginTransaction();
-			competenciaObtenida = (Competencia) session.get(Competencia.class, competencia.getId());
-			System.out.println("Se obtuvo competencia id: "+ competenciaObtenida.getId());
-			session.getTransaction().commit();
+			
+			CriteriaBuilder builder = session.getCriteriaBuilder();
+		    CriteriaQuery<Competencia> criteria = builder.createQuery(Competencia.class);
+		    Root<Competencia> root = criteria.from(Competencia.class);
+		    criteria.select(root).where(builder.equal(root.get("id"), competencia.getId()));
+		    competenciaObtenida = session.createQuery(criteria).getSingleResult();
+
+			
+			
+//			CompetenciaDTO competenciaDTO= new CompetenciaDTO();
+//			session.beginTransaction();
+//			competenciaObtenida = session.byId(Competencia.class).getReference(competencia.getId());
+//			System.out.println("Se obtuvo competencia id: "+ competenciaObtenida.getId());
+////			competenciaDTO.setId(competenciaObtenida.getId());
+////			competenciaDTO.setNombre(competenciaObtenida.getNombre());
+////			competenciaDTO.setDeporteDeCompetencia(new Pair<Integer,String>(competenciaObtenida.getDeporteDeCompetencia().getId(),competenciaObtenida.getDeporteDeCompetencia().getNombre()));
+//			session.flush();
+//			session.getTransaction().commit();
+
 			
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally {
-			if(session!=null && session.isOpen())
-			session.close();
+			if(session!=null && session.isOpen()) {
+	
+				session.close();
+			}
 		}
 		return competenciaObtenida;
 	}
@@ -152,11 +170,9 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	}
 
 
-	@Override
-	public Competencia recuperarCompetencia() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
+
 
 
 
