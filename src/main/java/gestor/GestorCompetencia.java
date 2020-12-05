@@ -36,7 +36,7 @@ public class GestorCompetencia {
 	
 	public void darDeAltaCompetencia(CompetenciaDTO competenciaDto) throws Exception{
 		
-		Usuario usuario = new Usuario(0, "ChecoPerez@gmail.com", "hunter12", "Perez", "Checo");
+		Usuario usuario = new Usuario(1, "ChecoPerez@gmail.com", "hunter12", "Perez", "Checo");
 		Competencia competencia = new Competencia();
 		
 		if(daoCompetencia.verificarSiExiste(competenciaDto.getNombre())){
@@ -46,7 +46,7 @@ public class GestorCompetencia {
 			
 			competencia.inicializarCompetencia(competenciaDto);
 			competencia.setUsuarioAsociado(usuario);
-			Deporte deporte = daoDeporte.recuperarDeporte(competenciaDto.getDeporteDeCompetencia()); //cambiar deporte
+			Deporte deporte = daoDeporte.recuperarDeporte(competenciaDto.getIdDeporteDeCompetencia()); //cambiar deporte
 			competencia.setDeporteDeCompetencia(deporte);
 			
 			
@@ -109,8 +109,8 @@ public class GestorCompetencia {
   }
 
 	public void generarFixture(CompetenciaDTO compDto) throws EstadoCompetenciaException, ReservasInsuficientesException {
-		Competencia competencia = daoCompetencia.recuperarCompetencia();
-		
+		Competencia competencia = daoCompetencia.recuperarCompetencia(compDto);
+		System.out.println(competencia);
 		if(competencia.getEstadoCompetencia() != Estado.CREADA || competencia.getEstadoCompetencia() != Estado.PLANIFICADA) {
 			throw new EstadoCompetenciaException();
 		}
@@ -179,7 +179,7 @@ public class GestorCompetencia {
 	}
 	
 	public Competencia obtenerCompetencia(CompetenciaDTO competencia) {
-		return daoCompetencia.obtenerCompetencia( competencia);
+		return daoCompetencia.recuperarCompetencia( competencia);
 	
 	}
 	

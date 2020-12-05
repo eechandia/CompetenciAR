@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,12 +27,12 @@ public class Participante {
 	@Id
 	@SequenceGenerator(name="participante-seq",sequenceName="tp.participante_id_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="participante-seq")
-	private Integer idParticipante;
+	private Integer id;
 	
 	@Column
 	private String nombre;
 	@Column
-	private String email;
+	private String correo_electronico;
 
 	@ManyToOne()
     @JoinColumn(name = "id_competencia")
@@ -44,7 +45,7 @@ public class Participante {
 	private List<EncuentroDeportivo> encuentrosDeportivoAsociado2;
 
 	public Integer getIdParticipante() {
-		return idParticipante;
+		return id;
 	}
 
 	public String getNombre() {
@@ -52,7 +53,7 @@ public class Participante {
 	}
 
 	public String getEmail() {
-		return email;
+		return correo_electronico;
 	}
 
 	public Competencia getCompetencia() {
@@ -61,7 +62,7 @@ public class Participante {
 	
 	public void inicializarParticipante(ParticipanteDTO participanteDto) {
 		this.nombre = participanteDto.getNombre();
-		this.email = participanteDto.getEmail();
+		this.correo_electronico = participanteDto.getEmail();
 	}
 
 	public void setCompetencia(Competencia competencia) {

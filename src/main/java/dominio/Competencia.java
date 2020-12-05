@@ -21,12 +21,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.FetchMode;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.Type;
+
 import dto.CompetenciaDTO;
 
 @Entity
 @Table(name="competencia", schema = "tp")
  
 public class Competencia {
+
 
 	public enum Estado {
 		CREADA, PLANIFICADA, EN_DISPUTA, FINALIZADA, CANCELADA
@@ -40,8 +45,9 @@ public class Competencia {
 	@Column(name="nombre")
 	private String nombre;
 	
-	@Enumerated(EnumType.STRING)
+	
 	@Column(name="estado")
+	@Enumerated(EnumType.STRING)
 	private Estado estadoCompetencia;
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "competencia", cascade = CascadeType.ALL)
@@ -210,9 +216,7 @@ public class Competencia {
 	public void setFixture(Fixture fixture) {
 		this.fixture = fixture;
 	}
-	
-	
-	
+
 		
 }
 

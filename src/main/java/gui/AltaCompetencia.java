@@ -257,13 +257,18 @@ public class AltaCompetencia extends JPanel {
 		nombreTexto.setMinimumSize(new Dimension(200, 30));
 		nombreTexto.setMaximumSize(new Dimension(200, 30));
 		nombreTexto.setPreferredSize(new Dimension(200, 30));
-		final JComboBox<String> deporteBox = new JComboBox<String>(); 
+		
+		final JComboBox<Pair<Integer,String>> deporteBox = new JComboBox<Pair<Integer,String>>(); 
 		//Pedir al gestor de deporte
-		deporteBox.addItem(" ");
-		final List<String> deportes = gestorDeporte.getDeportesInterfaz();
-		for(String dep: deportes) {
+		Pair<Integer,String> vacio = new Pair<Integer, String>();
+		vacio.setFirst(0);
+		vacio.setSecond(" ");
+		deporteBox.addItem(vacio);
+		final List<Pair<Integer,String>> deportes = gestorDeporte.getDeportesInterfaz();
+		for(Pair<Integer,String> dep: deportes) {
 			deporteBox.addItem(dep);
 		}
+		
 		deporteBox.setMinimumSize(new Dimension(200, 30));
 		deporteBox.setMaximumSize(new Dimension(200, 30));
 		deporteBox.setPreferredSize(new Dimension(200, 30));
@@ -671,9 +676,12 @@ public class AltaCompetencia extends JPanel {
 					for (Triplet<Integer, String, Integer> reserva: reservas) {
 						reservasDTO.add(new Pair<Integer, Integer>(reserva.getFirst(), reserva.getThird()));
 					}
+					
+					Pair<Integer, String> dep = (Pair<Integer, String>) deporteBox.getSelectedItem();
+					
 					CompetenciaDTO competenciaDTO = new CompetenciaDTO( 
 							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), reservasDTO, 
-							deporteBox.getSelectedItem().toString(), (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
+							dep, (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
 					try {
 						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);

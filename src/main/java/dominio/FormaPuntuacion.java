@@ -24,7 +24,7 @@ public abstract class FormaPuntuacion {
 	}
 	
 	@Id
-	@SequenceGenerator(name="forma-de-puntuacion-seq",sequenceName="tp.formapuntuacion_id_seq", initialValue=1, allocationSize=1)
+	@SequenceGenerator(name="forma-de-puntuacion-seq",sequenceName="tp.forma_puntuacion_id_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="forma-de-puntuacion-seq")
 	protected Integer id;
 	

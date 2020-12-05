@@ -28,7 +28,7 @@ public class Localidad {
 	private Integer id;
 	
 	@Column 
-	private String[] codigoPostal;
+	private String codigo_postal;
 	
 	@Column 
 	private String nombre;

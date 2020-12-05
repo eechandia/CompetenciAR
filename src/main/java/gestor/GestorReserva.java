@@ -13,8 +13,15 @@ public class GestorReserva {
 
 		List<LugarDeRealizacion> lugares = convertirReservasAListaDeLugares(reservas);
 		
-		if((participantes.size() - 1 ) > lugares.size()) {
-			return false;
+		if ((participantes.size() % 2) == 0) {
+			if(((participantes.size()-1) * (participantes.size()/2)) > lugares.size()) {
+				return false;
+			}
+		}
+		else {
+			if ((participantes.size() * ((participantes.size()-1)/2)) > lugares.size()) {
+				return false;
+			}
 		}
 		return true;
 	}

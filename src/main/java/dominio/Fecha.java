@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class Fecha {
 	@Id
 	@SequenceGenerator(name="fecha-seq",sequenceName="tp.fecha_id_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="fecha-seq")
-	private Integer id;
+	private Integer id_fecha;
 
 	@Column(name="numero_fecha")
 	private Integer numeroFecha;
@@ -40,10 +41,10 @@ public class Fecha {
 	}
 	
 	public Integer getId() {
-		return id;
+		return id_fecha;
 	}
 	public void setId(Integer id) {
-		this.id = id;
+		this.id_fecha = id;
 	}
 	public Integer getNumeroFecha() {
 		return numeroFecha;

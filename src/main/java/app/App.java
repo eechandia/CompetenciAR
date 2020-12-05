@@ -18,14 +18,12 @@ import org.hibernate.cfg.Configuration;
 import dao.CompetenciaDAOHibernate;
 import dao.ParticipanteDAO;
 import dao.ParticipanteDAOHibernate;
-import dominio.Deporte;
-import dominio.Competencia;
-import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
+import exceptions.EstadoCompetenciaException;
+import exceptions.ReservasInsuficientesException;
 import gestor.*;
 import gui.*;
-import utils.HibernateUtils;
 
 @SuppressWarnings("serial")
 public class App extends JFrame {
@@ -66,7 +64,7 @@ public class App extends JFrame {
 	
 	public void armarApp() {
 		this.setBackground(Color.WHITE);
-		this.setTitle("Trabajo Pr·ctico 2020 - DiseÒo de Sistemas");
+		this.setTitle("Trabajo Pr√°ctico 2020 - Dise√±o de Sistemas");
 		this.setMinimumSize(new Dimension(1280, 720));
 		this.setMaximumSize(new Dimension(1280, 720));
 		this.setPreferredSize(new Dimension(1280, 720));
@@ -76,6 +74,39 @@ public class App extends JFrame {
 		//Inicializar gestores
 		gestorDeporte = new GestorDeporte();
 		gestorCompetencia = new GestorCompetencia();
+		
+		CompetenciaDTO compDTO = new CompetenciaDTO(30, null, null, null, null, null, null, null, null, null, null, null, null,null, null, null, null, null);
+		try {
+			gestorCompetencia.generarFixture(compDTO);
+		} catch (EstadoCompetenciaException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		} catch (ReservasInsuficientesException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+		
+		//###########Para probar metodo de alta Participante###########
+				CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
+				
+				//Esta fallando esto de competenciaDTO
+				GestorCompetencia gestorCompetencia = new GestorCompetencia();
+				
+				
+				CompetenciaDTO competencia= new CompetenciaDTO(30,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+
+				
+				ParticipanteDTO participante = new ParticipanteDTO("Esteban Echandia", "esteban123@gmail.com");
+				GestorParticipante gestorParticipante = new GestorParticipante();
+				try {
+					gestorParticipante.crearParticipante(participante, competencia);
+					System.out.println("funciono");
+				} catch (Exception e1) {
+					System.out.println("F");
+					e1.printStackTrace();
+				}
+		
+		
 		
 		//Inicializar paneles y CardLayout
 		tpPanel = new JPanel();
@@ -108,65 +139,33 @@ public class App extends JFrame {
 	
 	public static void main(String[] args) {
 		
-		/*
-		###########Para probar metodo de participanteDAO###########
 		
-		ParticipanteDTO participante = new ParticipanteDTO("esteban", "esteban@gmail.com");
-		CompetenciaDTO competencia = new CompetenciaDTO(5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-		ParticipanteDAO participanteDAO = new ParticipanteDAOHibernate();
-		System.out.println(participanteDAO.nombreOEmailYaExiste(participante, competencia));
+//		Para probar metodo de participanteDAO
+//		ParticipanteDTO participante = new ParticipanteDTO("esteban", "esteban@gmail.com");
+//		CompetenciaDTO competencia = new CompetenciaDTO(5, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+//		ParticipanteDAO participanteDAO = new ParticipanteDAOHibernate();
+//		System.out.println(participanteDAO.nombreOEmailYaExiste(participante, competencia));
 
+		
+//		App aplicacion = new App();
+//		aplicacion.setSize(1000, 600);
+//		aplicacion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		aplicacion.armarApp();
+//		aplicacion.setTitle("Gestor Camiones");
+//		aplicacion.setVisible(true);
 
 		// TODO Auto-generated method stub
-		System.out.println("testeando");
+/*		System.out.println("testeando");
 		
 		
 		SessionFactory factory = new Configuration()
 				.configure("hibernate.cfg.xml")
 				.buildSessionFactory();
-				
-		###########Para probar metodo de modificar###########
-		Session session = HibernateUtils.getSessionFactory().openSession();
-		
-		Deporte temp = new Deporte("PES");
 
-		
-		try {
-			session.beginTransaction(); 
-			session.save(temp);
-			session.getTransaction().commit();
-			session.beginTransaction(); 
-			temp.setNombre("Baseboll");
-			session.update(temp);
-			session.getTransaction().commit();
-		} finally {
-				session.close();
-		}
-	
-		
-		//###########Para probar metodo de alta Participante###########
-		CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
-		
-		//Esta fallando esto de competenciaDTO
-		GestorCompetencia gestorCompetencia = new GestorCompetencia();
-		
-		
-		CompetenciaDTO competencia= new CompetenciaDTO(7,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
-
-		
-		ParticipanteDTO participante = new ParticipanteDTO("Esteban Echandia", "esteban123@gmail.com");
-		GestorParticipante gestorParticipante = new GestorParticipante();
-		try {
-			gestorParticipante.crearParticipante(participante, competencia);
-			System.out.println("funciono");
-		} catch (Exception e1) {
-			System.out.println("F");
-			e1.printStackTrace();
-		}
 		
 		*/
-		
-		
+	
+	
 		
 		
 		SwingUtilities.invokeLater(new Runnable() {
@@ -197,6 +196,9 @@ public class App extends JFrame {
 							try {
 								App ventana = new App();
 								ventana.setVisible(true);
+								
+								
+								
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -206,4 +208,3 @@ public class App extends JFrame {
 		});
 	}
 }
-

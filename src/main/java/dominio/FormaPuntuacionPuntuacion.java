@@ -11,12 +11,12 @@ import javax.persistence.Table;
 public class FormaPuntuacionPuntuacion extends FormaPuntuacion {
 	
 	@Column
-	private Integer puntosSiRivalAusente;
+	private Integer puntos_si_rival_ausente;
 
 	public FormaPuntuacionPuntuacion(Modalidad m1, Integer puntosSiRivalAusente) {
 		super();
 		this.modalidad = m1;
-		this.puntosSiRivalAusente = puntosSiRivalAusente;
+		this.puntos_si_rival_ausente = puntosSiRivalAusente;
 	}
 	
 	public FormaPuntuacionPuntuacion() {

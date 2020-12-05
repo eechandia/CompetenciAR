@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -54,8 +55,12 @@ public class LugarDeRealizacion {
     @JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	
-	@OneToMany(mappedBy = "lugarDeRealizacion")
+	@OneToMany(mappedBy = "lugarDeRealizacion", fetch = FetchType.EAGER)
 	private List<EncuentroDeportivo> encuentrosDeportivos;
+	
+	@Column
+	private Integer disponibilidad;
+	
 	
 	public Integer getCodigo() {
 		return codigo;

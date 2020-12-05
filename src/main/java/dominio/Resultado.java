@@ -33,6 +33,7 @@ public class Resultado {
 	@Column(name="participante2_ganador")
 	private Boolean participante2Ganador;
 	
+
 	@ManyToOne()
     @JoinColumn(name = "id_encuentro_deportivo")
 	private EncuentroDeportivo encuentroAsociado;

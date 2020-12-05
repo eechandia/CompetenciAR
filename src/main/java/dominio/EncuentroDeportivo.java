@@ -3,6 +3,7 @@ package dominio;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ public class EncuentroDeportivo {
 	@Id
 	@SequenceGenerator(name="encuentrodeportivo-seq",sequenceName="tp.encuentrodeportivo_id_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="encuentrodeportivo-seq")
-	private Integer id;
+	private Integer id_encuentro_deportivo;
 	
 	@ManyToOne()
     @JoinColumn(name = "participante1")
@@ -62,10 +63,10 @@ public class EncuentroDeportivo {
 
 	
 	public Integer getId() {
-		return id;
+		return id_encuentro_deportivo;
 	}
 	public void setId(Integer id) {
-		this.id = id;
+		this.id_encuentro_deportivo = id;
 	}
 	public Participante getParticipante1() {
 		return participante1;
