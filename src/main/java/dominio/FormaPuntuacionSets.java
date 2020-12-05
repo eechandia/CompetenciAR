@@ -11,12 +11,12 @@ import javax.persistence.Table;
 @Table(name="forma_puntuacion_sets", schema = "tp")
 public class FormaPuntuacionSets extends FormaPuntuacion {
 	@Column
-	private Integer cantidadMaxSets;
+	private Integer cantidad_max_sets;
 	
 	public FormaPuntuacionSets(Modalidad m1, Integer cantidadMaxSets) {
 		super();
 		this.modalidad = m1;
-		this.cantidadMaxSets = cantidadMaxSets;
+		this.cantidad_max_sets = cantidadMaxSets;
 	}
 	
 	public FormaPuntuacionSets() {

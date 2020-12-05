@@ -179,7 +179,7 @@ public class GestorCompetencia {
 	}
 	
 	public Competencia obtenerCompetencia(CompetenciaDTO competencia) {
-		return daoCompetencia.obtenerCompetencia( competencia);
+		return daoCompetencia.recuperarCompetencia( competencia);
 	
 	}
 	
