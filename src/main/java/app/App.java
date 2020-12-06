@@ -4,7 +4,13 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -57,14 +63,18 @@ public class App extends JFrame {
 //		
 //	}
 	
-	public void armarApp() {
+	public void armarApp(){
 		this.setBackground(Color.WHITE);
-		this.setTitle("Trabajo Práctico 2020 - Diseño de Sistemas");
+		this.setTitle("Trabajo Practico 2020 - Disenio de Sistemas");
 		this.setMinimumSize(new Dimension(1280, 720));
 		this.setMaximumSize(new Dimension(1280, 720));
 		this.setPreferredSize(new Dimension(1280, 720));
 		this.setBounds(43, 43, 1280, 720);
+		this.setIconImage(new ImageIcon("src/main/resources/icono.JPG").getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		
+		
 		
 		//Inicializar gestores
 		gestorCompetencia = new GestorCompetencia();
@@ -81,20 +91,20 @@ public class App extends JFrame {
 //		}
 		
 		//###########Para probar metodo de alta Participante###########
-				CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
-				GestorCompetencia gestorCompetencia = new GestorCompetencia();
-				
-				CompetenciaDTO competencia= new CompetenciaDTO(30,null,Estado.CREADA,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
-				
-				ParticipanteDTO participante = new ParticipanteDTO("Messi", "Messi");
-				GestorParticipante gestorParticipante = new GestorParticipante();
-				try {
-					gestorParticipante.crearParticipante(participante, competencia);
-					System.out.println("funciono");
-				} catch (Exception e1) {
-					System.out.println("F");
-					e1.printStackTrace();
-				}
+//				CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
+//				GestorCompetencia gestorCompetencia = new GestorCompetencia();
+//				
+//				CompetenciaDTO competencia= new CompetenciaDTO(30,null,Estado.CREADA,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+//				
+//				ParticipanteDTO participante = new ParticipanteDTO("Messi", "Messi");
+//				GestorParticipante gestorParticipante = new GestorParticipante();
+//				try {
+//					gestorParticipante.crearParticipante(participante, competencia);
+//					System.out.println("funciono");
+//				} catch (Exception e1) {
+//					System.out.println("F");
+//					e1.printStackTrace();
+//				}
 		
 		
 		

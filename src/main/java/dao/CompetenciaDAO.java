@@ -8,6 +8,7 @@ import dominio.Competencia;
 import dominio.FormaPuntuacion;
 import dominio.Reserva;
 import dto.CompetenciaDTO;
+import utils.Filtro;
 
 public interface CompetenciaDAO {
 	
@@ -21,4 +22,7 @@ public interface CompetenciaDAO {
 	
 	public abstract Competencia recuperarCompetencia(CompetenciaDTO competencia);
 	
+	public abstract List<Competencia> obtenerCompetencias(Filtro filtro);
+
+	public abstract List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario) throws Exception;
 }
