@@ -30,6 +30,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
+import dto.EncuentroDTO;
 import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
 import exceptions.ReservasInsuficientesException;
@@ -48,17 +49,19 @@ public class VerCompetencia extends JPanel {
 	private JPanel tpPanel;
 	private String cardAnterior;
 	private GestorCompetencia gestorCompetencia;
+	private List<Object> filtros;
 	
 	public VerCompetencia(CompetenciaDTO competencia, String card, JPanel tp, List<Object> filtros) {
 		this.tpPanel = tp;
 		this.cardAnterior = card;
 		this.gestorCompetencia = new GestorCompetencia();
+		this.filtros = filtros;
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		armarPantalla(competencia, filtros);
+		armarPantalla(competencia);
 	}
 	
-	private void armarPantalla( CompetenciaDTO competencia, List<Object> filtros ) {
+	private void armarPantalla( CompetenciaDTO competencia ) {
 		 
 		//Armar Pantalla
 		
@@ -305,7 +308,9 @@ public class VerCompetencia extends JPanel {
 		tablaEncuentros.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		tablaEncuentros.setRowHeight(40);
 		
-		actualizarTablaEncuentros(competencia.getProximosEncuentros());
+		List<EncuentroDTO> proximosEncuentros = gestorCompetencia.obtenerProximosEncuentros(competencia); 
+		
+		actualizarTablaEncuentros(proximosEncuentros);
 		auxTablaE.add(tablaEncuentros);
 		tablaEncuentros.setDefaultEditor(Object.class, null);		
 	    
@@ -399,10 +404,7 @@ public class VerCompetencia extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JPanel modificarCompetencia = new JPanel();
-				tpPanel.add(modificarCompetencia, "ModificarCompetencia");
-				CardLayout layout = (CardLayout)tpPanel.getLayout();
-				layout.show(tpPanel, "ModificarCompetencia");
+				JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada", " ", JOptionPane.INFORMATION_MESSAGE);
 			}
 		
 		});
@@ -431,7 +433,7 @@ public class VerCompetencia extends JPanel {
 					try {
 						gestorCompetencia.generarFixture(competencia);
 						JOptionPane.showMessageDialog(new JPanel(), "El Fixture se ha creado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
-						competenciaModificada();
+						competenciaModificada(competencia);
 					}
 					catch(EstadoCompetenciaException e1) {
 						JOptionPane.showMessageDialog(new JPanel(), "La Competencia se encuentra en Estado: " + competencia.getEstadoCompetencia() + "\nNo se puede generar un nuevo Fixture", "Error", JOptionPane.ERROR_MESSAGE);
@@ -523,8 +525,22 @@ public class VerCompetencia extends JPanel {
 		tpPanel.remove(this);
 	}
 	
-	private void competenciaModificada() {
-		//ver como hacer
+	public void competenciaModificada(CompetenciaDTO competenciaDTO) {
+		tpPanel.remove(tpPanel.getComponentCount() - 2);
+		if(cardAnterior.equals("ListarCompetencias")) {
+			JPanel listarCompetencias = new ListarCompetencias(tpPanel, filtros);
+			tpPanel.add(listarCompetencias, "ListarCompetencias");
+		}
+		else {
+			JPanel listarCompetencias = new ListarTodasLasCompetencias(tpPanel, filtros);
+			tpPanel.add(listarCompetencias, "ListarTodasLasCompetencias");
+		}
+		JPanel verCompetencia = new VerCompetencia(competenciaDTO, cardAnterior, tpPanel, filtros);
+		tpPanel.add(verCompetencia, "VerCompetencia");
+		CardLayout layout = (CardLayout)tpPanel.getLayout();
+		//ver tema usuario
+        layout.show(tpPanel, "VerCompetencia");
+        tpPanel.remove(this);
 	}
 	
 }

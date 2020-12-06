@@ -17,6 +17,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -33,7 +34,7 @@ import javax.swing.text.Document;
 
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
-import gui.ListarParticipantesCompetencia.JTextStateController;
+import gestor.GestorParticipante;
 
 @SuppressWarnings("serial")
 public class ListarParticipantesCompetencia extends JPanel {
@@ -75,9 +76,11 @@ public class ListarParticipantesCompetencia extends JPanel {
 	private JTable tablaParticipantes;
 	private DefaultTableModel modeloParticipantes;
 	private JPanel tpPanel;
+	private GestorParticipante gestorParticipante;
 	
 	public ListarParticipantesCompetencia(JPanel tp, CompetenciaDTO competencia) {
 		this.tpPanel = tp;
+		this.gestorParticipante = new GestorParticipante();
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		armarPantalla(competencia);
@@ -332,6 +335,26 @@ public class ListarParticipantesCompetencia extends JPanel {
 				tpPanel.add(altaParticipante, "AltaParticipante");
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				layout.show(tpPanel, "AltaParticipante");
+			}
+			
+		});
+		
+		eliminar.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int ok = JOptionPane.showConfirmDialog(new JPanel(), "El participante se eliminará permanentemente", "Advertencia", JOptionPane.OK_CANCEL_OPTION);
+				if(ok == JOptionPane.OK_OPTION) {
+					if(gestorParticipante.eliminarParticipante(competenciaDTO.getParticipantes().get(tablaParticipantes.getSelectedRow()), competenciaDTO)) {
+						competenciaDTO.getParticipantes().remove(tablaParticipantes.getSelectedRow());
+						JOptionPane.showMessageDialog(new JPanel(), "El participante se ha eliminado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
+						actualizarTablaParticipantes(competenciaDTO.getParticipantes());
+						((VerCompetencia) tpPanel.getComponent(tpPanel.getComponentCount() - 2)).competenciaModificada(competenciaDTO);
+					}
+					else {
+						JOptionPane.showMessageDialog(new JPanel(), "No se pudo eliminar la competencia", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 			
 		});

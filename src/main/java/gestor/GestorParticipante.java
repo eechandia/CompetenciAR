@@ -31,6 +31,10 @@ public class GestorParticipante {
 		
 	}
 	
+	public boolean eliminarParticipante(ParticipanteDTO participanteDto, CompetenciaDTO competenciaDto) {
+		return false;
+	}
+	
 	public void validar(ParticipanteDTO participante) throws Exception {
 		if (participante.getNombre() == null) {
 			throw new Exception("El campo nombre esta vacio");

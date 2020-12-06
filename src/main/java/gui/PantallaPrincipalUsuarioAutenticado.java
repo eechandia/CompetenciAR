@@ -23,6 +23,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+@SuppressWarnings("serial")
 public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 
 	private GridBagConstraints gbc;
@@ -100,22 +101,18 @@ public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 		this.addMouseListener(new MouseListener() {
 			
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			

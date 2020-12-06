@@ -36,6 +36,7 @@ import javax.swing.text.Document;
 
 import dominio.Competencia.Estado;
 import dominio.SistemaDeCompetencia;
+import dominio.Usuario;
 import dto.CompetenciaDTO;
 import gestor.GestorCompetencia;
 import gestor.GestorDeporte;
@@ -79,6 +80,7 @@ public class ListarCompetencias extends JPanel {
 	private GestorDeporte gestorDeporte;
 	private GestorCompetencia gestorCompetencia;
 	private JPanel tpPanel;
+	private List<CompetenciaDTO> competenciasFiltradas;
 	
 	public ListarCompetencias(JPanel tp, List<Object> filtros) {
 		this.tpPanel = tp;
@@ -374,23 +376,8 @@ public class ListarCompetencias extends JPanel {
 		this.add(filtrosPanel);
 		this.add(tablaPanel);
 		
-		if(filtrosAnteriores != null) {
-			if(filtrosAnteriores.get(0) != null) {
-				nombreCompetencia.setText((String)filtrosAnteriores.get(0));
-			}
-			if(filtrosAnteriores.get(1) != null) {
-				deporteBox.setSelectedIndex((Integer)filtrosAnteriores.get(1));
-			}
-			if(filtrosAnteriores.get(2) != null) {
-				modalidad.setSelectedIndex((Integer)filtrosAnteriores.get(2));
-			}
-			if(filtrosAnteriores.get(3) != null) {
-				estado.setSelectedIndex((Integer)filtrosAnteriores.get(3));
-			}
-			buscar.doClick();
-		}
-		
 		//Funcion de Botones
+
 		volver.addActionListener( new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -436,7 +423,7 @@ public class ListarCompetencias extends JPanel {
 				}
 				
 				// ver usuario
-				List<CompetenciaDTO> competenciasFiltradas = gestorCompetencia.obtenerCompetencias(new Usuario(), nombreCompetencia.getText(), deporteBox.getSelectedItem().toString(), tipoCompetencia, tipoEstado);
+				competenciasFiltradas = gestorCompetencia.obtenerCompetencias(new Usuario(), nombreCompetencia.getText(), deporteBox.getSelectedItem().toString(), tipoCompetencia, tipoEstado);
 				actualizarTablaCompetencias(competenciasFiltradas);
 				agregar.setVisible(false);
 				auxEspacio.setMinimumSize(new Dimension(700, 30));
@@ -477,6 +464,24 @@ public class ListarCompetencias extends JPanel {
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				//ver tema usuario
 		        layout.show(tpPanel, "AltaCompetencia");
+			}
+			
+		});
+		
+		verDetalles.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Object> filtros = new ArrayList<Object>();
+				filtros.add(nombreCompetencia.getText());
+				filtros.add(deporteBox.getSelectedIndex());
+				filtros.add(modalidad.getSelectedIndex());
+				filtros.add(estado.getSelectedIndex());
+				JPanel verCompetencia = new VerCompetencia(competenciasFiltradas.get(tablaCompetencias.getSelectedRow()), "ListarTodasLasCompetencias", tpPanel, filtros);
+				tpPanel.add(verCompetencia, "VerCompetencia");
+				CardLayout layout = (CardLayout)tpPanel.getLayout();
+				//ver tema usuario
+		        layout.show(tpPanel, "VerCompetencia");
 			}
 			
 		});

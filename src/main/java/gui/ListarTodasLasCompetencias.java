@@ -30,14 +30,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Document;
 
 import dominio.SistemaDeCompetencia;
-import dominio.Usuario;
 import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import gestor.GestorCompetencia;
@@ -82,6 +79,7 @@ public class ListarTodasLasCompetencias extends JPanel {
 	private GestorDeporte gestorDeporte;
 	private GestorCompetencia gestorCompetencia;
 	private JPanel tpPanel;
+	private List<CompetenciaDTO> competenciasFiltradas;
 	
 	public ListarTodasLasCompetencias(JPanel tp, List<Object> filtros) {
 		this.tpPanel = tp;
@@ -319,9 +317,12 @@ public class ListarTodasLasCompetencias extends JPanel {
 			@Override
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column){
 				final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-					c.setBackground(row % 2 == 0 ? new Color(187, 255, 241) : Color.WHITE);
 					if(isSelected) {
 						c.setBackground(Color.BLUE);
+						verDetalles.setEnabled(true);
+					}
+					else {
+						c.setBackground(row % 2 == 0 ? new Color(187, 255, 241) : Color.WHITE);
 						verDetalles.setEnabled(false);
 					}
 					return c;
@@ -433,7 +434,7 @@ public class ListarTodasLasCompetencias extends JPanel {
 				}
 						
 				// ver usuario
-				List<CompetenciaDTO> competenciasFiltradas = gestorCompetencia.obtenerCompetencias( nombreCompetencia.getText(), deporteBox.getSelectedItem().toString(), tipoCompetencia, tipoEstado, usuario.getText());
+				competenciasFiltradas = gestorCompetencia.obtenerCompetencias( nombreCompetencia.getText(), deporteBox.getSelectedItem().toString(), tipoCompetencia, tipoEstado, usuario.getText());
 				actualizarTablaCompetencias(competenciasFiltradas);
 				agregar.setVisible(false);
 				auxEspacio.setMinimumSize(new Dimension(960, 30));
@@ -480,6 +481,25 @@ public class ListarTodasLasCompetencias extends JPanel {
 		        layout.show(tpPanel, "AltaCompetencia");
 			}
 					
+		});
+		
+		verDetalles.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<Object> filtros = new ArrayList<Object>();
+				filtros.add(nombreCompetencia.getText());
+				filtros.add(deporteBox.getSelectedIndex());
+				filtros.add(modalidad.getSelectedIndex());
+				filtros.add(estado.getSelectedIndex());
+				filtros.add(usuario.getText());
+				JPanel verCompetencia = new VerCompetencia(competenciasFiltradas.get(tablaCompetencias.getSelectedRow()), "ListarTodasLasCompetencias", tpPanel, filtros);
+				tpPanel.add(verCompetencia, "VerCompetencia");
+				CardLayout layout = (CardLayout)tpPanel.getLayout();
+				//ver tema usuario
+		        layout.show(tpPanel, "VerCompetencia");
+			}
+			
 		});
 				
 		//Enable/Disable Buscar

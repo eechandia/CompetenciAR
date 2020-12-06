@@ -296,6 +296,7 @@ public class AltaParticipante extends JPanel {
 		}
 		
 		private void participanteAgregado(CompetenciaDTO competenciaDTO) {
+			((VerCompetencia) tpPanel.getComponent(tpPanel.getComponentCount() - 3)).competenciaModificada(competenciaDTO);
 			JPanel listarParticipantes = new ListarParticipantesCompetencia(tpPanel, competenciaDTO);
 			tpPanel.add(listarParticipantes, "ListarParticipantesCompetencia");
 			CardLayout layout = (CardLayout)tpPanel.getLayout();
