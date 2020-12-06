@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -239,7 +241,13 @@ public class ListarParticipantesCompetencia extends JPanel {
 	    constraintsTabla.anchor = GridBagConstraints.CENTER;
 		
 		//Tabla Participantes
-		tablaParticipantes = new JTable(modeloParticipantes);
+		tablaParticipantes = new JTable(modeloParticipantes){
+		    public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)
+		    {
+		        super.changeSelection(rowIndex, columnIndex, extend, extend);
+		    }
+		};
+		
 		
 		//Header
 		tablaParticipantes.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -355,6 +363,39 @@ public class ListarParticipantesCompetencia extends JPanel {
 						JOptionPane.showMessageDialog(new JPanel(), "No se pudo eliminar la competencia", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
+			}
+			
+		});
+		
+		this.addMouseListener( new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+                tablaParticipantes.clearSelection();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
 			}
 			
 		});

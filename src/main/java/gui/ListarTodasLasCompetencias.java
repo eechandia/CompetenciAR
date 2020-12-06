@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -294,7 +296,13 @@ public class ListarTodasLasCompetencias extends JPanel {
 		aux.setLayout(new BoxLayout(aux, BoxLayout.PAGE_AXIS));
 		JPanel auxTabla = new JPanel();
 		auxTabla.setBackground(Color.WHITE);
-		tablaCompetencias = new JTable(modeloCompetencia);
+		tablaCompetencias = new JTable(modeloCompetencia){
+		    public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)
+		    {
+		        super.changeSelection(rowIndex, columnIndex, extend, extend);
+		    }
+		};
+		
 		auxTabla.add(tablaCompetencias);
 		tablaCompetencias.setDefaultEditor(Object.class, null);
 			
@@ -546,6 +554,39 @@ public class ListarTodasLasCompetencias extends JPanel {
 				buscar.setEnabled(estado.getSelectedIndex() != 0);
 			}
 					
+		});
+		
+		this.addMouseListener( new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+                tablaCompetencias.clearSelection();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
 		});
 		
 		//----------------------------//

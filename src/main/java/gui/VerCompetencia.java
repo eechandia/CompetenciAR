@@ -10,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -238,7 +240,13 @@ public class VerCompetencia extends JPanel {
 		//Tabla Participantes
 		JPanel auxTablaP = new JPanel();
 		auxTablaP.setBackground(Color.WHITE);	
-		tablaParticipantes = new JTable(modeloParticipantes);
+		tablaParticipantes = new JTable(modeloParticipantes){
+		    public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)
+		    {
+		        super.changeSelection(rowIndex, columnIndex, extend, extend);
+		    }
+		};
+		
 		
 		//Header
 		tablaParticipantes.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -288,7 +296,13 @@ public class VerCompetencia extends JPanel {
 	    //Tabla Proximos Encuentros
 		JPanel auxTablaE = new JPanel();
 		auxTablaE.setBackground(Color.WHITE);	
-		tablaEncuentros = new JTable(modeloEncuentros);
+		tablaEncuentros = new JTable(modeloEncuentros){
+		    public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)
+		    {
+		        super.changeSelection(rowIndex, columnIndex, extend, extend);
+		    }
+		};
+		
 		
 		//Header
 		tablaEncuentros.getTableHeader().setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -473,6 +487,41 @@ public class VerCompetencia extends JPanel {
 			}
 			
 		});		
+		
+		this.addMouseListener( new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+                tablaParticipantes.clearSelection();
+                tablaEncuentros.clearSelection();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+		});
+		
 	}
 	
 	private void actualizarTablaParticipantes( List<ParticipanteDTO> participantes ) {

@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -747,7 +749,13 @@ public class AltaCompetencia extends JPanel {
 		lugarPanel.add(lugarDeRealizacion, lugarConstraints);
 
 		//Crear tabla
-		tablaLugares = new JTable(modeloLugar);
+		tablaLugares = new JTable(modeloLugar){
+		    public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend)
+		    {
+		        super.changeSelection(rowIndex, columnIndex, extend, extend);
+		    }
+		};
+		
 		
 		//Constraints Tabla
 	    GridBagConstraints constraintsTabla = new GridBagConstraints();
@@ -1034,6 +1042,39 @@ public class AltaCompetencia extends JPanel {
 		    public void keyTyped(KeyEvent e) { 
 		        if (reglamento.getText().length() >= 1000 ) e.consume(); 
 		    }  
+		});
+		
+		this.addMouseListener( new MouseListener() {
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+                tablaLugares.clearSelection();
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
 		});
 		
 	}
