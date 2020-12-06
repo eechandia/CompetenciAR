@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -185,6 +186,31 @@ public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 		gbc.fill=GridBagConstraints.NONE;
 		gbc.anchor=GridBagConstraints.CENTER;
 		this.add(lugarDeRealizacion,gbc);
+		
+		//Funcion botones
+		competencias.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JPanel listarCompetencias = new ListarTodasLasCompetencias(tpPanel, null);
+				tpPanel.add(listarCompetencias, "ListarTodasLasCompetencias");
+				CardLayout layout = (CardLayout)tpPanel.getLayout();
+				layout.show(tpPanel, "ListarTodasLasCompetencias");
+			}
+			
+		});
+
+		misCompetencias.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JPanel listarCompetencias = new ListarCompetencias(tpPanel, null);
+				tpPanel.add(listarCompetencias, "ListarCompetencias");
+				CardLayout layout = (CardLayout)tpPanel.getLayout();
+				layout.show(tpPanel, "ListarCompetencias");
+			}
+			
+		});
 
 	}
 

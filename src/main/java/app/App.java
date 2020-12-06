@@ -30,14 +30,8 @@ public class App extends JFrame {
 
 	private JPanel tpPanel;
 	private CardLayout cl;
-	private GestorDeporte gestorDeporte;
 	private GestorCompetencia gestorCompetencia;
-	private PantallaPrincipalUsuarioNoAutenticado usuarioNoA;
-	private PantallaIniciarSesion iniciarSesion;
 	private PantallaPrincipalUsuarioAutenticado usuarioA;
-	private AltaCompetencia altaCompetencia;
-	private ListarCompetencias listarCompetencias;
-	private ListarCompetencias listarMisCompetencias;
 	
 	
 //	public static void main(String[] args) {
@@ -72,7 +66,6 @@ public class App extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		//Inicializar gestores
-		gestorDeporte = new GestorDeporte();
 		gestorCompetencia = new GestorCompetencia();
 		
 		CompetenciaDTO compDTO = new CompetenciaDTO(30, null, null, null, null, null, null, null, null, null, null, null, null,null, null, null, null, null);
@@ -113,19 +106,9 @@ public class App extends JFrame {
 		cl = new CardLayout(0,0);
 		tpPanel.setLayout(cl);
 		
-		usuarioNoA = new PantallaPrincipalUsuarioNoAutenticado(tpPanel);
-		iniciarSesion = new PantallaIniciarSesion(tpPanel);
 		usuarioA = new PantallaPrincipalUsuarioAutenticado(tpPanel);
-		altaCompetencia = new AltaCompetencia(tpPanel, gestorDeporte, gestorCompetencia);
-		listarCompetencias = new ListarCompetencias(tpPanel, gestorDeporte, gestorCompetencia);
-		listarMisCompetencias = new ListarCompetencias(tpPanel, gestorDeporte, gestorCompetencia);
 		
-		tpPanel.add(usuarioNoA, "Card__UsuarionNoAutenticado");
-		tpPanel.add(iniciarSesion, "Card__IniciarSesion");
-		tpPanel.add(usuarioA, "Card__UsuarioAutenticado");
-		tpPanel.add(altaCompetencia, "Card__AltaCompetencia");
-		tpPanel.add(listarCompetencias, "Card__ListarCompetencias");
-		tpPanel.add(listarMisCompetencias, "Card__MisCompetencias");
+		tpPanel.add(usuarioA, "UsuarioAutenticado");
 
 		this.setContentPane(tpPanel);
 		this.pack();
@@ -176,19 +159,15 @@ public class App extends JFrame {
 				  }  
 			    catch (UnsupportedLookAndFeelException e) {
 			    	e.printStackTrace();
-			       // handle exception
 			    }
 			    catch (ClassNotFoundException e) {
 			    	e.printStackTrace();
-			       // handle exception
 			    }
 			    catch (InstantiationException e) {
 			    	e.printStackTrace();
-			       // handle exception
 			    }
 			    catch (IllegalAccessException e) {
 			    	e.printStackTrace();
-			       // handle exception
 			    }
 				  
 				  EventQueue.invokeLater(new Runnable() {
