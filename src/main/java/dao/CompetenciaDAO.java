@@ -22,7 +22,7 @@ public interface CompetenciaDAO {
 	
 	public abstract Competencia recuperarCompetencia(CompetenciaDTO competencia);
 	
-	public abstract List<Competencia> obtenerCompetencias(Filtro filtro);
+	public abstract List<Competencia> obtenerCompetencias(Filtro filtro) throws Exception;
 
 	public abstract List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario) throws Exception;
 }

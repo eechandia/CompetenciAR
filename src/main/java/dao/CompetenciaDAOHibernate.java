@@ -267,13 +267,13 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			}
 			
 			if(filtro.getEstado() != null) {
-				String whereEstado = " estado = " +filtro.getEstado() +" and ";	
+				String whereEstado = " estado = " +filtro.getEstado() +" and";	
 				hql += whereEstado;
 			}
 			
 
 			if(!filtro.getNombreCompetencia().isBlank()) {
-				String likeUsuario = "nombre LIKE "+filtro.getNombreCompetencia()+" and ";
+				String likeUsuario = " nombre LIKE "+filtro.getNombreCompetencia()+" and";
 				hql += likeUsuario;
 			}
 			
