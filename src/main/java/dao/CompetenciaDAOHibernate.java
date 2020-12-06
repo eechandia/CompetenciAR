@@ -141,7 +141,9 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	public void modificarCompetencia(Competencia competencia) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		try {	
+			session.beginTransaction();
 			session.update(competencia);
+			session.getTransaction().commit();
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

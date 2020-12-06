@@ -62,6 +62,22 @@ public class Fecha {
 	public void agregarEncuentro(EncuentroDeportivo e) {
 		this.encuentros.add(e);
 	}
+
+	public Integer getId_fecha() {
+		return id_fecha;
+	}
+
+	public void setId_fecha(Integer id_fecha) {
+		this.id_fecha = id_fecha;
+	}
+
+	public Fixture getFixture() {
+		return fixture;
+	}
+
+	public void setFixture(Fixture fixture) {
+		this.fixture = fixture;
+	}
 	
 	
 }

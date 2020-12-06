@@ -18,11 +18,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.FetchMode;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Type;
 
 import dto.CompetenciaDTO;
@@ -63,7 +66,9 @@ public class Competencia {
 	@Column(name="fecha_de_baja")
 	private LocalDate fechaBaja;
 	
-	@OneToOne(mappedBy = "competencia")
+	
+	@OneToOne()
+	@PrimaryKeyJoinColumn
 	private Fixture fixture;
 	
 	@ManyToOne()
@@ -71,6 +76,7 @@ public class Competencia {
 	private Usuario usuarioAsociado;
 	
 	@OneToMany(mappedBy = "competencia")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Reserva> reservasDisponibles;
 	
 	@OneToOne 
