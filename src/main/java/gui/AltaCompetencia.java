@@ -203,7 +203,7 @@ public class AltaCompetencia extends JPanel {
 		comboLugares.setRenderer(new LugarDeRealizacionComboRenderer());
 		
 		//-----------------------------------------//
-		final JComboBox<Pair<Integer,String>> deporteBox0 = new JComboBox<Pair<Integer,String>>(); 
+		/*final JComboBox<Pair<Integer,String>> deporteBox0 = new JComboBox<Pair<Integer,String>>(); 
 		//Pedir al gestor de deporte
 		Pair<Integer,String> vacio = new Pair<Integer, String>();
 		vacio.setFirst(0);
@@ -212,6 +212,16 @@ public class AltaCompetencia extends JPanel {
 		final List<Pair<Integer,String>> deportes = gestorDeporte.getDeportesInterfaz();
 		for(Pair<Integer,String> dep: deportes) {
 			deporteBox0.addItem(dep);
+		}*/
+		Pair<Integer,String> vacio = new Pair<Integer, String>();
+		vacio.setFirst(0);
+		vacio.setSecond(" ");
+		//deporteBox0.addItem(vacio);
+		final List<Pair<Integer,String>> deportes = new ArrayList<Pair<Integer, String>>();
+		deportes.add(vacio);
+		deportes.addAll(gestorDeporte.getDeportesInterfaz());
+		for(Pair<Integer,String> dep: deportes) {
+			deporteBox.addItem(dep.getSecond());
 		}
 		//-----------------------------------------//
 		//Cargo deportes en el ComboBox
@@ -961,7 +971,7 @@ public class AltaCompetencia extends JPanel {
 					}
 					CompetenciaDTO competenciaDTO = new CompetenciaDTO( 
 							nombreTexto.getText(), tipoCompetencia, tipoPuntuacion, reglamento.getText(), reservasDTO, 
-							(Pair<Integer, String>) deporteBox0.getSelectedItem(), (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
+							deportes.get(deporteBox.getSelectedIndex()), (Integer) puntosAu.getValue(), (Integer) cantMaxSets.getValue(), (Integer) puntosG.getValue(),
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
 					try {
 						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);

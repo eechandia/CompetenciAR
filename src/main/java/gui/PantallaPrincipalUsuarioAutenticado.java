@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
@@ -189,7 +190,7 @@ public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JPanel listarCompetencias = new ListarTodasLasCompetencias(tpPanel, null);
+				JPanel listarCompetencias = new ListarTodasLasCompetencias(tpPanel, new ArrayList<Object>());
 				tpPanel.add(listarCompetencias, "ListarTodasLasCompetencias");
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				layout.show(tpPanel, "ListarTodasLasCompetencias");
@@ -201,7 +202,7 @@ public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JPanel listarCompetencias = new ListarCompetencias(tpPanel, null);
+				JPanel listarCompetencias = new ListarCompetencias(tpPanel, new ArrayList<Object>());
 				tpPanel.add(listarCompetencias, "ListarCompetencias");
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				layout.show(tpPanel, "ListarCompetencias");

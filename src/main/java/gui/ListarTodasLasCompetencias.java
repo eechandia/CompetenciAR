@@ -87,6 +87,7 @@ public class ListarTodasLasCompetencias extends JPanel {
 		this.tpPanel = tp;
 		this.gestorCompetencia = new GestorCompetencia();
 		this.gestorDeporte = new GestorDeporte();
+		this.competenciasFiltradas = new ArrayList<CompetenciaDTO>();
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
@@ -109,15 +110,17 @@ public class ListarTodasLasCompetencias extends JPanel {
 		final JComboBox<String> estado = new JComboBox<String>(arregloE);
 				
 		//--------------------------------------------------------------------//
-		final JComboBox<Pair<Integer,String>> deporteBox0 = new JComboBox<Pair<Integer,String>>(); 
+		//final JComboBox<Pair<Integer,String>> deporteBox0 = new JComboBox<Pair<Integer,String>>(); 
 		//Pedir al gestor de deporte
 		Pair<Integer,String> vacio = new Pair<Integer, String>();
 		vacio.setFirst(0);
-		vacio.setSecond(" ");
-		deporteBox0.addItem(vacio);
-		final List<Pair<Integer,String>> deportes = gestorDeporte.getDeportesInterfaz();
+		vacio.setSecond("Deporte");
+		//deporteBox0.addItem(vacio);
+		final List<Pair<Integer,String>> deportes = new ArrayList<Pair<Integer, String>>();
+		deportes.add(vacio);
+		deportes.addAll(gestorDeporte.getDeportesInterfaz());
 		for(Pair<Integer,String> dep: deportes) {
-			deporteBox0.addItem(dep);
+			deporteBox.addItem(dep.getSecond());
 		}
 		//Agrego contenido a ComboBox Deporte
 		/*deporteBox.addItem("Deporte");
@@ -442,7 +445,7 @@ public class ListarTodasLasCompetencias extends JPanel {
 				}
 						
 				// ver usuario
-				competenciasFiltradas = gestorCompetencia.obtenerCompetencias( nombreCompetencia.getText(), deporteBox.getSelectedItem().toString(), tipoCompetencia, tipoEstado, usuario.getText());
+				competenciasFiltradas = gestorCompetencia.obtenerCompetencias( nombreCompetencia.getText(), deportes.get(deporteBox.getSelectedIndex()), tipoCompetencia, tipoEstado, usuario.getText());
 				actualizarTablaCompetencias(competenciasFiltradas);
 				agregar.setVisible(false);
 				auxEspacio.setMinimumSize(new Dimension(960, 30));
@@ -459,7 +462,7 @@ public class ListarTodasLasCompetencias extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				List<Object> filtros = new ArrayList<Object>();
 				filtros.add(nombreCompetencia.getText());
-				filtros.add(deporteBox0.getSelectedIndex());
+				filtros.add(deporteBox.getSelectedIndex());
 				filtros.add(modalidad.getSelectedIndex());
 				filtros.add(estado.getSelectedIndex());
 				filtros.add(usuario.getText());
@@ -478,7 +481,7 @@ public class ListarTodasLasCompetencias extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				List<Object> filtros = new ArrayList<Object>();
 				filtros.add(nombreCompetencia.getText());
-				filtros.add(deporteBox0.getSelectedIndex());
+				filtros.add(deporteBox.getSelectedIndex());
 				filtros.add(modalidad.getSelectedIndex());
 				filtros.add(estado.getSelectedIndex());
 				filtros.add(usuario.getText());
@@ -595,7 +598,7 @@ public class ListarTodasLasCompetencias extends JPanel {
 				nombreCompetencia.setText((String)filtrosAnteriores.get(0));
 			}
 			if(!filtrosAnteriores.get(1).equals(null)) {
-				deporteBox0.setSelectedIndex((Integer)filtrosAnteriores.get(1));
+				deporteBox.setSelectedIndex((Integer)filtrosAnteriores.get(1));
 			}
 			if(!filtrosAnteriores.get(2).equals(null)) {
 				modalidad.setSelectedIndex((Integer)filtrosAnteriores.get(2));
