@@ -42,6 +42,7 @@ import dominio.Usuario;
 import dto.CompetenciaDTO;
 import gestor.GestorCompetencia;
 import gestor.GestorDeporte;
+import utils.Filtro;
 import utils.Pair;
 
 @SuppressWarnings("serial")
@@ -438,7 +439,7 @@ public class ListarCompetencias extends JPanel {
 				}
 				
 				// ver usuario
-				competenciasFiltradas = gestorCompetencia.obtenerCompetencias(new Usuario(), nombreCompetencia.getText(), deportes.get(deporteBox.getSelectedIndex()), tipoCompetencia, tipoEstado);
+				competenciasFiltradas = gestorCompetencia.obtenerCompetencias(new Usuario(), new Filtro(nombreCompetencia.getText(), deportes.get(deporteBox.getSelectedIndex()).getFirst(), tipoCompetencia, tipoEstado));
 				actualizarTablaCompetencias(competenciasFiltradas);
 				agregar.setVisible(false);
 				auxEspacio.setMinimumSize(new Dimension(700, 30));
@@ -457,7 +458,7 @@ public class ListarCompetencias extends JPanel {
 				filtros.add(deporteBox.getSelectedIndex());
 				filtros.add(modalidad.getSelectedIndex());
 				filtros.add(estado.getSelectedIndex());
-				JPanel altaCompetencia = new AltaCompetencia(tpPanel, filtros, "ListarCompetencias");
+				JPanel altaCompetencia = new AltaCompetencia(tpPanel, filtros);
 				tpPanel.add(altaCompetencia, "AltaCompetencia");
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				//ver tema usuario
@@ -474,7 +475,7 @@ public class ListarCompetencias extends JPanel {
 				filtros.add(deporteBox.getSelectedIndex());
 				filtros.add(modalidad.getSelectedIndex());
 				filtros.add(estado.getSelectedIndex());
-				JPanel altaCompetencia = new AltaCompetencia(tpPanel, filtros, "ListarCompetencias");
+				JPanel altaCompetencia = new AltaCompetencia(tpPanel, filtros);
 				tpPanel.add(altaCompetencia, "AltaCompetencia");
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				//ver tema usuario
@@ -492,7 +493,7 @@ public class ListarCompetencias extends JPanel {
 				filtros.add(deporteBox.getSelectedIndex());
 				filtros.add(modalidad.getSelectedIndex());
 				filtros.add(estado.getSelectedIndex());
-				JPanel verCompetencia = new VerCompetencia(competenciasFiltradas.get(tablaCompetencias.getSelectedRow()), "ListarTodasLasCompetencias", tpPanel, filtros);
+				JPanel verCompetencia = new VerCompetencia(competenciasFiltradas.get(tablaCompetencias.getSelectedRow()), tpPanel, filtros);
 				tpPanel.add(verCompetencia, "VerCompetencia");
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				//ver tema usuario

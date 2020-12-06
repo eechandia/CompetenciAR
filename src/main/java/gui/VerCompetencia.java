@@ -49,13 +49,11 @@ public class VerCompetencia extends JPanel {
 	private DefaultTableModel modeloParticipantes;
 	private DefaultTableModel modeloEncuentros;
 	private JPanel tpPanel;
-	private String cardAnterior;
 	private GestorCompetencia gestorCompetencia;
 	private List<Object> filtros;
 	
-	public VerCompetencia(CompetenciaDTO competencia, String card, JPanel tp, List<Object> filtros) {
+	public VerCompetencia(CompetenciaDTO competencia, JPanel tp, List<Object> filtros) {
 		this.tpPanel = tp;
-		this.cardAnterior = card;
 		this.gestorCompetencia = new GestorCompetencia();
 		this.filtros = filtros;
 		this.setBackground(Color.WHITE);
@@ -561,30 +559,18 @@ public class VerCompetencia extends JPanel {
 	
 	private void competenciaEliminada(List<Object> filtros) {
 		tpPanel.remove(tpPanel.getComponentCount() - 2);
-		if(cardAnterior.equals("ListarMisCompetencias")){
-			JPanel listarCompetenciasPanel = new ListarCompetencias(tpPanel, filtros);
-			tpPanel.add(listarCompetenciasPanel, cardAnterior);
-		}
-		else {
-			JPanel listarTodasCompetenciasPanel = new ListarTodasLasCompetencias(tpPanel, filtros);
-			tpPanel.add(listarTodasCompetenciasPanel, cardAnterior);
-		}
+		JPanel listarCompetenciasPanel = new ListarCompetencias(tpPanel, filtros);
+		tpPanel.add(listarCompetenciasPanel, "ListarCompetencias");		
 		CardLayout layout = (CardLayout)tpPanel.getLayout();
-		layout.show(tpPanel, cardAnterior);
+		layout.show(tpPanel, "ListarCompetencias");
 		tpPanel.remove(this);
 	}
 	
 	public void competenciaModificada(CompetenciaDTO competenciaDTO) {
 		tpPanel.remove(tpPanel.getComponentCount() - 2);
-		if(cardAnterior.equals("ListarCompetencias")) {
-			JPanel listarCompetencias = new ListarCompetencias(tpPanel, filtros);
-			tpPanel.add(listarCompetencias, "ListarCompetencias");
-		}
-		else {
-			JPanel listarCompetencias = new ListarTodasLasCompetencias(tpPanel, filtros);
-			tpPanel.add(listarCompetencias, "ListarTodasLasCompetencias");
-		}
-		JPanel verCompetencia = new VerCompetencia(competenciaDTO, cardAnterior, tpPanel, filtros);
+		JPanel listarCompetencias = new ListarCompetencias(tpPanel, filtros);
+		tpPanel.add(listarCompetencias, "ListarCompetencias");
+		JPanel verCompetencia = new VerCompetencia(competenciaDTO, tpPanel, filtros);
 		tpPanel.add(verCompetencia, "VerCompetencia");
 		CardLayout layout = (CardLayout)tpPanel.getLayout();
 		//ver tema usuario

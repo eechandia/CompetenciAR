@@ -367,6 +367,15 @@ public class ListarParticipantesCompetencia extends JPanel {
 			
 		});
 		
+		modificar.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada", " ", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		});
+		
 		this.addMouseListener( new MouseListener() {
 
 			@Override

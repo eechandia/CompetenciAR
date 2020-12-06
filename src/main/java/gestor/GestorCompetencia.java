@@ -28,6 +28,7 @@ import dto.EncuentroDTO;
 import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
 import exceptions.ReservasInsuficientesException;
+import utils.Filtro;
 import utils.Pair;
 
 public class GestorCompetencia {
@@ -179,18 +180,6 @@ public class GestorCompetencia {
 	
 	}
 	
-
-
-	public List<CompetenciaDTO> obtenerCompetencias(String string, Object object, Tipo tipoCompetencia, Estado tipoEstado, String string3){
-		List<CompetenciaDTO> competencias = new ArrayList<CompetenciaDTO>();
-		return competencias;
-	}
-	
-	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr, String string, String string2, Tipo tipoCompetencia, Estado tipoEstado){
-		List<CompetenciaDTO> competencias = new ArrayList<CompetenciaDTO>();
-		return competencias;
-	}
-	
 	public Competencia obtenerCompetencia(CompetenciaDTO competencia) {
 		return daoCompetencia.recuperarCompetencia( competencia);
 	
@@ -205,8 +194,7 @@ public class GestorCompetencia {
 		return null;
 	}
 
-	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr, String text, Object selectedItem, Tipo tipoCompetencia,
-			Estado tipoEstado) {
+	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr, Filtro filtros) {
 		List<CompetenciaDTO> competencias = new ArrayList<CompetenciaDTO>();
 		return competencias;
 	}

@@ -116,13 +116,11 @@ public class AltaCompetencia extends JPanel {
 	private GestorDeporte gestorDeporte;
 	private GestorCompetencia gestorCompetencia;
 	private JPanel tpPanel;
-	private String cardAnterior;
 	
-	public AltaCompetencia(JPanel tp, List<Object> filtros, String card) {
+	public AltaCompetencia(JPanel tp, List<Object> filtros) {
 		this.gestorDeporte = new GestorDeporte();
 		this.gestorCompetencia = new GestorCompetencia();
 		this.tpPanel = tp;
-		this.cardAnterior = card;
 		this.setBackground(Color.WHITE);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.armarPantalla(filtros);
@@ -876,7 +874,6 @@ public class AltaCompetencia extends JPanel {
 		//Funcion de botones
 	    aceptar.addActionListener(new ActionListener() {
 
-			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				//crear DTO
 				if(		nombreTexto.getText() == null ||
@@ -1113,16 +1110,10 @@ public class AltaCompetencia extends JPanel {
 	
 	private void competenciaCreada(List<Object> filtros) {
 		tpPanel.remove(tpPanel.getComponentCount() - 2);
-		if(cardAnterior.equals("ListarMisCompetencias")){
-			JPanel listarCompetenciasPanel = new ListarCompetencias(tpPanel, filtros);
-			tpPanel.add(listarCompetenciasPanel, cardAnterior);
-		}
-		else {
-			JPanel listarTodasCompetenciasPanel = new ListarTodasLasCompetencias(tpPanel, filtros);
-			tpPanel.add(listarTodasCompetenciasPanel, cardAnterior);
-		}
+		JPanel listarCompetenciasPanel = new ListarCompetencias(tpPanel, filtros);
+		tpPanel.add(listarCompetenciasPanel, "ListarCompetencias");
 		CardLayout layout = (CardLayout)tpPanel.getLayout();
-		layout.show(tpPanel, cardAnterior);
+		layout.show(tpPanel, "ListarCompetencias");
 		tpPanel.remove(tpPanel.getComponentCount() - 2);
 		tpPanel.remove(this);
 	}

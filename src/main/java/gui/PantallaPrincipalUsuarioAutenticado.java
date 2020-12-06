@@ -17,6 +17,7 @@ import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
@@ -190,10 +191,7 @@ public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JPanel listarCompetencias = new ListarTodasLasCompetencias(tpPanel, new ArrayList<Object>());
-				tpPanel.add(listarCompetencias, "ListarTodasLasCompetencias");
-				CardLayout layout = (CardLayout)tpPanel.getLayout();
-				layout.show(tpPanel, "ListarTodasLasCompetencias");
+				JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada", " ", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 		});
@@ -206,6 +204,15 @@ public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 				tpPanel.add(listarCompetencias, "ListarCompetencias");
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				layout.show(tpPanel, "ListarCompetencias");
+			}
+			
+		});
+		
+		lugarDeRealizacion.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada", " ", JOptionPane.INFORMATION_MESSAGE);
 			}
 			
 		});
