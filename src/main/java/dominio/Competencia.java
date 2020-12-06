@@ -89,7 +89,6 @@ public class Competencia {
 		this.id=null;
 		this.nombre = compeDTO.getNombre();
 		this.estadoCompetencia = compeDTO.getEstadoCompetencia();
-		this.participantes = compeDTO.getParticipantes();
 		this.reglamento = compeDTO.getReglamento();
 		this.dadaDeBaja = false;
 		this.fechaBaja = null;

@@ -17,12 +17,15 @@ import dominio.Modalidad;
 import dominio.Participante;
 import dominio.Reserva;
 import dominio.SistemaDeCompetencia;
+import dominio.SistemaDeCompetencia.Tipo;
 import dominio.SistemaDeEliminatoriaDoble;
 import dominio.SistemaDeEliminatoriaSimple;
 import dominio.SistemaDeLiga;
 import dominio.Usuario;
 import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
+import dto.EncuentroDTO;
+import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
 import exceptions.ReservasInsuficientesException;
 import utils.Pair;
@@ -49,6 +52,14 @@ public class GestorCompetencia {
 			Deporte deporte = daoDeporte.recuperarDeporte(competenciaDto.getIdDeporteDeCompetencia()); //cambiar deporte
 			competencia.setDeporteDeCompetencia(deporte);
 			
+			List<Participante> participantes = new ArrayList<Participante>();
+			for(ParticipanteDTO participante: competenciaDto.getParticipantes()) {
+				Participante p = new Participante();
+				p.inicializarParticipante(participante);
+				p.setCompetencia(competencia);
+				participantes.add(p);
+			}			
+			competencia.setParticipantes(participantes);
 			
 			Modalidad modalidad = new Modalidad(competencia);
 
@@ -170,11 +181,11 @@ public class GestorCompetencia {
 	
 
 
-	public List<CompetenciaDTO> obtenerCompetencias(){
+	public List<CompetenciaDTO> obtenerCompetencias(String string, String string2, Tipo tipoCompetencia, Estado tipoEstado, String string3){
 		return null;
 	}
 	
-	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr){
+	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr, String string, String string2, Tipo tipoCompetencia, Estado tipoEstado){
 		return null;
 	}
 	
@@ -188,5 +199,7 @@ public class GestorCompetencia {
 		
 	}
 	
-	
+	public List<EncuentroDTO> obtenerProximosEncuentros(CompetenciaDTO competenciaDto){
+		return null;
+	}
 }
