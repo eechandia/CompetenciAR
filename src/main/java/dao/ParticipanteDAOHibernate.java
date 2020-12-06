@@ -3,6 +3,7 @@ package dao;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import dominio.Participante;
@@ -19,20 +20,58 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO{
 	}
 
 	@Override
-	public void darDeBajaParticpante() {
-		// TODO Auto-generated method stub
+	public void darDeBajaParticpante(Participante participante) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		Transaction tx=null;
+		
+		try{
+		    tx = session.beginTransaction();
+		    
+			session.delete(participante);
+			System.out.println("El participante "+ participante.getNombre()+" se elimino con exito");
+			session.flush();	
+			tx.commit();
+			
+		}catch(Exception ex){
+			tx.rollback();	
+			throw ex;
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();
+			
+		}
+		
 		
 	}
 
 	@Override
 	public void modificarParticipante() {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
 	@Override
-	public void guardarParticipante() {
-		// TODO Auto-generated method stub
+	public void guardarParticipante(Participante participante) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		Transaction tx=null;
+		
+		try{
+		    tx = session.beginTransaction();
+		    
+			session.save(participante);
+			session.flush();	
+			tx.commit();
+			
+		}catch(Exception ex){
+			tx.rollback();	
+			throw ex;
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();
+			
+		}
 		
 	}
 

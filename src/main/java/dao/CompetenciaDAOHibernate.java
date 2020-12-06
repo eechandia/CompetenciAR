@@ -132,8 +132,27 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	}
 
 
-	public void darDeBajaCompetencia() {
-		// TODO Auto-generated method stub
+	public void darDeBajaCompetencia(Competencia competencia) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		Transaction tx=null;
+		
+		try{
+		    tx = session.beginTransaction();
+		    
+			session.delete(competencia);
+			System.out.println("La competencia de id: "+ competencia.getId()+" se elimino con exito");
+			session.flush();	
+			tx.commit();
+			
+		}catch(Exception ex){
+			tx.rollback();	
+			throw ex;
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();
+			
+		}
 		
 	}
 

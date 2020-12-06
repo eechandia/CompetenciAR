@@ -145,7 +145,7 @@ public class GestorCompetencia {
 	
 	public void validarEstado(CompetenciaDTO competencia) throws Exception {
 		Estado ESTADO = competencia.getEstadoCompetencia();
-		if(ESTADO != Estado.CREADA || ESTADO != Estado.PLANIFICADA) {
+		if(ESTADO != Estado.CREADA && ESTADO != Estado.PLANIFICADA) {
 			throw new Exception("La competencia no se encuentra en estado Creada o Planificada.");
 		}
 	}
@@ -183,8 +183,9 @@ public class GestorCompetencia {
 	
 	}
 	
-	public boolean eliminarCompetencia ( CompetenciaDTO competencia ) {
-		return false;
+	public void eliminarCompetencia ( Competencia competencia ) {
+		daoCompetencia.darDeBajaCompetencia(competencia);
+		
 	}
 	
 	
