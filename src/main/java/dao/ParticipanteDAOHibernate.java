@@ -2,10 +2,17 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.query.Query;
 
+import dominio.Competencia;
 import dominio.Participante;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
@@ -20,14 +27,21 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO{
 	}
 
 	@Override
-	public void darDeBajaParticpante(Participante participante) {
+	public void darDeBajaParticpante(ParticipanteDTO participanteDTO) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
-		Transaction tx=null;
+		Transaction tx=null; 
 		
 		try{
 		    tx = session.beginTransaction();
-		    
-			session.delete(participante);
+		    		    
+		    CriteriaBuilder builder = session.getCriteriaBuilder();
+		    CriteriaQuery<Participante> criteria = builder.createQuery(Participante.class);
+		    Root<Participante> root = criteria.from(Participante.class);
+		    criteria.select(root).where(builder.equal(root.get("nombre"), participanteDTO.getNombre()));
+		    Participante participante = session.createQuery(criteria).getSingleResult();
+			
+		    session.delete(participante);
+
 			System.out.println("El participante "+ participante.getNombre()+" se elimino con exito");
 			session.flush();	
 			tx.commit();
@@ -38,11 +52,8 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO{
 		}
 		finally {
 			if(session!=null && session.isOpen())
-			session.close();
-			
+			session.close();	
 		}
-		
-		
 	}
 
 	@Override

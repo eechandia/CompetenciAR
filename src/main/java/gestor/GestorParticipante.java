@@ -3,6 +3,7 @@ package gestor;
 import dao.ParticipanteDAO;
 import dao.ParticipanteDAOHibernate;
 import dominio.Competencia;
+import dominio.Fixture;
 import dominio.Participante;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
@@ -10,6 +11,7 @@ import dto.ParticipanteDTO;
 public class GestorParticipante {
 	ParticipanteDAO participanteDAO = new ParticipanteDAOHibernate();
 	GestorCompetencia gestorCompetencia = new GestorCompetencia();
+	GestorFixture gestorFixture = new GestorFixture();
 	
 	
 	public void crearParticipante(ParticipanteDTO participanteDto, CompetenciaDTO competenciaDto) throws Exception {
@@ -33,6 +35,14 @@ public class GestorParticipante {
 	}
 	
 	public boolean eliminarParticipante(ParticipanteDTO participanteDto, CompetenciaDTO competenciaDto) {
+		
+		Competencia competencia = gestorCompetencia.obtenerCompetencia(competenciaDto);
+		Fixture fixture = competencia.getFixture();
+
+		if(fixture != null) {
+			gestorFixture.bajaFixture(fixture);
+		}
+		participanteDAO.darDeBajaParticpante(participanteDto);
 		return false;
 	}
 	

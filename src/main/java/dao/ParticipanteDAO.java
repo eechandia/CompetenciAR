@@ -6,7 +6,7 @@ import dto.ParticipanteDTO;
 
 public interface ParticipanteDAO {
 	
-	public abstract void darDeBajaParticpante(Participante participante);
+	public abstract void darDeBajaParticpante(ParticipanteDTO participante);
 	
 	public abstract void modificarParticipante();
 	
