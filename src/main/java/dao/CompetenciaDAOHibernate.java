@@ -202,7 +202,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		String finalHql;
 
 		try {	
-			String hql;
+			String hql ="";
 			
 			if(filtro.getModalidad() != null) {
 				
@@ -224,8 +224,11 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 				}
 			}
 			else {
-				hql = "FROM Competencia WHERE";
+				hql = "FROM Competencia WHERE ";
 			}
+			
+			String whereNoDadaDeBaja =  " dada_de_baja = false and ";
+			hql += whereNoDadaDeBaja;
 
 			if(filtro.getIdDeporte() != 0) {
 				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
