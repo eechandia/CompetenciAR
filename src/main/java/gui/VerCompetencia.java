@@ -30,11 +30,13 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
+import dominio.Competencia;
 import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import dto.EncuentroDTO;
 import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
+import exceptions.ParticipantesInsuficientesException;
 import exceptions.ReservasInsuficientesException;
 import gestor.GestorCompetencia;
 
@@ -64,10 +66,25 @@ public class VerCompetencia extends JPanel {
 	private void armarPantalla( CompetenciaDTO competencia ) {
 		 
 		//Armar Pantalla
+		//Aux
+		String modalidad = " ";
+		switch(competencia.getTipoSistemaDeCompetencia()) {
+		case ELIMIN_DOBLE:
+			modalidad = "Eliminatoria Doble";
+			break;
+		case ELIMIN_SIMPLE:
+			modalidad = "Eliminatoria Simple";
+			break;
+		case LIGA:
+			modalidad = "Liga";
+			break;
+		default:
+			break;
+		}
 		
 		//Etiquetas
 		JLabel nombreCompetencia = new JLabel( competencia.getNombre());
-		JLabel modalidadCompetencia = new JLabel("Modalidad: " + competencia.getTipoSistemaDeCompetencia().toString().replace("_", " "));
+		JLabel modalidadCompetencia = new JLabel(modalidad);
 		JLabel deporteCompetencia = new JLabel("Deporte: " + competencia.getDeporteDeCompetencia());
 		JLabel estadoCompetencia = new JLabel("Estado: " + competencia.getEstadoCompetencia().toString().replace("_", " "));
 		
@@ -103,7 +120,7 @@ public class VerCompetencia extends JPanel {
 		verParticipantes.setFont(botones);
 		
 		//Dimensiones
-		Dimension etiquetas = new Dimension(200, 30);
+		Dimension etiquetas = new Dimension(400, 30);
 		Dimension botonesArriba = new Dimension(100, 40);
 		Dimension botonesAbajo = new Dimension(200, 40);
 		
@@ -176,9 +193,9 @@ public class VerCompetencia extends JPanel {
 		
 		auxNombres.setBackground(Color.WHITE);
 		
-		auxRelleno.setMinimumSize(new Dimension(400, 40));
-		auxRelleno.setMaximumSize(new Dimension(400, 40));
-		auxRelleno.setPreferredSize(new Dimension(400, 40));
+		auxRelleno.setMinimumSize(new Dimension(200, 40));
+		auxRelleno.setMaximumSize(new Dimension(200, 40));
+		auxRelleno.setPreferredSize(new Dimension(200, 40));
 		auxRelleno.setBackground(Color.WHITE);
 		
 		auxRelleno0.setMinimumSize(new Dimension(40, 40));
@@ -426,7 +443,9 @@ public class VerCompetencia extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int ok = JOptionPane.showConfirmDialog(new JPanel(), "La competencia se eliminará permanentemente", "Advertencia", JOptionPane.OK_CANCEL_OPTION);
-				if(ok == JOptionPane.OK_OPTION && gestorCompetencia.eliminarCompetencia(competencia)) {
+				if(ok == JOptionPane.OK_OPTION ) {
+					Competencia comp = gestorCompetencia.obtenerCompetencia(competencia);
+					gestorCompetencia.eliminarCompetencia(comp);
 					JOptionPane.showMessageDialog(new JPanel(), "La competencia se ha eliminado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
 					competenciaEliminada(filtros);
 				}
@@ -445,13 +464,16 @@ public class VerCompetencia extends JPanel {
 					try {
 						gestorCompetencia.generarFixture(competencia);
 						JOptionPane.showMessageDialog(new JPanel(), "El Fixture se ha creado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
-						competenciaModificada(competencia);
+						competenciaModificada(competencia, true);
 					}
 					catch(EstadoCompetenciaException e1) {
 						JOptionPane.showMessageDialog(new JPanel(), "La Competencia se encuentra en Estado: " + competencia.getEstadoCompetencia() + "\nNo se puede generar un nuevo Fixture", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					catch(ReservasInsuficientesException e2) {
 						JOptionPane.showMessageDialog(new JPanel(), "Los lugares de realización se encuentran llenos\nPruebe más tarde", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch (ParticipantesInsuficientesException e3) {
+						JOptionPane.showMessageDialog(new JPanel(), "Cantidad de participantes insuficientes", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -526,10 +548,17 @@ public class VerCompetencia extends JPanel {
 		String[] columnas = {"Participante"};
 		modeloParticipantes = new DefaultTableModel(columnas, 0);
 		
-		for(ParticipanteDTO participante: participantes) {
-			Object[] renglon = { participante.getNombre()};
+		if(!participantes.isEmpty()) {
+			for(ParticipanteDTO participante: participantes) {
+				Object[] renglon = { participante.getNombre()};
+				modeloParticipantes.addRow(renglon);
+			}
+		}
+		else {
+			Object[] renglon = { "--------------" };
 			modeloParticipantes.addRow(renglon);
 		}
+
 		
 		//actualizar modelo
 		tablaParticipantes.setModel(modeloParticipantes);
@@ -539,12 +568,18 @@ public class VerCompetencia extends JPanel {
 		String[] columnas = {"Etapa", "Local", "Fecha y Hora", "Visitante"};
 		modeloEncuentros = new DefaultTableModel(columnas, 0);	
 		 
-		for(EncuentroDTO encuentro: proximosEncuentros) {
-			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-			String fecha = formato.format( encuentro.getFecha() );
-			Object[] renglon = { encuentro.getEtapa(), encuentro.getParticipante1(), fecha, encuentro.getParticipante2()};
+		if(proximosEncuentros!= null) {
+			for(EncuentroDTO encuentro: proximosEncuentros) {
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+				String fecha = formato.format( encuentro.getFecha() );
+				Object[] renglon = { encuentro.getEtapa(), encuentro.getParticipante1(), fecha, encuentro.getParticipante2()};
+				modeloEncuentros.addRow(renglon);
+				
+			}
+		}
+		else {
+			Object[] renglon = { "---", "--------------", "--/--/---- --:--", "--------------"};
 			modeloEncuentros.addRow(renglon);
-			
 		}
 		
 		//actualizar modelo
@@ -566,7 +601,7 @@ public class VerCompetencia extends JPanel {
 		tpPanel.remove(this);
 	}
 	
-	public void competenciaModificada(CompetenciaDTO competenciaDTO) {
+	public void competenciaModificada(CompetenciaDTO competenciaDTO, boolean verComp) {
 		tpPanel.remove(tpPanel.getComponentCount() - 2);
 		JPanel listarCompetencias = new ListarCompetencias(tpPanel, filtros);
 		tpPanel.add(listarCompetencias, "ListarCompetencias");
@@ -574,7 +609,9 @@ public class VerCompetencia extends JPanel {
 		tpPanel.add(verCompetencia, "VerCompetencia");
 		CardLayout layout = (CardLayout)tpPanel.getLayout();
 		//ver tema usuario
-        layout.show(tpPanel, "VerCompetencia");
+		if(verComp) {
+			layout.show(tpPanel, "VerCompetencia");
+		}
         tpPanel.remove(this);
 	}
 	

@@ -202,8 +202,31 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		String finalHql;
 
 		try {	
-			String hql = "FROM Competencia WHERE";
+			String hql;
 			
+			if(filtro.getModalidad() != null) {
+				
+				switch(filtro.getModalidad()) {
+				case LIGA:
+					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeLiga sl " + 
+							"WHERE m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sl.id and";
+					break;
+				case ELIMIN_SIMPLE:
+					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaSimple sed " + 
+							"WHERE  m.competencia = c.id AND sc.modalidad = m.id AND sc.id = ses.id and";
+					break;
+				case ELIMIN_DOBLE:
+					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaDoble sed " + 
+							"WHERE  m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sed.id and";
+					break;
+				default:
+					break;
+				}
+			}
+			else {
+				hql = "FROM Competencia WHERE";
+			}
+
 			if(filtro.getIdDeporte() != 0) {
 				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
 				hql += whereDeporte;
@@ -217,7 +240,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			
 
 			if(!filtro.getNombreCompetencia().isBlank()) {
-				String likeUsuario = " lower(nombre) LIKE lower(%'"+filtro.getNombreCompetencia()+"%') and";
+				String likeUsuario = " lower(nombre) LIKE lower('%"+filtro.getNombreCompetencia()+"%') and";
 				hql += likeUsuario;
 			}
 			
@@ -258,11 +281,36 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	@Override
 	public List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario) throws Exception {
 		Session session = HibernateUtils.getSessionFactory().openSession();
-		String finalHql;
+		
+		System.out.println(filtro.getModalidad());
 
 		try {	
-			String hql = "FROM Competencia WHERE id_usuario = "+idUsuario.toString()+ " and";
+			String finalHql;
+			String hql = null;
 			
+		if(filtro.getModalidad() != null) {
+			
+			switch(filtro.getModalidad()) {
+			case LIGA:
+				hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeLiga sl " + 
+						"WHERE id_usuario = "+idUsuario.toString()+" AND m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sl.id and";
+				break;
+			case ELIMIN_SIMPLE:
+				hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaSimple sed " + 
+						"WHERE id_usuario = "+idUsuario.toString()+" AND m.competencia = c.id AND sc.modalidad = m.id AND sc.id = ses.id and";
+				break;
+			case ELIMIN_DOBLE:
+				hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaDoble sed " + 
+						"WHERE id_usuario = "+idUsuario.toString()+" AND m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sed.id and";
+				break;
+			default:
+				break;
+			}
+		}
+		else {
+			hql = "FROM Competencia WHERE id_usuario = "+idUsuario.toString()+ " and";
+		}
+		
 			if(filtro.getIdDeporte() != 0) {
 				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
 				hql += whereDeporte;
@@ -276,7 +324,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			
 
 			if(!filtro.getNombreCompetencia().isBlank()) {
-				String likeUsuario = " lower(nombre) LIKE lower(%'"+filtro.getNombreCompetencia()+"%') and";
+				String likeUsuario = " lower(nombre) LIKE lower('%"+filtro.getNombreCompetencia()+"%') and";
 				hql += likeUsuario;
 			}
 			
