@@ -60,5 +60,21 @@ public class FixtureDAOHibernate implements FixtureDAO{
 		}
 		return id;
 	}
+	
+	public void darDeBajaFecha(Fecha fecha) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			session.delete(fecha);
+			session.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();
+		}	
+	}
+
 
 }

@@ -131,17 +131,24 @@ public class GestorCompetencia {
 			
 			Fixture fixture = gestorFixture.generarFixture(participantes,lugaresDeRealizacion);
 			fixture.setId(competencia.getId());
-			competencia.setFixture(fixture);
-			competencia.setEstadoCompetencia(Estado.PLANIFICADA);
-			daoCompetencia.modificarCompetencia(competencia);
-			gestorFixture.guardarFixture(competencia);
+			
+//			competencia.setFixture(fixture);
+//			competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+//			daoCompetencia.modificarCompetencia(competencia);
+//			gestorFixture.guardarFixture(competencia);
 			
 			if (competencia.getFixture() == null) {
-				
+				competencia.setFixture(fixture);
+				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+				daoCompetencia.modificarCompetencia(competencia);
+				gestorFixture.guardarFixture(competencia);
 			}
 			else {
-				//mensaje de confirmacion
-				
+				gestorFixture.bajaFixture(competencia.getFixture());
+				competencia.setFixture(fixture);
+				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+				daoCompetencia.modificarCompetencia(competencia);
+				gestorFixture.guardarFixture(competencia);
 			}
 		}
 	}

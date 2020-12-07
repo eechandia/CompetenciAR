@@ -89,68 +89,7 @@ public class GestorFixture {
 				}
 			}
 		}
-		
 		return fixture;
-		
-		
-		
-//		for (int i=1 ; i<participantes.size();i++) {
-//			
-//			Fecha fecha = new Fecha();
-//			fecha.setNumeroFecha(i);
-//			
-//			if((participantes.size() % 2) == 0) {
-//				
-//				Integer participante1=0;
-//				Integer participante2=participantes.size()-1;
-//				
-//				for (int j=0 ; j<participantes.size() /2 ; j++) {
-//					
-//					EncuentroDeportivo encuentro = gestorEncuentro.generarEncuentro(participantes.get(participante1),participantes.get(participante2),lugaresDeRealizacion.get(0));
-//					lugaresDeRealizacion.remove(0);
-//					fecha.agregarEncuentro(encuentro);
-//					participante1++;
-//					participante2--;
-//				
-//				}
-//				rotarParticipantes(participantes);
-//			}
-//			else {
-//				Participante ultimoParticipante = participantes.get(participantes.size()-1);
-//				participantes.remove(participantes.size()-1);
-//				
-//				Integer participante1=0;
-//				Integer participante2=participantes.size()-1;
-//				
-//					for (int j=0 ; j<participantes.size() /2 ; j++) {
-//					
-//					EncuentroDeportivo encuentro = gestorEncuentro.generarEncuentro(participantes.get(participante1),participantes.get(participante2),lugaresDeRealizacion.get(0));
-//					lugaresDeRealizacion.remove(0);
-//					fecha.agregarEncuentro(encuentro);
-//					participante1++;
-//					participante2--;
-//				
-//				}
-//				participantes.add(ultimoParticipante);
-//				
-//				if(i != (participantes.size()-2)) {
-//					rotarParticipantes(participantes);
-//				}
-//				else {
-//					Participante aux = participantes.get(0);
-//					participantes.set(0, participantes.get(participantes.size()-1));
-//					participantes.set((participantes.size()-1), aux);
-//					participantes.remove(participantes.size()-1);
-//					rotarParticipantes(participantes);
-//					participantes.add(aux);
-//				}
-//			}
-//			
-//			fixture.agregarFecha(fecha);
-//		
-//		}
-//		
-//		return fixture;
 	}
 
 	private void rotarParticipantes(List<Participante> participantes) {
@@ -179,6 +118,25 @@ public class GestorFixture {
 				daoEncuentro.guardarEncuentroDeportivo(unEncuentro);
 			}
 		}
+	}
+	
+	public void borrarFixture() {
+		
+	}
+
+	public void bajaFixture(Fixture fixture) {
+
+		List<Fecha> fechas = fixture.getFechas();
+		EncuentroDeportivoDAO daoEncuentro = new EncuentroDeportivoDAOHibernate();
+		
+		for (Fecha unaFecha : fechas) {
+			List<EncuentroDeportivo> encuentros = unaFecha.getEncuentros();
+			for (EncuentroDeportivo unEncuentro : encuentros) {
+				daoEncuentro.darDeBajaEncuentro(unEncuentro);
+			}
+			daoFixture.darDeBajaFecha(unaFecha);
+		}
+		daoFixture.darDeBajaFixture(fixture);
 	}
 
 }

@@ -15,6 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 @Entity
 @Table(name="Fecha", schema = "tp")
 
@@ -29,6 +32,7 @@ public class Fecha {
 	private Integer numeroFecha;
 	
 	@OneToMany(mappedBy = "fecha")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<EncuentroDeportivo> encuentros;
 	
 	@ManyToOne()

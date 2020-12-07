@@ -24,4 +24,22 @@ public class EncuentroDeportivoDAOHibernate implements EncuentroDeportivoDAO{
 		}	
 	}
 	
+	public void darDeBajaEncuentro(EncuentroDeportivo encuentro) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		try {
+				session.beginTransaction();
+				session.delete(encuentro);
+				session.getTransaction().commit();
+			}catch (Exception e) {
+			e.printStackTrace();
+			}
+			finally {
+				if(session!=null && session.isOpen())
+					session.close();
+		}	
+	}
+
+
+	
+	
 }
