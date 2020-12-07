@@ -441,7 +441,7 @@ public class ListarCompetencias extends JPanel {
 				
 				// ver usuario
 				try {
-					competenciasFiltradas = gestorCompetencia.obtenerCompetencias(new Usuario(1, "ChecoPerez@gmail.com", "hunter12", "Perez", "Checo"), new Filtro(nombreCompetencia.getText(), deportes.get(deporteBox.getSelectedIndex()).getFirst(), tipoCompetencia, tipoEstado));
+					competenciasFiltradas = gestorCompetencia.obtenerCompetencias(GestorUsuario.getUsuario(), new Filtro(nombreCompetencia.getText(), deportes.get(deporteBox.getSelectedIndex()).getFirst(), tipoCompetencia, tipoEstado));
 				} catch (Exception e1) {
 					JOptionPane.showMessageDialog(new JPanel(), e1.getMessage(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
 				}
