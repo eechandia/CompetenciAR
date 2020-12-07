@@ -6,11 +6,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
-import dominio.Competencia;
 import dominio.Deporte;
-import dominio.LugarDeRealizacion;
 import utils.HibernateUtils;
 
 public class DeporteDAOHibernate implements DeporteDAO{

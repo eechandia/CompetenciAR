@@ -43,6 +43,7 @@ import dominio.Usuario;
 import dto.CompetenciaDTO;
 import gestor.GestorCompetencia;
 import gestor.GestorDeporte;
+import gestor.GestorUsuario;
 import utils.Filtro;
 import utils.Pair;
 
