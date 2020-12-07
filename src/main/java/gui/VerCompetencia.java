@@ -38,6 +38,7 @@ import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
 import exceptions.ParticipantesInsuficientesException;
 import exceptions.ReservasInsuficientesException;
+import exceptions.ReservasNoDisponiblesException;
 import gestor.GestorCompetencia;
 
 @SuppressWarnings("serial")
@@ -474,6 +475,9 @@ public class VerCompetencia extends JPanel {
 					}
 					catch (ParticipantesInsuficientesException e3) {
 						JOptionPane.showMessageDialog(new JPanel(), "Cantidad de participantes insuficientes", "Error", JOptionPane.ERROR_MESSAGE);
+					}
+					catch (ReservasNoDisponiblesException e4) {
+						JOptionPane.showMessageDialog(new JPanel(), e4.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}

@@ -31,6 +31,7 @@ import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
 import exceptions.ParticipantesInsuficientesException;
 import exceptions.ReservasInsuficientesException;
+import exceptions.ReservasNoDisponiblesException;
 import utils.Filtro;
 import utils.Pair;
 
@@ -129,7 +130,7 @@ public class GestorCompetencia {
 	
   }
 
-	public void generarFixture(CompetenciaDTO compDto) throws EstadoCompetenciaException, ReservasInsuficientesException, ParticipantesInsuficientesException {
+	public void generarFixture(CompetenciaDTO compDto) throws EstadoCompetenciaException, ReservasInsuficientesException, ParticipantesInsuficientesException, ReservasNoDisponiblesException {
 		Competencia competencia = daoCompetencia.recuperarCompetencia(compDto);
 		System.out.println(competencia);
 		if(competencia.getEstadoCompetencia() != Estado.CREADA && competencia.getEstadoCompetencia() != Estado.PLANIFICADA) {
@@ -142,6 +143,8 @@ public class GestorCompetencia {
 		SistemaDeCompetencia sist = competencia.getModalidad().getSistemaCompetencia();
 		if (sist instanceof SistemaDeLiga) {
 			
+			
+			gestorReserva.reservasDisponibles(reservas);
 			if(gestorReserva.cantidadDeReservasSuficientesSistDeLiga(reservas,participantes) == false) {
 				throw new ReservasInsuficientesException();
 			}
@@ -151,16 +154,14 @@ public class GestorCompetencia {
 			Fixture fixture = gestorFixture.generarFixture(participantes,lugaresDeRealizacion);
 			fixture.setId(competencia.getId());
 			
-//			competencia.setFixture(fixture);
-//			competencia.setEstadoCompetencia(Estado.PLANIFICADA);
-//			daoCompetencia.modificarCompetencia(competencia);
-//			gestorFixture.guardarFixture(competencia);
+
 			
 			if (competencia.getFixture() == null) {
 				competencia.setFixture(fixture);
 				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
 				daoCompetencia.modificarCompetencia(competencia);
 				gestorFixture.guardarFixture(competencia);
+				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
 			}
 			else {
 				gestorFixture.bajaFixture(competencia.getFixture());
@@ -168,6 +169,7 @@ public class GestorCompetencia {
 				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
 				daoCompetencia.modificarCompetencia(competencia);
 				gestorFixture.guardarFixture(competencia);
+				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
 			}
 		}
 	}
