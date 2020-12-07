@@ -67,5 +67,15 @@ public class GestorReserva {
 		}
 		
 	}
+
+	public void actualizarLugaresDeRealizacionBajaFixture(List<Reserva> reservas) {
+	LugarDeRealizacionDAO daoLugarDeRealizacion = new LugarDeRealizacionDAOHibernate();
+		
+		for (Reserva unaReserva : reservas) {
+			LugarDeRealizacion lugar = unaReserva.getLugarDeRealizacion();
+			lugar.setDisponibilidad(lugar.getDisponibilidad() + unaReserva.getDisponibilidad());
+			daoLugarDeRealizacion.actualizarLugarDeRealizacion(lugar);
+		}
+	}
 	
 }

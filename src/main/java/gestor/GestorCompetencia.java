@@ -139,17 +139,21 @@ public class GestorCompetencia {
 		
 		List<Reserva> reservas = competencia.getReservasDisponibles();
 		List<Participante> participantes = competencia.getParticipantes();
+		
 		if(participantes.size() <= 1) throw new ParticipantesInsuficientesException();
 		SistemaDeCompetencia sist = competencia.getModalidad().getSistemaCompetencia();
 		if (sist instanceof SistemaDeLiga) {
 			
 			
 			gestorReserva.reservasDisponibles(reservas);
+			
 			if(gestorReserva.cantidadDeReservasSuficientesSistDeLiga(reservas,participantes) == false) {
 				throw new ReservasInsuficientesException();
 			}
 			
 			List<LugarDeRealizacion> lugaresDeRealizacion = gestorReserva.convertirReservasAListaDeLugares(reservas);
+			
+			if(competencia.getFixture() != null) gestorReserva.actualizarLugaresDeRealizacionBajaFixture(reservas);
 			
 			Fixture fixture = gestorFixture.generarFixture(participantes,lugaresDeRealizacion);
 			fixture.setId(competencia.getId());
