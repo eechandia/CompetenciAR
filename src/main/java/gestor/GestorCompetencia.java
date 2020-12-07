@@ -17,15 +17,19 @@ import dominio.Modalidad;
 import dominio.Participante;
 import dominio.Reserva;
 import dominio.SistemaDeCompetencia;
+import dominio.SistemaDeCompetencia.Tipo;
 import dominio.SistemaDeEliminatoriaDoble;
 import dominio.SistemaDeEliminatoriaSimple;
 import dominio.SistemaDeLiga;
 import dominio.Usuario;
 import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
+import dto.EncuentroDTO;
+import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
 import exceptions.ParticipantesInsuficientesException;
 import exceptions.ReservasInsuficientesException;
+import utils.Filtro;
 import utils.Pair;
 
 public class GestorCompetencia {
@@ -51,6 +55,14 @@ public class GestorCompetencia {
 			Deporte deporte = daoDeporte.recuperarDeporte(competenciaDto.getIdDeporteDeCompetencia()); //cambiar deporte
 			competencia.setDeporteDeCompetencia(deporte);
 			
+			List<Participante> participantes = new ArrayList<Participante>();
+			for(ParticipanteDTO participante: competenciaDto.getParticipantes()) {
+				Participante p = new Participante();
+				p.inicializarParticipante(participante);
+				p.setCompetencia(competencia);
+				participantes.add(p);
+			}			
+			competencia.setParticipantes(participantes);
 			
 			Modalidad modalidad = new Modalidad(competencia);
 
@@ -157,7 +169,7 @@ public class GestorCompetencia {
 	
 	public void validarEstado(CompetenciaDTO competencia) throws Exception {
 		Estado ESTADO = competencia.getEstadoCompetencia();
-		if(ESTADO != Estado.CREADA || ESTADO != Estado.PLANIFICADA) {
+		if(ESTADO != Estado.CREADA && ESTADO != Estado.PLANIFICADA) {
 			throw new Exception("La competencia no se encuentra en estado Creada o Planificada.");
 		}
 	}
@@ -180,24 +192,22 @@ public class GestorCompetencia {
 	
 	}
 	
-
-
-	public List<CompetenciaDTO> obtenerCompetencias(){
-		return null;
-	}
-	
-	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr){
-		return null;
-	}
-	
 	public Competencia obtenerCompetencia(CompetenciaDTO competencia) {
 		return daoCompetencia.recuperarCompetencia( competencia);
 	
 	}
 	
-	public boolean eliminarCompetencia ( CompetenciaDTO competencia ) {
-		return false;
+	public void eliminarCompetencia ( Competencia competencia ) {
+		daoCompetencia.darDeBajaCompetencia(competencia);
+		
 	}
 	
-	
+	public List<EncuentroDTO> obtenerProximosEncuentros(CompetenciaDTO competenciaDto){
+		return null;
+	}
+
+	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr, Filtro filtros) {
+		List<CompetenciaDTO> competencias = new ArrayList<CompetenciaDTO>();
+		return competencias;
+	}
 }

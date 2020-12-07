@@ -11,13 +11,12 @@ import dto.CompetenciaDTO;
 
 public interface CompetenciaDAO {
 	
-	public abstract void darDeBajaCompetencia();
+	public abstract void darDeBajaCompetencia(Competencia competencia);
 
 	public abstract void modificarCompetencia(Competencia competencia);
 	
 	public abstract Boolean guardarCompetencia(Competencia competencia) throws Exception;
 
-	
 	public abstract Boolean verificarSiExiste(String nombre);
 	
 	public abstract Competencia recuperarCompetencia(CompetenciaDTO competencia);

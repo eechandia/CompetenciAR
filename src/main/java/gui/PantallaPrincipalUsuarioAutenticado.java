@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,11 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.border.Border;
@@ -22,6 +25,7 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+@SuppressWarnings("serial")
 public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 
 	private GridBagConstraints gbc;
@@ -99,22 +103,18 @@ public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 		this.addMouseListener(new MouseListener() {
 			
 			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
 				
 			}
 			
@@ -185,6 +185,37 @@ public class PantallaPrincipalUsuarioAutenticado extends JPanel {
 		gbc.fill=GridBagConstraints.NONE;
 		gbc.anchor=GridBagConstraints.CENTER;
 		this.add(lugarDeRealizacion,gbc);
+		
+		//Funcion botones
+		competencias.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada", " ", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		});
+
+		misCompetencias.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JPanel listarCompetencias = new ListarCompetencias(tpPanel, new ArrayList<Object>());
+				tpPanel.add(listarCompetencias, "ListarCompetencias");
+				CardLayout layout = (CardLayout)tpPanel.getLayout();
+				layout.show(tpPanel, "ListarCompetencias");
+			}
+			
+		});
+		
+		lugarDeRealizacion.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada", " ", JOptionPane.INFORMATION_MESSAGE);
+			}
+			
+		});
 
 	}
 

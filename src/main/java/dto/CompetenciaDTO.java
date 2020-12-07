@@ -48,7 +48,7 @@ public class CompetenciaDTO implements Serializable {
 	
 	private FormaPuntuacion.Tipo tipoFormaPuntuacion;
 
-	private List<Participante> participantes;
+	private List<ParticipanteDTO> participantes;
 	
 	private String reglamento;
 	
@@ -61,7 +61,7 @@ public class CompetenciaDTO implements Serializable {
 
 	private List<Pair<Integer, Integer>> reservasDisponibles;
 
-	private Pair<Integer, String> deporteDeCompetencia; //ver en gestores, mejor para la pantalla 
+	private Pair<Integer, String> deporteDeCompetencia; 
 
 	private Integer puntosSiRivalAusente;
 	
@@ -81,7 +81,7 @@ public class CompetenciaDTO implements Serializable {
 			Competencia.Estado estadoCompetencia, 
 			SistemaDeCompetencia.Tipo tipoSistemaDeCompetencia,
 			FormaPuntuacion.Tipo tipoFormaPuntuacion,
-			List<Participante> participantes, 
+			List<ParticipanteDTO> participantes, 
 			String reglamento, 
 			Boolean dadaDeBaja, 
 			LocalDate fechaBaja, 
@@ -167,7 +167,7 @@ public class CompetenciaDTO implements Serializable {
 		return tipoFormaPuntuacion;
 	}
 
-	public List<Participante> getParticipantes() {
+	public List<ParticipanteDTO> getParticipantes() {
 		return participantes;
 	}
 
@@ -243,7 +243,7 @@ public class CompetenciaDTO implements Serializable {
 		this.tipoFormaPuntuacion = tipoFormaPuntuacion;
 	}
 
-	public void setParticipantes(List<Participante> participantes) {
+	public void setParticipantes(List<ParticipanteDTO> participantes) {
 		this.participantes = participantes;
 	}
 
@@ -295,7 +295,9 @@ public class CompetenciaDTO implements Serializable {
 		this.puntosPorPresentarse = puntosPorPresentarse;
 	}
 
-	
+	public void addParticipante(ParticipanteDTO participante) {
+		this.participantes.add(participante);
+	}
 	
 
 }
