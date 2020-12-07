@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -14,6 +15,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import dominio.Competencia;
+import dominio.Competencia.Estado;
 import dominio.Deporte;
 import dominio.Fixture;
 import dominio.Reserva;
@@ -139,7 +141,10 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		try{
 		    tx = session.beginTransaction();
 		    
-			session.delete(competencia);
+		    competencia.setFechaBaja(LocalDate.now());
+		    competencia.setDadaDeBaja(true);
+		    competencia.setEstadoCompetencia(Estado.CANCELADA);
+		    session.update(competencia);
 			System.out.println("La competencia de id: "+ competencia.getId()+" se elimino con exito");
 			session.flush();	
 			tx.commit();
@@ -289,7 +294,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 
 		try {	
 			String finalHql;
-			String hql = null;
+			String hql = "";
 			
 		if(filtro.getModalidad() != null) {
 			
@@ -311,8 +316,11 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			}
 		}
 		else {
-			hql = "FROM Competencia WHERE id_usuario = "+idUsuario.toString()+ " and";
+			hql = " FROM Competencia WHERE id_usuario = "+idUsuario.toString()+ " and";
 		}
+		
+			String whereNoDadaDeBaja =  " dada_de_baja = false and";
+			hql += whereNoDadaDeBaja;
 		
 			if(filtro.getIdDeporte() != 0) {
 				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
