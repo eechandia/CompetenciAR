@@ -153,28 +153,38 @@ public class GestorCompetencia {
 			
 			List<LugarDeRealizacion> lugaresDeRealizacion = gestorReserva.convertirReservasAListaDeLugares(reservas);
 			
-			if(competencia.getFixture() != null) gestorReserva.actualizarLugaresDeRealizacionBajaFixture(reservas);
+			if(competencia.getFixture() != null) {
+				gestorFixture.bajaFixture(competencia.getFixture());
+				gestorReserva.actualizarLugaresDeRealizacionBajaFixture(reservas);
+			}
 			
 			Fixture fixture = gestorFixture.generarFixture(participantes,lugaresDeRealizacion);
 			fixture.setId(competencia.getId());
 			
 
+			competencia.setFixture(fixture);
+			competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+			daoCompetencia.modificarCompetencia(competencia);
+			gestorFixture.guardarFixture(competencia);
+			gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
 			
-			if (competencia.getFixture() == null) {
-				competencia.setFixture(fixture);
-				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
-				daoCompetencia.modificarCompetencia(competencia);
-				gestorFixture.guardarFixture(competencia);
-				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
-			}
-			else {
-				gestorFixture.bajaFixture(competencia.getFixture());
-				competencia.setFixture(fixture);
-				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
-				daoCompetencia.modificarCompetencia(competencia);
-				gestorFixture.guardarFixture(competencia);
-				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
-			}
+			
+			
+			
+//			if (competencia.getFixture() == null) {
+//				competencia.setFixture(fixture);
+//				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+//				daoCompetencia.modificarCompetencia(competencia);
+//				gestorFixture.guardarFixture(competencia);
+//				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
+//			}
+//			else {
+//				competencia.setFixture(fixture);
+//				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+//				daoCompetencia.modificarCompetencia(competencia);
+//				gestorFixture.guardarFixture(competencia);
+//				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
+//			}
 		}
 	}
 	

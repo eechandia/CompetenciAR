@@ -18,6 +18,7 @@ public class GestorFixture {
 	private GestorEncuentro gestorEncuentro = new GestorEncuentro();
 	private FixtureDAOHibernate daoFixture = new FixtureDAOHibernate();
 	
+	
 	public Fixture generarFixture(List<Participante> participantes, List<LugarDeRealizacion> lugaresDeRealizacion) {
 		
 		Fixture fixture = new Fixture();
