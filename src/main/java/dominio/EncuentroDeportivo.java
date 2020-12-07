@@ -86,6 +86,12 @@ public class EncuentroDeportivo {
 	public void setLugarDeRealizacion(LugarDeRealizacion lugarDeRealizacion) {
 		this.lugarDeRealizacion = lugarDeRealizacion;
 	}
+	public Fecha getFecha() {
+		return fecha;
+	}
+	public void setFecha(Fecha fecha) {
+		this.fecha = fecha;
+	}
 	
 	
 	
