@@ -46,7 +46,7 @@ public class GestorReserva {
 	}
 
 	public boolean reservasDisponibles(List<Reserva> reservas) throws ReservasNoDisponiblesException {
-		LugarDeRealizacionDAO daoLugarDeRealizacion = new LugarDeRealizacionDAOHibernate();
+		
 		
 		for (Reserva unaReserva : reservas) {
 			if(unaReserva.getDisponibilidad()>unaReserva.getLugarDeRealizacion().getDisponibilidad()) {
@@ -54,6 +54,18 @@ public class GestorReserva {
 			}
 		}
 		return true;
+	}
+
+	public void actualizarLugaresDeRealizacionGenerarFixture(List<Reserva> reservas) {
+
+		LugarDeRealizacionDAO daoLugarDeRealizacion = new LugarDeRealizacionDAOHibernate();
+		
+		for (Reserva unaReserva : reservas) {
+			LugarDeRealizacion lugar = unaReserva.getLugarDeRealizacion();
+			lugar.setDisponibilidad(lugar.getDisponibilidad() - unaReserva.getDisponibilidad());
+			daoLugarDeRealizacion.actualizarLugarDeRealizacion(lugar);
+		}
+		
 	}
 	
 }

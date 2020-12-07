@@ -27,5 +27,7 @@ public interface LugarDeRealizacionDAO {
 	 * @throws Exception 
 	 */
 	public abstract void guardarReservas(List<Reserva> reservasDisponibles, Competencia competencia, Session session) throws Exception;
+
+	public abstract void actualizarLugarDeRealizacion(LugarDeRealizacion lugar);
 	
 }

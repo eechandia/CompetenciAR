@@ -161,6 +161,7 @@ public class GestorCompetencia {
 				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
 				daoCompetencia.modificarCompetencia(competencia);
 				gestorFixture.guardarFixture(competencia);
+				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
 			}
 			else {
 				gestorFixture.bajaFixture(competencia.getFixture());
@@ -168,6 +169,7 @@ public class GestorCompetencia {
 				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
 				daoCompetencia.modificarCompetencia(competencia);
 				gestorFixture.guardarFixture(competencia);
+				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
 			}
 		}
 	}

@@ -84,5 +84,21 @@ public class LugarDeRealizacionDAOHibernate implements LugarDeRealizacionDAO{
 		}
 	}
 
+	@Override
+	public void actualizarLugarDeRealizacion(LugarDeRealizacion lugar) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		try {
+			session.beginTransaction();
+			session.update(lugar);
+			session.getTransaction().commit();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();
+		}	
+	}
+
 	
 }

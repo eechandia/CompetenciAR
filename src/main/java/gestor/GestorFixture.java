@@ -36,9 +36,10 @@ public class GestorFixture {
 				Integer participante2=participantes.size()-1;
 				
 				for (int j=0 ; j<participantes.size() /2 ; j++) {
-					
-					EncuentroDeportivo encuentro = gestorEncuentro.generarEncuentro(participantes.get(participante1),participantes.get(participante2),lugaresDeRealizacion.get(0));
+					LugarDeRealizacion lugar = lugaresDeRealizacion.get(0);
+					EncuentroDeportivo encuentro = gestorEncuentro.generarEncuentro(participantes.get(participante1),participantes.get(participante2),lugar);
 					lugaresDeRealizacion.remove(0);
+					lugaresDeRealizacion.add(lugar);
 					fecha.agregarEncuentro(encuentro);
 					encuentro.setFecha(fecha);
 					participante1++;
