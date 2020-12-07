@@ -202,7 +202,30 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		String finalHql;
 
 		try {	
-			String hql = "FROM Competencia WHERE";
+			String hql;
+			
+			if(filtro.getModalidad() != null) {
+				
+				switch(filtro.getModalidad()) {
+				case LIGA:
+					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeLiga sl " + 
+							"WHERE m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sl.id and";
+					break;
+				case ELIMIN_SIMPLE:
+					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaSimple sed " + 
+							"WHERE  m.competencia = c.id AND sc.modalidad = m.id AND sc.id = ses.id and";
+					break;
+				case ELIMIN_DOBLE:
+					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaDoble sed " + 
+							"WHERE  m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sed.id and";
+					break;
+				default:
+					break;
+				}
+			}
+			else {
+				hql = "FROM Competencia WHERE";
+			}
 
 			if(filtro.getIdDeporte() != 0) {
 				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
