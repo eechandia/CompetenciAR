@@ -23,6 +23,7 @@ public class App extends JFrame {
 	private CardLayout cl;
 	private GestorParticipante gestorParticipante;
 	private PantallaPrincipalUsuarioAutenticado usuarioA;
+
 	
 	public void armarApp(){
 		this.setBackground(Color.WHITE);
@@ -34,9 +35,7 @@ public class App extends JFrame {
 		this.setIconImage(new ImageIcon("src/main/resources/icono.JPG").getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
-		//Inicializar gestores
-		GestorDeporte gestorDeporte = new GestorDeporte();
-		GestorCompetencia gestorCompetencia = new GestorCompetencia();
+	
 
 		//Inicializar paneles y CardLayout
 		tpPanel = new JPanel();
@@ -55,6 +54,11 @@ public class App extends JFrame {
 	}
 	
 	public static void main(String[] args) {
+		//Inicializar gestores
+		GestorDeporte gestorDeporte = new GestorDeporte();
+		GestorCompetencia gestorCompetencia = new GestorCompetencia();
+		gestorCompetencia.obtenerCompetencia(null); //busca un objeto null para que hibernate arranque antes de la app
+		
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
