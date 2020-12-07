@@ -44,11 +44,12 @@ public class GestorCompetencia {
 	
 	public void darDeAltaCompetencia(CompetenciaDTO competenciaDto) throws Exception{
 		
+		//usuario de prueba
 		Usuario usuario = new Usuario(1, "ChecoPerez@gmail.com", "hunter12", "Perez", "Checo");
 		Competencia competencia = new Competencia();
 		
 		if(daoCompetencia.verificarSiExiste(competenciaDto.getNombre())){
-			throw new Exception("Nombre ya existe");
+			throw new Exception("El nombre de la competencia ya esta en uso, por favor elija otro.");
 		}
 		else {
 			
