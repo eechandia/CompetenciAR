@@ -268,8 +268,6 @@ public class ListarParticipantesCompetencia extends JPanel {
 		        final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
 		        c.setBackground(row % 2 == 0 ? new Color(187, 255, 241) : Color.WHITE);
 		        if(isSelected) c.setBackground(Color.BLUE);
-	        	modificar.setEnabled(isSelected);
-	        	eliminar.setEnabled(isSelected);
 		        return c;
 		    }
 		};
@@ -357,10 +355,10 @@ public class ListarParticipantesCompetencia extends JPanel {
 						competenciaDTO.getParticipantes().remove(tablaParticipantes.getSelectedRow());
 						JOptionPane.showMessageDialog(new JPanel(), "El participante se ha eliminado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
 						actualizarTablaParticipantes(competenciaDTO.getParticipantes());
-						((VerCompetencia) tpPanel.getComponent(tpPanel.getComponentCount() - 2)).competenciaModificada(competenciaDTO);
+						((VerCompetencia) tpPanel.getComponent(tpPanel.getComponentCount() - 2)).competenciaModificada(competenciaDTO, false);
 					}
 					else {
-						JOptionPane.showMessageDialog(new JPanel(), "No se pudo eliminar la competencia", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(new JPanel(), "No se pudo eliminar al participante", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -381,6 +379,9 @@ public class ListarParticipantesCompetencia extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
                 tablaParticipantes.clearSelection();
+                modificar.setEnabled(tablaParticipantes.getSelectedRow() != -1);
+                eliminar.setEnabled(tablaParticipantes.getSelectedRow() != -1);
+                System.out.printf(String.valueOf(tablaParticipantes.getSelectedRow()));
 			}
 
 			@Override

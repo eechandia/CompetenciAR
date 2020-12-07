@@ -972,10 +972,11 @@ public class AltaCompetencia extends JPanel {
 							empate.isSelected(), (Integer) puntosEmp.getValue(), (Integer) puntosPorPresentarse.getValue());
 					try {
 						gestorCompetencia.darDeAltaCompetencia(competenciaDTO);
+						JOptionPane.showMessageDialog(new JPanel(), "La competencia se ha guardado correctamente" , "Información", JOptionPane.INFORMATION_MESSAGE);
+						competenciaCreada(filtros);
 					} catch (Exception e1) {
 						JOptionPane.showMessageDialog(new JPanel(), "Error: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
-					competenciaCreada(filtros);
 				}				
 			}
 	    	
@@ -999,20 +1000,27 @@ public class AltaCompetencia extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Triplet<Integer, String, Integer> lugarSeleccionado = comboLugares.getItemAt(comboLugares.getSelectedIndex());
 				if(lugarSeleccionado.getFirst() >= 0 && (Integer) encuentros.getValue() > 0) {
-					if((Integer) encuentros.getValue() <= lugarSeleccionado.getThird()) {
 						reservas.add(new Triplet<Integer, String, Integer>(lugarSeleccionado.getFirst(), lugarSeleccionado.getSecond(), (Integer) encuentros.getValue()));
 						actualizarTablaLugar(reservas);
 						lugaresSeleccionados.add(lugarSeleccionado);
 						comboLugares.removeItemAt(comboLugares.getSelectedIndex());
 						encuentros.setValue(0);
 						comboLugares.setSelectedIndex(0);	
-					}
-					else {
-						JOptionPane.showMessageDialog(new JPanel(), "La disponibilidad de este lugar es de: " + lugarSeleccionado.getThird(), "Advertencia", JOptionPane.WARNING_MESSAGE);
-					}
 				}
 				else {
 					JOptionPane.showMessageDialog(new JPanel(), "Uno o más de los campos se encuentran vacíos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+					if(comboLugares.getSelectedIndex() == 0) {
+						nombreTexto.setBorder(BorderFactory.createLineBorder(Color.red, 2));
+					}
+					else {
+						nombreTexto.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+					}
+					if((Integer) encuentros.getValue() == 0) {
+						deporteBox.setBorder(BorderFactory.createLineBorder(Color.red, 2));
+					}
+					else {
+						deporteBox.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
+					}
 				}
 			}
 	    	

@@ -58,14 +58,18 @@ public class GestorCompetencia {
 			Deporte deporte = daoDeporte.recuperarDeporte(competenciaDto.getIdDeporteDeCompetencia()); //cambiar deporte
 			competencia.setDeporteDeCompetencia(deporte);
 			
-			List<Participante> participantes = new ArrayList<Participante>();
-			for(ParticipanteDTO participante: competenciaDto.getParticipantes()) {
-				Participante p = new Participante();
-				p.inicializarParticipante(participante);
-				p.setCompetencia(competencia);
-				participantes.add(p);
-			}			
-			competencia.setParticipantes(participantes);
+			
+			if(competenciaDto.getParticipantes() != null) {
+				List<Participante> participantes = new ArrayList<Participante>();
+				for(ParticipanteDTO participante: competenciaDto.getParticipantes()) {
+					Participante p = new Participante();
+					p.inicializarParticipante(participante);
+					p.setCompetencia(competencia);
+					participantes.add(p);
+				}			
+				competencia.setParticipantes(participantes);
+			}
+
 			
 			Modalidad modalidad = new Modalidad(competencia);
 

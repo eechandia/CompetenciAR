@@ -458,12 +458,7 @@ public class ListarCompetencias extends JPanel {
 		agregar.addActionListener( new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
-				List<Object> filtros = new ArrayList<Object>();
-				filtros.add(nombreCompetencia.getText());
-				filtros.add(deporteBox.getSelectedIndex());
-				filtros.add(modalidad.getSelectedIndex());
-				filtros.add(estado.getSelectedIndex());
-				JPanel altaCompetencia = new AltaCompetencia(tpPanel, filtros);
+				JPanel altaCompetencia = new AltaCompetencia(tpPanel, new ArrayList<Object>());
 				tpPanel.add(altaCompetencia, "AltaCompetencia");
 				CardLayout layout = (CardLayout)tpPanel.getLayout();
 				//ver tema usuario
@@ -514,6 +509,7 @@ public class ListarCompetencias extends JPanel {
 		nombreCompetencia.addKeyListener(new KeyAdapter() {
 		    public void keyTyped(KeyEvent e) { 
 		        if (nombreCompetencia.getText().length() >= 150 ) e.consume(); 
+		        buscar.setEnabled(nombreCompetencia.getText().length() > 0 || modalidad.getSelectedIndex() != 0 || deporteBox.getSelectedIndex() != 0 || estado.getSelectedIndex() != 0);
 		    }  
 		});
 		
@@ -521,7 +517,7 @@ public class ListarCompetencias extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				buscar.setEnabled(modalidad.getSelectedIndex() != 0);
+				buscar.setEnabled(nombreCompetencia.getText().length() > 0 || modalidad.getSelectedIndex() != 0 || deporteBox.getSelectedIndex() != 0 || estado.getSelectedIndex() != 0);
 			}
 			
 		});
@@ -530,7 +526,7 @@ public class ListarCompetencias extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				buscar.setEnabled(deporteBox.getSelectedIndex() != 0);
+				buscar.setEnabled(nombreCompetencia.getText().length() > 0 || modalidad.getSelectedIndex() != 0 || deporteBox.getSelectedIndex() != 0 || estado.getSelectedIndex() != 0);
 			}
 			
 		});
@@ -539,7 +535,7 @@ public class ListarCompetencias extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				buscar.setEnabled(estado.getSelectedIndex() != 0);
+				buscar.setEnabled(nombreCompetencia.getText().length() > 0 || modalidad.getSelectedIndex() != 0 || deporteBox.getSelectedIndex() != 0 || estado.getSelectedIndex() != 0);
 			}
 			
 		});
@@ -549,6 +545,7 @@ public class ListarCompetencias extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
                 tablaCompetencias.clearSelection();
+                verDetalles.setEnabled(tablaCompetencias.getSelectedRow() != -1);
 			}
 
 			@Override
@@ -602,7 +599,21 @@ public class ListarCompetencias extends JPanel {
 		modeloCompetencia = new DefaultTableModel(columnas, 0);		
 
 		for(CompetenciaDTO competencia: competencias) {
-			String modalidad = competencia.getTipoSistemaDeCompetencia().toString().replace("_", " ");
+			String modalidad = " ";
+			switch(competencia.getTipoSistemaDeCompetencia()) {
+			case ELIMIN_DOBLE:
+				modalidad = "Eliminatoria Doble";
+				break;
+			case ELIMIN_SIMPLE:
+				modalidad = "Eliminatoria Simple";
+				break;
+			case LIGA:
+				modalidad = "Liga";
+				break;
+			default:
+				break;
+			}
+			
 			String estado = competencia.getEstadoCompetencia().toString().replace("_", " ");
 			Object[] renglon = { competencia.getNombre(), competencia.getDeporteDeCompetencia().getSecond(), modalidad, estado};
 			modeloCompetencia.addRow(renglon);
