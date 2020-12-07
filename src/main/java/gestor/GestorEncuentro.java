@@ -6,6 +6,8 @@ import dominio.Participante;
 
 public class GestorEncuentro {
 
+	
+	
 	public EncuentroDeportivo generarEncuentro(Participante participante1, Participante participante2,
 			LugarDeRealizacion lugarDeRealizacion) {
 		

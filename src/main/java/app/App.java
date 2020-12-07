@@ -22,6 +22,7 @@ import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
+import exceptions.ParticipantesInsuficientesException;
 import exceptions.ReservasInsuficientesException;
 import gestor.*;
 import gui.*;
@@ -66,37 +67,44 @@ public class App extends JFrame {
 		this.setBounds(43, 43, 1280, 720);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		//Inicializar gestores
+
+	//	Inicializar gestores
+		gestorDeporte = new GestorDeporte();
 		gestorCompetencia = new GestorCompetencia();
 		
-//		CompetenciaDTO compDTO = new CompetenciaDTO(29, null, null, null, null, null, null, null, null, null, null, null, null,null, null, null, null, null);
-//		try {
-//			gestorCompetencia.generarFixture(compDTO);
-//		} catch (EstadoCompetenciaException e) {
-//			// TODO Auto-generated catch block
-//			System.out.println(e.getMessage());
-//		} catch (ReservasInsuficientesException e) {
-//			// TODO Auto-generated catch block
-//			System.out.println(e.getMessage());
-//		}
+		CompetenciaDTO compDTO = new CompetenciaDTO(31, null, null, null, null, null, null, null, null, null, null, null, null,null, null, null, null, null);
+		try {
+			gestorCompetencia.generarFixture(compDTO);
+		} catch (ParticipantesInsuficientesException e) {
+			System.out.println(e.getMessage());
+		} catch (EstadoCompetenciaException e) {
+			System.out.println(e.getMessage());
+		} catch (ReservasInsuficientesException e) {
+			System.out.println(e.getMessage());
+		}
 		
-		//###########Para probar metodo de alta Participante###########
-				CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
-				GestorCompetencia gestorCompetencia = new GestorCompetencia();
-				
-				CompetenciaDTO competencia= new CompetenciaDTO(30,null,Estado.CREADA,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
-				
-				ParticipanteDTO participante = new ParticipanteDTO("Messi", "Messi");
-				GestorParticipante gestorParticipante = new GestorParticipante();
-				try {
-					gestorParticipante.crearParticipante(participante, competencia);
-					System.out.println("funciono");
-				} catch (Exception e1) {
-					System.out.println("F");
-					e1.printStackTrace();
-				}
-		
-		
+//		//###########Para probar metodo de alta Participante###########
+//				CompetenciaDAOHibernate competenciaDAO= new CompetenciaDAOHibernate();
+//				
+//				//Esta fallando esto de competenciaDTO
+//				GestorCompetencia gestorCompetencia = new GestorCompetencia();
+//				
+//				
+//				CompetenciaDTO competencia= new CompetenciaDTO(31,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null);
+//
+//				
+//				ParticipanteDTO participante = new ParticipanteDTO("aaaa", "aaaa@gmail.com");
+//				GestorParticipante gestorParticipante = new GestorParticipante();
+//				try {
+//					gestorParticipante.crearParticipante(participante, competencia);
+//					System.out.println("funciono");
+//				} catch (Exception e1) {
+//					System.out.println("F");
+//					e1.printStackTrace();
+//				}
+//		
+//		
+
 		
 		//Inicializar paneles y CardLayout
 		tpPanel = new JPanel();

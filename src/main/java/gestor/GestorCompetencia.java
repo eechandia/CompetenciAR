@@ -27,6 +27,7 @@ import dto.CompetenciaDTO;
 import dto.EncuentroDTO;
 import dto.ParticipanteDTO;
 import exceptions.EstadoCompetenciaException;
+import exceptions.ParticipantesInsuficientesException;
 import exceptions.ReservasInsuficientesException;
 import utils.Filtro;
 import utils.Pair;
@@ -37,6 +38,7 @@ public class GestorCompetencia {
 	private DeporteDAOHibernate daoDeporte = new DeporteDAOHibernate();
 	private GestorReserva gestorReserva = new GestorReserva();
 	private GestorFixture gestorFixture = new GestorFixture();
+	
 	
 	public void darDeAltaCompetencia(CompetenciaDTO competenciaDto) throws Exception{
 		
@@ -120,16 +122,16 @@ public class GestorCompetencia {
 	
   }
 
-	public void generarFixture(CompetenciaDTO compDto) throws EstadoCompetenciaException, ReservasInsuficientesException {
+	public void generarFixture(CompetenciaDTO compDto) throws EstadoCompetenciaException, ReservasInsuficientesException, ParticipantesInsuficientesException {
 		Competencia competencia = daoCompetencia.recuperarCompetencia(compDto);
 		System.out.println(competencia);
-		if(competencia.getEstadoCompetencia() != Estado.CREADA || competencia.getEstadoCompetencia() != Estado.PLANIFICADA) {
+		if(competencia.getEstadoCompetencia() != Estado.CREADA && competencia.getEstadoCompetencia() != Estado.PLANIFICADA) {
 			throw new EstadoCompetenciaException();
 		}
 		
 		List<Reserva> reservas = competencia.getReservasDisponibles();
 		List<Participante> participantes = competencia.getParticipantes();
-		
+		if(participantes.size() <= 1) throw new ParticipantesInsuficientesException();
 		SistemaDeCompetencia sist = competencia.getModalidad().getSistemaCompetencia();
 		if (sist instanceof SistemaDeLiga) {
 			
@@ -140,15 +142,25 @@ public class GestorCompetencia {
 			List<LugarDeRealizacion> lugaresDeRealizacion = gestorReserva.convertirReservasAListaDeLugares(reservas);
 			
 			Fixture fixture = gestorFixture.generarFixture(participantes,lugaresDeRealizacion);
+			fixture.setId(competencia.getId());
+			
+//			competencia.setFixture(fixture);
+//			competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+//			daoCompetencia.modificarCompetencia(competencia);
+//			gestorFixture.guardarFixture(competencia);
 			
 			if (competencia.getFixture() == null) {
 				competencia.setFixture(fixture);
 				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
 				daoCompetencia.modificarCompetencia(competencia);
+				gestorFixture.guardarFixture(competencia);
 			}
 			else {
-				//mensaje de confirmacion
-				
+				gestorFixture.bajaFixture(competencia.getFixture());
+				competencia.setFixture(fixture);
+				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
+				daoCompetencia.modificarCompetencia(competencia);
+				gestorFixture.guardarFixture(competencia);
 			}
 		}
 	}
