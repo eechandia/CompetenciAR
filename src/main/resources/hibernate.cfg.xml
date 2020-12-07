@@ -10,6 +10,7 @@
         <property name="hibernate.connection.password">NhtBV0fJkxswJU_wnGShHGwMDup5cj_6</property>
         <property name="hibernate.connection.url">jdbc:postgresql://tuffi.db.elephantsql.com:5432/dchqgbyd</property>
         <property name="hibernate.connection.autocommit">true</property>
+        <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
 		
 
         
