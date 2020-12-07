@@ -37,4 +37,41 @@ public class Sesion {
 	@ManyToOne()
     @JoinColumn(name = "id_usuario")
 	private Usuario usuario;
+	
+	public Sesion(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public LocalDateTime getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(LocalDateTime fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public LocalDateTime getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(LocalDateTime fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+	
 }
