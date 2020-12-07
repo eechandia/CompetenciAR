@@ -41,6 +41,22 @@ public class SistemaDeLiga extends SistemaDeCompetencia {
 	public SistemaDeLiga() {
 		super();
 	}
+
+	public Integer getPuntosPorPartido() {
+		return puntosPorPartido;
+	}
+
+	public Boolean getEmpatePermitido() {
+		return empatePermitido;
+	}
+
+	public Integer getPuntosPorEmpate() {
+		return puntosPorEmpate;
+	}
+
+	public Integer getPuntosPorPresentarse() {
+		return puntosPorPresentarse;
+	}
 	
 	
 }

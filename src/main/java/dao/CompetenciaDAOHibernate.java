@@ -11,14 +11,14 @@ import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-
-
+import org.hibernate.query.Query;
 
 import dominio.Competencia;
 import dominio.Deporte;
 import dominio.Fixture;
 import dominio.Reserva;
 import dto.CompetenciaDTO;
+import utils.Filtro;
 import utils.HibernateUtils;
 import utils.Pair;
 
@@ -191,16 +191,119 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	}
 
 
+//	Nombre -> String vacio o Nombre de la competencia
+//	Deporte -> 0 (si no se busca) o un integer con el id de deporte
+//	Modalidad -> null o tipo.Competencia
+//	Estado -> null o Estado.Competencia
+	
+	@Override
+	public List<Competencia> obtenerCompetencias(Filtro filtro) throws Exception {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		String finalHql;
+		try {	
+			String hql = "SELECT * FROM tp.Competencia c WHERE";
+			
+			
+			if(filtro.getIdDeporte() != 0) {
+				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
+				hql += whereDeporte;
+			}
+			
+			if(filtro.getEstado() != null) {
+				String whereEstado = " estado = " +filtro.getEstado() +" and ";	
+				hql += whereEstado;
+			}
+			
 
+			if(!filtro.getNombreCompetencia().isBlank()) {
+				String likeUsuario = "nombre LIKE "+filtro.getNombreCompetencia()+" and ";
+				hql += likeUsuario;
+			}
+			
+			if(hql.endsWith("and")) {
+				String trimmedHql = hql.trim();
+				finalHql = trimmedHql.substring(trimmedHql.lastIndexOf(" "), trimmedHql.length());
+				
+			}
+			else {
+				finalHql = hql;
+			}
+			
 
-
-
-
-
-
-
+			//String hql = "SELECT nombre FROM Participante p WHERE nombre = :nombre_participante and id_competencia = :id_competencia";
+			
+			Query query = session.createQuery(finalHql);
+			List resultados = query.list();
+			
+			if (resultados.isEmpty()) {
+				throw new Exception("No hay competencias con estos filtros");
+			}
+			else {
+				return resultados;
+			}
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();	
+		}
+	}
+		
 	
 	
-	
+//	Nombre -> String vacio o Nombre de la competencia
+//	Deporte -> 0 (si no se busca) o un integer con el id de deporte
+//	Modalidad -> null o tipo.Competencia
+//	Estado -> null o Estado.Competencia
+
+	@Override
+	public List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario) throws Exception {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		String finalHql;
+		try {	
+			String hql = "SELECT * FROM Competencia c WHERE id_usuario = "+idUsuario.toString()+ " and";
+			
+			
+			if(filtro.getIdDeporte() != 0) {
+				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
+				hql += whereDeporte;
+			}
+			
+			if(filtro.getEstado() != null) {
+				String whereEstado = " estado = " +filtro.getEstado() +" and";	
+				hql += whereEstado;
+			}
+			
+
+			if(!filtro.getNombreCompetencia().isBlank()) {
+				String likeUsuario = " nombre LIKE "+filtro.getNombreCompetencia()+"% and";
+				hql += likeUsuario;
+			}
+			
+			if(hql.endsWith("and")) {
+				String trimmedHql = hql.trim();
+				finalHql = trimmedHql.substring(trimmedHql.lastIndexOf(" "), trimmedHql.length());
+				
+			}
+			else {
+			    finalHql = hql;
+			}
+
+			//String hql = "SELECT nombre FROM Participante p WHERE nombre = :nombre_participante and id_competencia = :id_competencia";
+			
+			Query query = session.createQuery(finalHql);
+			List resultados = query.list();
+			
+			if (resultados.isEmpty()) {
+				throw new Exception("No hay competencias para este usuario con estos filtros");
+			}
+			else {
+				return resultados;
+			}
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();	
+		}
+	}	
 	
 }

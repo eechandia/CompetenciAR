@@ -73,6 +73,8 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 	
-	
+	public Integer getId() {
+		return this.id;
+	}
 	
 }

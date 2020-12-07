@@ -4,7 +4,13 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -58,20 +64,25 @@ public class App extends JFrame {
 //		
 //	}
 	
-	public void armarApp() {
+	public void armarApp(){
 		this.setBackground(Color.WHITE);
-		this.setTitle("Trabajo Práctico 2020 - Diseño de Sistemas");
+		this.setTitle("Trabajo Practico 2020 - Disenio de Sistemas");
 		this.setMinimumSize(new Dimension(1280, 720));
 		this.setMaximumSize(new Dimension(1280, 720));
 		this.setPreferredSize(new Dimension(1280, 720));
 		this.setBounds(43, 43, 1280, 720);
+		this.setIconImage(new ImageIcon("src/main/resources/icono.JPG").getImage());
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		
+		
 		
 
 	//	Inicializar gestores
 		gestorDeporte = new GestorDeporte();
 		gestorCompetencia = new GestorCompetencia();
 		
+
 		CompetenciaDTO compDTO = new CompetenciaDTO(31, null, null, null, null, null, null, null, null, null, null, null, null,null, null, null, null, null);
 		try {
 			gestorCompetencia.generarFixture(compDTO);
@@ -94,6 +105,7 @@ public class App extends JFrame {
 //
 //				
 //				ParticipanteDTO participante = new ParticipanteDTO("aaaa", "aaaa@gmail.com");
+
 //				GestorParticipante gestorParticipante = new GestorParticipante();
 //				try {
 //					gestorParticipante.crearParticipante(participante, competencia);
@@ -102,8 +114,6 @@ public class App extends JFrame {
 //					System.out.println("F");
 //					e1.printStackTrace();
 //				}
-//		
-//		
 
 		
 		//Inicializar paneles y CardLayout

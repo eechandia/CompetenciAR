@@ -22,5 +22,10 @@ public class FormaPuntuacionPuntuacion extends FormaPuntuacion {
 	public FormaPuntuacionPuntuacion() {
 		super();
 	}
+
+	public Integer getPuntos_si_rival_ausente() {
+		return puntos_si_rival_ausente;
+	}
+	
 	
 }

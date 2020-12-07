@@ -1,5 +1,6 @@
 package gestor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import com.sun.xml.fastinfoset.UnparsedEntity;
@@ -9,6 +10,7 @@ import dao.DeporteDAOHibernate;
 import dominio.Competencia;
 import dominio.Deporte;
 import dominio.Fixture;
+import dominio.FormaPuntuacion;
 import dominio.FormaPuntuacionPuntuacion;
 import dominio.FormaPuntuacionResFinal;
 import dominio.FormaPuntuacionSets;
@@ -206,8 +208,75 @@ public class GestorCompetencia {
 		return null;
 	}
 
-	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr, Filtro filtros) {
-		List<CompetenciaDTO> competencias = new ArrayList<CompetenciaDTO>();
-		return competencias;
+	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr, Filtro filtros) throws Exception {
+		List<CompetenciaDTO> competenciasDTO = new ArrayList<CompetenciaDTO>();
+			List <Competencia> competencias = daoCompetencia.obtenerCompetenciasDeUsuario(filtros, usr.getId());
+			for(Competencia c: competencias) {
+				Integer puntosSiRivalAusente = 0;
+				Integer cantidadMaxSets = 0;
+				Integer puntosPorPartido = 0;
+				Boolean empatePermitido = false;
+				Integer puntosPorEmpate = 0;
+				Integer puntosPorPresentarse = 0;
+				
+				List<ParticipanteDTO> participantes = new ArrayList<ParticipanteDTO>();
+				for(Participante p: c.getParticipantes()) {
+					ParticipanteDTO pDTO = new ParticipanteDTO(p.getNombre(), p.getEmail());
+					participantes.add(pDTO);
+				}
+				
+				SistemaDeCompetencia.Tipo tipoCompetencia = null;
+				if(c.getModalidad().getSistemaCompetencia() instanceof SistemaDeEliminatoriaDoble) {
+					tipoCompetencia = SistemaDeCompetencia.Tipo.ELIMIN_DOBLE;
+				}
+				else {
+					if(c.getModalidad().getSistemaCompetencia() instanceof SistemaDeLiga) {
+						tipoCompetencia = SistemaDeCompetencia.Tipo.LIGA;
+						empatePermitido = ((SistemaDeLiga) c.getModalidad().getSistemaCompetencia()).getEmpatePermitido();
+						puntosPorPartido = ((SistemaDeLiga) c.getModalidad().getSistemaCompetencia()).getPuntosPorPartido();
+						puntosPorEmpate = ((SistemaDeLiga) c.getModalidad().getSistemaCompetencia()).getPuntosPorEmpate();
+						puntosPorPresentarse = ((SistemaDeLiga) c.getModalidad().getSistemaCompetencia()).getPuntosPorPresentarse();
+					}
+					else {
+						tipoCompetencia = SistemaDeCompetencia.Tipo.ELIMIN_SIMPLE;
+					}
+				}
+				
+				FormaPuntuacion.Tipo formaP = null;
+				if(c.getModalidad().getFormaPuntuacion() instanceof FormaPuntuacionSets) {
+					formaP = FormaPuntuacion.Tipo.SETS;
+					cantidadMaxSets = ((FormaPuntuacionSets) c.getModalidad().getFormaPuntuacion()).getCantidad_max_sets();
+				}
+				else {
+					if(c.getModalidad().getFormaPuntuacion() instanceof FormaPuntuacionPuntuacion) {
+						formaP = FormaPuntuacion.Tipo.PUNTUACION;
+						puntosSiRivalAusente = ((FormaPuntuacionPuntuacion) c.getModalidad().getFormaPuntuacion()).getPuntos_si_rival_ausente();
+					}
+					else {
+						formaP = FormaPuntuacion.Tipo.RESULTADO_FINAL;
+					}
+				}
+
+				List<Pair<Integer, Integer>> reservas = new ArrayList<Pair<Integer, Integer>>();
+				for(Reserva r: c.getReservasDisponibles()) {
+					Pair<Integer, Integer> re = new Pair<Integer, Integer>();
+					re.setFirst(r.getLugarDeRealizacion().getCodigo());
+					re.setSecond(r.getDisponibilidad()); //???????????
+					reservas.add(re);
+				}
+				
+				Pair<Integer, String> deporte = new Pair<Integer, String>();
+				deporte.setFirst(c.getDeporteDeCompetencia().getId());
+				deporte.setSecond(c.getDeporteDeCompetencia().getNombre());
+				
+				CompetenciaDTO cDTO = new CompetenciaDTO( c.getId(), c.getNombre(), c.getEstadoCompetencia(), 
+						tipoCompetencia, formaP, participantes, c.getReglamento(), c.getDadaDeBaja(), c.getFechaBaja(), c.getUsuarioAsociado(),
+						reservas, deporte, puntosSiRivalAusente, cantidadMaxSets, puntosPorPartido, empatePermitido, 
+						puntosPorEmpate, puntosPorPresentarse);	
+						
+				competenciasDTO.add(cDTO);
+			}
+
+		return competenciasDTO;
 	}
 }
