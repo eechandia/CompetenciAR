@@ -38,8 +38,9 @@ public class Sesion {
     @JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 	
-	public Sesion(Integer id) {
+	public Sesion(Integer id, Usuario usuario) {
 		this.id = id;
+		this.usuario = usuario;
 	}
 
 	public Integer getId() {
