@@ -200,9 +200,9 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	public List<Competencia> obtenerCompetencias(Filtro filtro) throws Exception {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		String finalHql;
+
 		try {	
-			String hql = "SELECT * FROM tp.Competencia c WHERE";
-			
+			String hql = "FROM Competencia WHERE";
 			
 			if(filtro.getIdDeporte() != 0) {
 				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
@@ -210,25 +210,25 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			}
 			
 			if(filtro.getEstado() != null) {
-				String whereEstado = " estado = " +filtro.getEstado() +" and ";	
+				System.out.println("entro");
+				String whereEstado = " estado = '" +filtro.getEstado().toString() +"' and";	
 				hql += whereEstado;
 			}
 			
 
 			if(!filtro.getNombreCompetencia().isBlank()) {
-				String likeUsuario = "nombre LIKE "+filtro.getNombreCompetencia()+" and ";
+				String likeUsuario = " lower(nombre) LIKE lower(%'"+filtro.getNombreCompetencia()+"%') and";
 				hql += likeUsuario;
 			}
 			
 			if(hql.endsWith("and")) {
 				String trimmedHql = hql.trim();
-				finalHql = trimmedHql.substring(trimmedHql.lastIndexOf(" "), trimmedHql.length());
+				finalHql = trimmedHql.substring(0, trimmedHql.lastIndexOf(" "));
 				
 			}
 			else {
-				finalHql = hql;
+			    finalHql = hql;
 			}
-			
 
 			//String hql = "SELECT nombre FROM Participante p WHERE nombre = :nombre_participante and id_competencia = :id_competencia";
 			
@@ -259,9 +259,9 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	public List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario) throws Exception {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		String finalHql;
+
 		try {	
-			String hql = "SELECT * FROM Competencia c WHERE id_usuario = "+idUsuario.toString()+ " and";
-			
+			String hql = "FROM Competencia WHERE id_usuario = "+idUsuario.toString()+ " and";
 			
 			if(filtro.getIdDeporte() != 0) {
 				String whereDeporte = " id_deporte = " +filtro.getIdDeporte()+ " and";	
@@ -269,19 +269,20 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			}
 			
 			if(filtro.getEstado() != null) {
-				String whereEstado = " estado = " +filtro.getEstado() +" and";	
+				System.out.println("entro");
+				String whereEstado = " estado = '" +filtro.getEstado().toString() +"' and";	
 				hql += whereEstado;
 			}
 			
 
 			if(!filtro.getNombreCompetencia().isBlank()) {
-				String likeUsuario = " nombre LIKE "+filtro.getNombreCompetencia()+"% and";
+				String likeUsuario = " lower(nombre) LIKE lower(%'"+filtro.getNombreCompetencia()+"%') and";
 				hql += likeUsuario;
 			}
 			
 			if(hql.endsWith("and")) {
 				String trimmedHql = hql.trim();
-				finalHql = trimmedHql.substring(trimmedHql.lastIndexOf(" "), trimmedHql.length());
+				finalHql = trimmedHql.substring(0, trimmedHql.lastIndexOf(" "));
 				
 			}
 			else {
@@ -297,6 +298,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 				throw new Exception("No hay competencias para este usuario con estos filtros");
 			}
 			else {
+				System.out.println(resultados);
 				return resultados;
 			}
 		}

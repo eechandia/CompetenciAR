@@ -9,6 +9,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -17,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="sistema_competencia", schema = "tp")
-public abstract class SistemaDeCompetencia {
+public class SistemaDeCompetencia {
 	
 	public enum Tipo {
 		LIGA, ELIMIN_SIMPLE, ELIMIN_DOBLE

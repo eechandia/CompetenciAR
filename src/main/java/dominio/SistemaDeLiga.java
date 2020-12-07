@@ -18,7 +18,7 @@ public class SistemaDeLiga extends SistemaDeCompetencia {
 //	@Column(name="id_sistema_competencia")
 //	@JoinColumn(name = "id_sistema_competencia")
 //	protected Integer id;
-//	
+	
 	@Column(name="puntos_por_partido_ganado")
 	private Integer puntosPorPartido;
 	@Column(name="empate_permitido")
