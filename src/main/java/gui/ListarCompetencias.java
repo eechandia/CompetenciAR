@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -439,7 +440,11 @@ public class ListarCompetencias extends JPanel {
 				}
 				
 				// ver usuario
-				competenciasFiltradas = gestorCompetencia.obtenerCompetencias(new Usuario(), new Filtro(nombreCompetencia.getText(), deportes.get(deporteBox.getSelectedIndex()).getFirst(), tipoCompetencia, tipoEstado));
+				try {
+					competenciasFiltradas = gestorCompetencia.obtenerCompetencias(new Usuario(1, "ChecoPerez@gmail.com", "hunter12", "Perez", "Checo"), new Filtro(nombreCompetencia.getText(), deportes.get(deporteBox.getSelectedIndex()).getFirst(), tipoCompetencia, tipoEstado));
+				} catch (Exception e1) {
+					JOptionPane.showMessageDialog(new JPanel(), e1.getMessage(), "Informacion", JOptionPane.INFORMATION_MESSAGE);
+				}
 				actualizarTablaCompetencias(competenciasFiltradas);
 				agregar.setVisible(false);
 				auxEspacio.setMinimumSize(new Dimension(700, 30));
@@ -599,7 +604,7 @@ public class ListarCompetencias extends JPanel {
 		for(CompetenciaDTO competencia: competencias) {
 			String modalidad = competencia.getTipoSistemaDeCompetencia().toString().replace("_", " ");
 			String estado = competencia.getEstadoCompetencia().toString().replace("_", " ");
-			Object[] renglon = { competencia.getNombre(), competencia.getDeporteDeCompetencia(), modalidad, estado};
+			Object[] renglon = { competencia.getNombre(), competencia.getDeporteDeCompetencia().getSecond(), modalidad, estado};
 			modeloCompetencia.addRow(renglon);
 		}
 		//actualizar modelo

@@ -199,7 +199,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		String finalHql;
 		try {	
-			String hql = "SELECT * FROM Competencia c WHERE";
+			String hql = "SELECT * FROM tp.Competencia c WHERE";
 			
 			
 			if(filtro.getIdDeporte() != 0) {
@@ -267,13 +267,13 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			}
 			
 			if(filtro.getEstado() != null) {
-				String whereEstado = " estado = " +filtro.getEstado() +" and ";	
+				String whereEstado = " estado = " +filtro.getEstado() +" and";	
 				hql += whereEstado;
 			}
 			
 
 			if(!filtro.getNombreCompetencia().isBlank()) {
-				String likeUsuario = "nombre LIKE "+filtro.getNombreCompetencia()+" and ";
+				String likeUsuario = " nombre LIKE "+filtro.getNombreCompetencia()+"% and";
 				hql += likeUsuario;
 			}
 			
@@ -285,7 +285,6 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			else {
 			    finalHql = hql;
 			}
-			
 
 			//String hql = "SELECT nombre FROM Participante p WHERE nombre = :nombre_participante and id_competencia = :id_competencia";
 			

@@ -22,4 +22,10 @@ public class FormaPuntuacionSets extends FormaPuntuacion {
 	public FormaPuntuacionSets() {
 		super();
 	}
+
+	public Integer getCantidad_max_sets() {
+		return cantidad_max_sets;
+	}
+	
+	
 }
