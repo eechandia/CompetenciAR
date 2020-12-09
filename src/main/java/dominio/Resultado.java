@@ -2,6 +2,8 @@ package dominio;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +17,7 @@ import javax.persistence.Table;
 
 public class Resultado {
 
-	
+
 	@Id
 	@SequenceGenerator(name="resultado-seq",sequenceName="tp.resultado_id_seq", initialValue=1, allocationSize=1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator="resultado-seq")
@@ -32,6 +34,7 @@ public class Resultado {
 	
 	@Column(name="participante2_ganador")
 	private Boolean participante2Ganador;
+	
 	
 
 	@ManyToOne()
