@@ -217,11 +217,11 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 							"WHERE m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sl.id and";
 					break;
 				case ELIMIN_SIMPLE:
-					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaSimple sed " + 
+					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaSimple ses " + 
 							"WHERE  m.competencia = c.id AND sc.modalidad = m.id AND sc.id = ses.id and";
 					break;
 				case ELIMIN_DOBLE:
-					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaDoble sed " + 
+					hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaDoble sed" + 
 							"WHERE  m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sed.id and";
 					break;
 				default:
@@ -304,7 +304,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 						"WHERE id_usuario = "+idUsuario.toString()+" AND m.competencia = c.id AND sc.modalidad = m.id AND sc.id = sl.id and";
 				break;
 			case ELIMIN_SIMPLE:
-				hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaSimple sed " + 
+				hql = "SELECT c FROM Competencia c, Modalidad m, SistemaDeCompetencia sc, SistemaDeEliminatoriaSimple ses " + 
 						"WHERE id_usuario = "+idUsuario.toString()+" AND m.competencia = c.id AND sc.modalidad = m.id AND sc.id = ses.id and";
 				break;
 			case ELIMIN_DOBLE:
