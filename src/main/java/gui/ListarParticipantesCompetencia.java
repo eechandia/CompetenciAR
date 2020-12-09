@@ -358,7 +358,8 @@ public class ListarParticipantesCompetencia extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int ok = JOptionPane.showConfirmDialog(new JPanel(), "El participante se eliminará permanentemente", "Advertencia", JOptionPane.OK_CANCEL_OPTION);
+				JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada", " ", JOptionPane.INFORMATION_MESSAGE);
+				/*int ok = JOptionPane.showConfirmDialog(new JPanel(), "El participante se eliminará permanentemente", "Advertencia", JOptionPane.OK_CANCEL_OPTION);
 				if(ok == JOptionPane.OK_OPTION) {
 					if(gestorParticipante.eliminarParticipante(competenciaDTO.getParticipantes().get(tablaParticipantes.getSelectedRow()), competenciaDTO)) {
 						competenciaDTO.getParticipantes().remove(tablaParticipantes.getSelectedRow());
@@ -372,7 +373,7 @@ public class ListarParticipantesCompetencia extends JPanel {
 					else {
 						JOptionPane.showMessageDialog(new JPanel(), "No se pudo eliminar al participante", "Error", JOptionPane.ERROR_MESSAGE);
 					}
-				}
+				}*/
 			}
 			
 		});
