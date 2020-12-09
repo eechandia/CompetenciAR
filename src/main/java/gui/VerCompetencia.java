@@ -612,6 +612,7 @@ public class VerCompetencia extends JPanel {
 		JPanel verCompetencia = new VerCompetencia(competenciaDTO, tpPanel, filtros);
 		tpPanel.add(verCompetencia, "VerCompetencia");
 		CardLayout layout = (CardLayout)tpPanel.getLayout();
+		
 		//ver tema usuario
 		if(verComp) {
 			layout.show(tpPanel, "VerCompetencia");
