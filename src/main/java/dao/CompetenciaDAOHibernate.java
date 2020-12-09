@@ -287,7 +287,8 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 //	Estado -> null o Estado.Competencia
 
 	@Override
-	public List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario) throws Exception {
+	public List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario, int numeroPagina) throws Exception {
+		final int PAGE_SIZE = 5;
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		
 		System.out.println(filtro.getModalidad());
@@ -339,10 +340,11 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 				hql += likeUsuario;
 			}
 			
+			hql += " LIMIT "+ PAGE_SIZE + " OFFSET "+ (numeroPagina-1)*PAGE_SIZE;
+			
 			if(hql.endsWith("and")) {
 				String trimmedHql = hql.trim();
 				finalHql = trimmedHql.substring(0, trimmedHql.lastIndexOf(" "));
-				
 			}
 			else {
 			    finalHql = hql;

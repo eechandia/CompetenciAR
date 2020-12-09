@@ -24,5 +24,5 @@ public interface CompetenciaDAO {
 	
 	public abstract List<Competencia> obtenerCompetencias(Filtro filtro) throws Exception;
 
-	public abstract List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario) throws Exception;
+	public abstract List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario, int numeroPagina) throws Exception;
 }
