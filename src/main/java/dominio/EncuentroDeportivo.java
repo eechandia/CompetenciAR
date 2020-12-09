@@ -2,7 +2,10 @@ package dominio;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,10 +17,17 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import dominio.Resultado.tipoRonda;
+
 @Entity
 @Table(name="encuentro_deportivo", schema = "tp")
 
 public class EncuentroDeportivo {
+	
+	enum tipoRonda{
+		LIGA, ELIMIN_SIMPLE, ELIMIN_DOBLE_GANADORES, ELIMIN_DOBLE_PERDEDORES
+	}
+	
 	
 	
 	@Id
@@ -55,6 +65,10 @@ public class EncuentroDeportivo {
 	
 	@OneToMany(mappedBy = "encuentroAsociado")
 	private List<Resultado> resultados;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="tipo_ronda")
+	private tipoRonda ronda;
 	
 	@ManyToOne()
     @JoinColumn(name = "id_fecha")
