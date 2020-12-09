@@ -6,12 +6,12 @@ import dto.ParticipanteDTO;
 
 public interface ParticipanteDAO {
 	
-	public abstract void darDeBajaParticpante(ParticipanteDTO participante);
+	public abstract void darDeBajaParticpante(Participante participante);
 	
 	public abstract void modificarParticipante();
 	
 	
-	public abstract Participante recuperarParticipante();
+	public abstract Participante recuperarParticipante(ParticipanteDTO participanteDTO);
 
 	public abstract Boolean nombreOEmailYaExiste(ParticipanteDTO participante, CompetenciaDTO competencia);
 

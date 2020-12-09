@@ -448,7 +448,7 @@ public class VerCompetencia extends JPanel {
 					Competencia comp = gestorCompetencia.obtenerCompetencia(competencia);
 					gestorCompetencia.eliminarCompetencia(comp);
 					JOptionPane.showMessageDialog(new JPanel(), "La competencia se ha eliminado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
-					competenciaEliminada(filtros);
+					competenciaEliminada();
 				}
 				else {
 					JOptionPane.showMessageDialog(new JPanel(), "No se pudo eliminar la competencia", "Error", JOptionPane.ERROR_MESSAGE);
@@ -465,6 +465,7 @@ public class VerCompetencia extends JPanel {
 					try {
 						gestorCompetencia.generarFixture(competencia);
 						JOptionPane.showMessageDialog(new JPanel(), "El Fixture se ha creado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
+						competencia.setEstadoCompetencia(Estado.PLANIFICADA);
 						competenciaModificada(competencia, true);
 					}
 					catch(EstadoCompetenciaException e1) {
@@ -596,7 +597,7 @@ public class VerCompetencia extends JPanel {
 		tpPanel.remove(this);
 	}
 	
-	private void competenciaEliminada(List<Object> filtros) {
+	private void competenciaEliminada() {
 		tpPanel.remove(tpPanel.getComponentCount() - 2);
 		JPanel listarCompetenciasPanel = new ListarCompetencias(tpPanel, filtros);
 		tpPanel.add(listarCompetenciasPanel, "ListarCompetencias");		
@@ -606,12 +607,18 @@ public class VerCompetencia extends JPanel {
 	}
 	
 	public void competenciaModificada(CompetenciaDTO competenciaDTO, boolean verComp) {
-		tpPanel.remove(tpPanel.getComponentCount() - 2);
+		if(verComp) {
+			tpPanel.remove(tpPanel.getComponentCount() - 2);  
+		}
+		else {
+			tpPanel.remove(tpPanel.getComponentCount() - 3);
+		}
 		JPanel listarCompetencias = new ListarCompetencias(tpPanel, filtros);
 		tpPanel.add(listarCompetencias, "ListarCompetencias");
 		JPanel verCompetencia = new VerCompetencia(competenciaDTO, tpPanel, filtros);
 		tpPanel.add(verCompetencia, "VerCompetencia");
 		CardLayout layout = (CardLayout)tpPanel.getLayout();
+		
 		//ver tema usuario
 		if(verComp) {
 			layout.show(tpPanel, "VerCompetencia");

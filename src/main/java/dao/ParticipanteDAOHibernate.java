@@ -20,35 +20,17 @@ import utils.HibernateUtils;
 
 public class ParticipanteDAOHibernate implements ParticipanteDAO{
 
-	@Override
-	public Participante darDeAltaParticpante() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
-	public void darDeBajaParticpante(ParticipanteDTO participanteDTO) {
+	public void darDeBajaParticpante(Participante participante) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
-		Transaction tx=null; 
-		
 		try{
-		    tx = session.beginTransaction();
-		    		    
-		    CriteriaBuilder builder = session.getCriteriaBuilder();
-		    CriteriaQuery<Participante> criteria = builder.createQuery(Participante.class);
-		    Root<Participante> root = criteria.from(Participante.class);
-		    criteria.select(root).where(builder.equal(root.get("nombre"), participanteDTO.getNombre()));
-		    Participante participante = session.createQuery(criteria).getSingleResult();
-			
+		    session.beginTransaction();
 		    session.delete(participante);
-
-			System.out.println("El participante "+ participante.getNombre()+" se elimino con exito");
-			session.flush();	
-			tx.commit();
-			
-		}catch(Exception ex){
-			tx.rollback();	
-			throw ex;
+		    session.getTransaction().commit();
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 		finally {
 			if(session!=null && session.isOpen())
@@ -87,9 +69,30 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO{
 	}
 
 	@Override
-	public Participante recuperarParticipante() {
-		// TODO Auto-generated method stub
-		return null;
+	public Participante recuperarParticipante(ParticipanteDTO participanteDTO) {
+		Session session = HibernateUtils.getSessionFactory().openSession();
+		Transaction tx=null; 
+		  Participante participante = null;
+		try{
+		    tx = session.beginTransaction();
+		    CriteriaBuilder builder = session.getCriteriaBuilder();
+		    CriteriaQuery<Participante> criteria = builder.createQuery(Participante.class);
+		    Root<Participante> root = criteria.from(Participante.class);
+		    criteria.select(root).where(builder.equal(root.get("nombre"), participanteDTO.getNombre()));
+		    participante = session.createQuery(criteria).getSingleResult();
+			session.flush();	
+			tx.commit();
+			
+		}catch(Exception ex){
+			tx.rollback();	
+			throw ex;
+		}
+		finally {
+			if(session!=null && session.isOpen())
+			session.close();	
+		}
+		
+		return participante;
 	}
 
 	@Override

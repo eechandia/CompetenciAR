@@ -1,5 +1,8 @@
 package gestor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dao.ParticipanteDAO;
 import dao.ParticipanteDAOHibernate;
 import dominio.Competencia;
@@ -28,7 +31,9 @@ public class GestorParticipante {
 		
 		Competencia competencia = gestorCompetencia.obtenerCompetencia(competenciaDto);
 		participante.setCompetencia(competencia);
-
+		if(competencia.getFixture() != null) {
+			gestorFixture.bajaFixture(competencia.getFixture());
+		}
 		participanteDAO.guardarParticipante(participante);
 		gestorCompetencia.agregarParticipante(competencia, participante);
 		
@@ -38,12 +43,20 @@ public class GestorParticipante {
 		
 		Competencia competencia = gestorCompetencia.obtenerCompetencia(competenciaDto);
 		Fixture fixture = competencia.getFixture();
-
+		
 		if(fixture != null) {
 			gestorFixture.bajaFixture(fixture);
 		}
-		participanteDAO.darDeBajaParticpante(participanteDto);
-		return false;
+		Participante participante = participanteDAO.recuperarParticipante(participanteDto);
+		List<Participante> aux = new ArrayList<Participante>();
+		for (Participante unPart : competencia.getParticipantes()) {
+			if(unPart.getIdParticipante() != participante.getIdParticipante()) aux.add(unPart);
+		}
+		competencia.setParticipantes(aux);
+		participanteDAO.darDeBajaParticpante(participante);
+		gestorCompetencia.modificarCompetencia(competencia);
+		
+		return true;
 	}
 	
 	public void validar(ParticipanteDTO participante) throws Exception {
@@ -61,10 +74,10 @@ public class GestorParticipante {
 		}
 	}
 	
-	public void eliminarParticipante(Participante participante) {
-		participanteDAO.darDeBajaParticpante(participante);
-		
-	}
+//	public void eliminarParticipante(Participante participante) {
+//		participanteDAO.darDeBajaParticpante(participante);
+//		
+//	}
 	
 	
 }
