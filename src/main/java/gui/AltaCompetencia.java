@@ -200,35 +200,17 @@ public class AltaCompetencia extends JPanel {
 		final JComboBox<Triplet<Integer, String, Integer>> comboLugares = new JComboBox<Triplet<Integer, String, Integer>>();
 		comboLugares.setRenderer(new LugarDeRealizacionComboRenderer());
 		
-		//-----------------------------------------//
-		/*final JComboBox<Pair<Integer,String>> deporteBox0 = new JComboBox<Pair<Integer,String>>(); 
-		//Pedir al gestor de deporte
+		//Rellenar deporteBOx
 		Pair<Integer,String> vacio = new Pair<Integer, String>();
 		vacio.setFirst(0);
 		vacio.setSecond(" ");
-		deporteBox0.addItem(vacio);
-		final List<Pair<Integer,String>> deportes = gestorDeporte.getDeportesInterfaz();
-		for(Pair<Integer,String> dep: deportes) {
-			deporteBox0.addItem(dep);
-		}*/
-		Pair<Integer,String> vacio = new Pair<Integer, String>();
-		vacio.setFirst(0);
-		vacio.setSecond(" ");
-		//deporteBox0.addItem(vacio);
 		final List<Pair<Integer,String>> deportes = new ArrayList<Pair<Integer, String>>();
 		deportes.add(vacio);
 		deportes.addAll(gestorDeporte.getDeportesInterfaz());
 		for(Pair<Integer,String> dep: deportes) {
 			deporteBox.addItem(dep.getSecond());
 		}
-		//-----------------------------------------//
-		//Cargo deportes en el ComboBox
-		/*deporteBox.addItem(" ");
-		final List<String> deportes = gestorDeporte.getDeportesInterfaz();
-		for(String dep: deportes) {
-			deporteBox.addItem(dep);
-		}*/
-		
+
 		//Spinners
 		final JSpinner puntosAu = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		final JSpinner cantMaxSets = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
@@ -338,9 +320,9 @@ public class AltaCompetencia extends JPanel {
 		reglamento.setMaximumSize(new Dimension(460, 212));
 		reglamento.setPreferredSize(new Dimension(460, 212));
 		
-		comboLugares.setMinimumSize(new Dimension(150, 20));
-		comboLugares.setMaximumSize(new Dimension(150, 20));
-		comboLugares.setPreferredSize(new Dimension(150, 20));
+		comboLugares.setMinimumSize(new Dimension(250, 20));
+		comboLugares.setMaximumSize(new Dimension(250, 20));
+		comboLugares.setPreferredSize(new Dimension(250, 20));
 	    
 	    aceptar.setMinimumSize(new Dimension(500, 50));
 	    aceptar.setPreferredSize(new Dimension(500,50));
@@ -580,57 +562,6 @@ public class AltaCompetencia extends JPanel {
 		ac.setBackground(Color.white);
 		ac.setMinimumSize(panelAux.getMinimumSize());
 		
-		puntuacionBox.addActionListener( new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(puntuacionBox.getSelectedIndex() == 2) {
-					asterisco4.setVisible(true);
-					puntosAusente.setVisible(true);
-					puntosAu.setVisible(true);
-					cantidadMaxSets.setVisible(false);
-					cantMaxSets.setVisible(false);
-				} else {
-					if(puntuacionBox.getSelectedIndex() == 3) {
-						asterisco4.setVisible(true);
-						puntosAusente.setVisible(false);
-						puntosAu.setVisible(false);
-						cantidadMaxSets.setVisible(true);
-						cantMaxSets.setVisible(true);
-					}
-					else {
-						asterisco4.setVisible(false);
-						puntosAusente.setVisible(false);
-						puntosAu.setVisible(false);
-						cantidadMaxSets.setVisible(false);
-						cantMaxSets.setVisible(false);
-					}
-				}
-			}
-			
-		});
-		
-		modalidadBox.addActionListener( new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(modalidadBox.getSelectedIndex() == 1) {
-					panelAux.setVisible(true);
-					asterisco6.setVisible(true);
-					puntosGanado.setVisible(true);
-					puntosG.setVisible(true);
-					ac.setVisible(false);
-				}
-				else {
-					asterisco6.setVisible(false);
-					ac.setVisible(true);
-					panelAux.setVisible(false);
-					puntosGanado.setVisible(false);
-					puntosG.setVisible(false);
-				}
-			}
-			
-		});
 		//---------------//
 		//Panel de abajo: reglamento
 		JPanel abajo = new JPanel(new GridBagLayout());
@@ -692,28 +623,29 @@ public class AltaCompetencia extends JPanel {
 		lugarDeRealizacion.add(asterisco10, auxConstraints);
 		lugarDeRealizacion.setBackground(new Color(22, 138, 114));
 		
+		Dimension d = new Dimension(40, 10);
 		JPanel ae = new JPanel();
-		ae.setMaximumSize(new Dimension(70, 10));
-		ae.setMinimumSize(new Dimension(70, 10));
-		ae.setPreferredSize(new Dimension(70, 10));
+		ae.setMaximumSize(d);
+		ae.setMinimumSize(d);
+		ae.setPreferredSize(d);
 		ae.setBackground(new Color(22, 138, 114));
 		
 		JPanel af = new JPanel();
-		af.setMaximumSize(new Dimension(70, 10));
-		af.setMinimumSize(new Dimension(70, 10));
-		af.setPreferredSize(new Dimension(70, 10));
+		af.setMaximumSize(d);
+		af.setMinimumSize(d);
+		af.setPreferredSize(d);
 		af.setBackground(new Color(22, 138, 114));
 		
 		JPanel ag = new JPanel();
-		ag.setMaximumSize(new Dimension(70, 10));
-		ag.setMinimumSize(new Dimension(70, 10));
-		ag.setPreferredSize(new Dimension(70, 10));
+		ag.setMaximumSize(d);
+		ag.setMinimumSize(d);
+		ag.setPreferredSize(d);
 		ag.setBackground(new Color(22, 138, 114));
 		
 		JPanel ah = new JPanel();
-		ah.setMaximumSize(new Dimension(70, 10));
-		ah.setMinimumSize(new Dimension(70, 10));
-		ah.setPreferredSize(new Dimension(70, 10));
+		ah.setMaximumSize(d);
+		ah.setMinimumSize(d);
+		ah.setPreferredSize(d);
 		ah.setBackground(new Color(22, 138, 114));		
 		
 		auxConstraints.gridx = 1;
@@ -1088,6 +1020,58 @@ public class AltaCompetencia extends JPanel {
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				
+			}
+			
+		});
+		
+		puntuacionBox.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(puntuacionBox.getSelectedIndex() == 2) {
+					asterisco4.setVisible(true);
+					puntosAusente.setVisible(true);
+					puntosAu.setVisible(true);
+					cantidadMaxSets.setVisible(false);
+					cantMaxSets.setVisible(false);
+				} else {
+					if(puntuacionBox.getSelectedIndex() == 3) {
+						asterisco4.setVisible(true);
+						puntosAusente.setVisible(false);
+						puntosAu.setVisible(false);
+						cantidadMaxSets.setVisible(true);
+						cantMaxSets.setVisible(true);
+					}
+					else {
+						asterisco4.setVisible(false);
+						puntosAusente.setVisible(false);
+						puntosAu.setVisible(false);
+						cantidadMaxSets.setVisible(false);
+						cantMaxSets.setVisible(false);
+					}
+				}
+			}
+			
+		});
+		
+		modalidadBox.addActionListener( new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(modalidadBox.getSelectedIndex() == 1) {
+					panelAux.setVisible(true);
+					asterisco6.setVisible(true);
+					puntosGanado.setVisible(true);
+					puntosG.setVisible(true);
+					ac.setVisible(false);
+				}
+				else {
+					asterisco6.setVisible(false);
+					ac.setVisible(true);
+					panelAux.setVisible(false);
+					puntosGanado.setVisible(false);
+					puntosG.setVisible(false);
+				}
 			}
 			
 		});

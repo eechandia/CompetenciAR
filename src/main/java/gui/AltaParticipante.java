@@ -257,8 +257,8 @@ public class AltaParticipante extends JPanel {
 						ParticipanteDTO participanteDTO = new ParticipanteDTO(nombreTexto.getText(), emailTexto.getText());
 						try{
 							gestorParticipante.crearParticipante(participanteDTO, competenciaDTO);
-							JOptionPane.showMessageDialog(new JPanel(), "Se ha agregado el participante exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 							competenciaDTO.addParticipante(participanteDTO);
+							JOptionPane.showMessageDialog(new JPanel(), "Se ha agregado el participante exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 							participanteAgregado(competenciaDTO);
 						}
 						catch(Exception e1) {
