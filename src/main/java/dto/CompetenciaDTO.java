@@ -24,6 +24,7 @@ import javax.persistence.Tuple;
 
 import dominio.Competencia;
 import dominio.Deporte;
+import dominio.Fixture;
 import dominio.FormaPuntuacion;
 import dominio.Modalidad;
 import dominio.Participante;
@@ -75,6 +76,7 @@ public class CompetenciaDTO implements Serializable {
 	
 	private Integer puntosPorPresentarse;
 	
+
 	
 	public CompetenciaDTO(
 			Integer id,	String nombre, 
@@ -94,6 +96,7 @@ public class CompetenciaDTO implements Serializable {
 			Boolean empatePermitido,
 			Integer puntosPorEmpate,
 			Integer puntosPorPresentarse
+			
 			){
 		this.id = id;
 		this.nombre = nombre;
@@ -113,6 +116,7 @@ public class CompetenciaDTO implements Serializable {
 		this.empatePermitido = empatePermitido;
 		this.puntosPorEmpate = puntosPorEmpate;
 		this.puntosPorPresentarse = puntosPorPresentarse;
+	
 	}
 	
 	public CompetenciaDTO(
@@ -298,6 +302,7 @@ public class CompetenciaDTO implements Serializable {
 	public void addParticipante(ParticipanteDTO participante) {
 		this.participantes.add(participante);
 	}
-	
 
+
+	
 }

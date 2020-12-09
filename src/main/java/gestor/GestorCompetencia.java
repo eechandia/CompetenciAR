@@ -156,6 +156,7 @@ public class GestorCompetencia {
 			if(competencia.getFixture() != null) {
 				gestorFixture.bajaFixture(competencia.getFixture());
 				gestorReserva.actualizarLugaresDeRealizacionBajaFixture(reservas);
+				competencia.setFixture(null);
 			}
 			
 			Fixture fixture = gestorFixture.generarFixture(participantes,lugaresDeRealizacion);
@@ -168,23 +169,6 @@ public class GestorCompetencia {
 			gestorFixture.guardarFixture(competencia);
 			gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
 			
-			
-			
-			
-//			if (competencia.getFixture() == null) {
-//				competencia.setFixture(fixture);
-//				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
-//				daoCompetencia.modificarCompetencia(competencia);
-//				gestorFixture.guardarFixture(competencia);
-//				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
-//			}
-//			else {
-//				competencia.setFixture(fixture);
-//				competencia.setEstadoCompetencia(Estado.PLANIFICADA);
-//				daoCompetencia.modificarCompetencia(competencia);
-//				gestorFixture.guardarFixture(competencia);
-//				gestorReserva.actualizarLugaresDeRealizacionGenerarFixture(reservas);
-//			}
 		}
 	}
 	
@@ -201,16 +185,12 @@ public class GestorCompetencia {
 		
 		competencia.addParticipante(nuevoParticipante);	
 		competencia.setEstadoCompetencia(Estado.CREADA);
-		
 		Fixture fixture = competencia.getFixture();
-		
 		if(fixture != null) {
 			competencia.setFixture(null);
-			daoCompetencia.modificarCompetencia(competencia, fixture);
+			gestorReserva.actualizarLugaresDeRealizacionBajaFixture(competencia.getReservasDisponibles());
 		}
-		
 		daoCompetencia.modificarCompetencia(competencia);
-		
 		//Mensaje de exito
 	
 	}
@@ -290,6 +270,7 @@ public class GestorCompetencia {
 				deporte.setFirst(c.getDeporteDeCompetencia().getId());
 				deporte.setSecond(c.getDeporteDeCompetencia().getNombre());
 				
+				
 				CompetenciaDTO cDTO = new CompetenciaDTO( c.getId(), c.getNombre(), c.getEstadoCompetencia(), 
 						tipoCompetencia, formaP, participantes, c.getReglamento(), c.getDadaDeBaja(), c.getFechaBaja(), c.getUsuarioAsociado(),
 						reservas, deporte, puntosSiRivalAusente, cantidadMaxSets, puntosPorPartido, empatePermitido, 
@@ -299,5 +280,12 @@ public class GestorCompetencia {
 			}
 
 		return competenciasDTO;
+	}
+	
+	
+	
+
+	public void modificarCompetencia(Competencia competencia) {
+		daoCompetencia.modificarCompetencia(competencia);
 	}
 }

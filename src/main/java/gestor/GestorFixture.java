@@ -1,5 +1,6 @@
 package gestor;
 
+import java.util.Collections;
 import java.util.List;
 
 import dao.EncuentroDeportivoDAO;
@@ -12,6 +13,7 @@ import dominio.Fecha;
 import dominio.Fixture;
 import dominio.LugarDeRealizacion;
 import dominio.Participante;
+import dominio.Reserva;
 
 public class GestorFixture {
 
@@ -37,16 +39,14 @@ public class GestorFixture {
 				Integer participante2=participantes.size()-1;
 				
 				for (int j=0 ; j<participantes.size() /2 ; j++) {
-					LugarDeRealizacion lugar = lugaresDeRealizacion.get(0);
-					EncuentroDeportivo encuentro = gestorEncuentro.generarEncuentro(participantes.get(participante1),participantes.get(participante2),lugar);
-					lugaresDeRealizacion.remove(0);
-					lugaresDeRealizacion.add(lugar);
+					EncuentroDeportivo encuentro = gestorEncuentro.generarEncuentro(participantes.get(participante1),participantes.get(participante2),lugaresDeRealizacion.get(j));
 					fecha.agregarEncuentro(encuentro);
 					encuentro.setFecha(fecha);
 					participante1++;
 					participante2--;
 				
 				}
+				Collections.shuffle(lugaresDeRealizacion);
 				rotarParticipantes(participantes);
 				fixture.agregarFecha(fecha);
 			}
