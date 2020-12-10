@@ -465,7 +465,6 @@ public class VerCompetencia extends JPanel {
 					try {
 						gestorCompetencia.generarFixture(competencia);
 						JOptionPane.showMessageDialog(new JPanel(), "El Fixture se ha creado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
-						competencia.setEstadoCompetencia(Estado.PLANIFICADA);
 						competenciaModificada(competencia, true);
 					}
 					catch(EstadoCompetenciaException e1) {

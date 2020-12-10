@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import dominio.Resultado.tipoRonda;
+//import dominio.Resultado.tipoRonda;
 
 @Entity
 @Table(name="encuentro_deportivo", schema = "tp")
