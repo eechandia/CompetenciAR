@@ -41,7 +41,7 @@ public class GestorCompetencia {
 	private DeporteDAOHibernate daoDeporte = new DeporteDAOHibernate();
 	private GestorReserva gestorReserva = new GestorReserva();
 	private GestorFixture gestorFixture = new GestorFixture();
-	
+	private GestorEncuentro gestorEncuentro = new GestorEncuentro();
 	
 	public void darDeAltaCompetencia(CompetenciaDTO competenciaDto) throws Exception{
 		
@@ -270,11 +270,12 @@ public class GestorCompetencia {
 				deporte.setFirst(c.getDeporteDeCompetencia().getId());
 				deporte.setSecond(c.getDeporteDeCompetencia().getNombre());
 				
+			    List<EncuentroDTO> proxEncuentros =	gestorEncuentro.recuperarProximosEncuentrosDTO(c);
 				
 				CompetenciaDTO cDTO = new CompetenciaDTO( c.getId(), c.getNombre(), c.getEstadoCompetencia(), 
 						tipoCompetencia, formaP, participantes, c.getReglamento(), c.getDadaDeBaja(), c.getFechaBaja(), c.getUsuarioAsociado(),
 						reservas, deporte, puntosSiRivalAusente, cantidadMaxSets, puntosPorPartido, empatePermitido, 
-						puntosPorEmpate, puntosPorPresentarse);	
+						puntosPorEmpate, puntosPorPresentarse,proxEncuentros);	
 						
 				competenciasDTO.add(cDTO);
 			}

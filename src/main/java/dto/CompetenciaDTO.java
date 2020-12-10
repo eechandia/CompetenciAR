@@ -76,7 +76,7 @@ public class CompetenciaDTO implements Serializable {
 	
 	private Integer puntosPorPresentarse;
 	
-
+	private List<EncuentroDTO> proximosEncuentros;
 	
 	public CompetenciaDTO(
 			Integer id,	String nombre, 
@@ -95,8 +95,8 @@ public class CompetenciaDTO implements Serializable {
 			Integer puntosPorPartido,
 			Boolean empatePermitido,
 			Integer puntosPorEmpate,
-			Integer puntosPorPresentarse
-			
+			Integer puntosPorPresentarse,
+			List<EncuentroDTO> proxEncuentros
 			){
 		this.id = id;
 		this.nombre = nombre;
@@ -116,7 +116,7 @@ public class CompetenciaDTO implements Serializable {
 		this.empatePermitido = empatePermitido;
 		this.puntosPorEmpate = puntosPorEmpate;
 		this.puntosPorPresentarse = puntosPorPresentarse;
-	
+		this.proximosEncuentros = proxEncuentros;
 	}
 	
 	public CompetenciaDTO(
@@ -303,6 +303,11 @@ public class CompetenciaDTO implements Serializable {
 		this.participantes.add(participante);
 	}
 
+	public List<EncuentroDTO> getProximosEncuentros() {
+		return proximosEncuentros;
+	}
 
-	
+	public void setProximosEncuentros(List<EncuentroDTO> proximosEncuentros) {
+		this.proximosEncuentros = proximosEncuentros;
+	}
 }

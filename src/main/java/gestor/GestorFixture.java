@@ -67,15 +67,13 @@ public class GestorFixture {
 				
 					for (int j=0 ; j<participantes.size() /2 ; j++) {
 					
-					LugarDeRealizacion lugar = lugaresDeRealizacion.get(0);
-					EncuentroDeportivo encuentro = gestorEncuentro.generarEncuentro(participantes.get(participante1),participantes.get(participante2),lugar);
-					lugaresDeRealizacion.remove(0);
-					lugaresDeRealizacion.add(lugar);
+					EncuentroDeportivo encuentro = gestorEncuentro.generarEncuentro(participantes.get(participante1),participantes.get(participante2),lugaresDeRealizacion.get(j));
 					fecha.agregarEncuentro(encuentro);
 					participante1++;
 					participante2--;
 				
 				}
+				Collections.shuffle(lugaresDeRealizacion);
 				participantes.add(ultimoParticipante);
 				
 				if(i != (participantes.size()-1)) {
