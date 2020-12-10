@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dominio.Competencia;
 import dominio.Competencia.Estado;
+import dominio.SistemaDeCompetencia;
 import dto.CompetenciaDTO;
 import dto.EncuentroDTO;
 import dto.ParticipanteDTO;
@@ -462,7 +463,7 @@ public class VerCompetencia extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int ok = JOptionPane.showConfirmDialog(new JPanel(), "¿Desea crear un nuevo Fixture?\nSi ya existe un Fixture este será eliminado", "Advertencia", JOptionPane.OK_CANCEL_OPTION);
-				if(ok == JOptionPane.OK_OPTION) {
+				if(ok == JOptionPane.OK_OPTION && competencia.getTipoSistemaDeCompetencia() == SistemaDeCompetencia.Tipo.LIGA) {
 					try {
 						gestorCompetencia.generarFixture(competencia);
 						JOptionPane.showMessageDialog(new JPanel(), "El Fixture se ha creado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
@@ -480,6 +481,11 @@ public class VerCompetencia extends JPanel {
 					}
 					catch (ReservasNoDisponiblesException e4) {
 						JOptionPane.showMessageDialog(new JPanel(), e4.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else {
+					if(competencia.getTipoSistemaDeCompetencia() != SistemaDeCompetencia.Tipo.LIGA) {
+						JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada para los sistemas\nde eliminatoria doble y eliminatoria simple", " ", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}
