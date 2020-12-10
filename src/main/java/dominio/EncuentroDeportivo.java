@@ -17,16 +17,16 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import dominio.Resultado.tipoRonda;
+//import dominio.Resultado.tipoRonda;
 
 @Entity
 @Table(name="encuentro_deportivo", schema = "tp")
 
 public class EncuentroDeportivo {
 	
-	enum tipoRonda{
-		LIGA, ELIMIN_SIMPLE, ELIMIN_DOBLE_GANADORES, ELIMIN_DOBLE_PERDEDORES
-	}
+//	enum tipoRonda{
+//		LIGA, ELIMIN_SIMPLE, ELIMIN_DOBLE_GANADORES, ELIMIN_DOBLE_PERDEDORES
+//	}
 	
 	
 	
@@ -66,9 +66,9 @@ public class EncuentroDeportivo {
 	@OneToMany(mappedBy = "encuentroAsociado")
 	private List<Resultado> resultados;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name="tipo_ronda")
-	private tipoRonda ronda;
+//	@Enumerated(EnumType.STRING)
+//	@Column(name="tipo_ronda")
+//	private tipoRonda ronda;
 	
 	@ManyToOne()
     @JoinColumn(name = "id_fecha")
