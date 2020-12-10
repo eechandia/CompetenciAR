@@ -24,6 +24,9 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
+import org.apache.commons.validator.routines.EmailValidator;
+
+import dominio.Competencia.Estado;
 import dto.CompetenciaDTO;
 import dto.ParticipanteDTO;
 import gestor.GestorParticipante;
@@ -250,14 +253,13 @@ public class AltaParticipante extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					if( nombreTexto.getText().length() > 0 &&
-						((emailTexto.getText().endsWith("@gmail.com") && emailTexto.getText().length() > 10) ||
-						(emailTexto.getText().endsWith("@hotmail.com") && emailTexto.getText().length() > 12) ||
-						(emailTexto.getText().endsWith("@outlook.com") && emailTexto.getText().length() > 12))) {
+						EmailValidator.getInstance().isValid(emailTexto.getText())) {
 						
 						ParticipanteDTO participanteDTO = new ParticipanteDTO(nombreTexto.getText(), emailTexto.getText());
 						try{
 							gestorParticipante.crearParticipante(participanteDTO, competenciaDTO);
 							competenciaDTO.addParticipante(participanteDTO);
+							competenciaDTO.setEstadoCompetencia(Estado.CREADA);
 							JOptionPane.showMessageDialog(new JPanel(), "Se ha agregado el participante exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 							participanteAgregado(competenciaDTO);
 						}
@@ -274,9 +276,7 @@ public class AltaParticipante extends JPanel {
 						else {
 							nombreTexto.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 						}
-						if((emailTexto.getText().endsWith("@gmail.com") && emailTexto.getText().length() > 10) ||
-						(emailTexto.getText().endsWith("@hotmail.com") && emailTexto.getText().length() > 12) ||
-						(emailTexto.getText().endsWith("@outlook.com") && emailTexto.getText().length() > 12)) {
+						if(EmailValidator.getInstance().isValid(emailTexto.getText())) {
 							emailTexto.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));							
 						}
 						else {
