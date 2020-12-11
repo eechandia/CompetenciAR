@@ -11,8 +11,8 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-
-
+import dao.CompetenciaDAO;
+import dao.CompetenciaDAOHibernate;
 import gestor.*;
 import gui.*;
 
@@ -55,10 +55,8 @@ public class App extends JFrame {
 	
 	public static void main(String[] args) {
 		//Inicializar gestores
-		GestorDeporte gestorDeporte = new GestorDeporte();
-		GestorCompetencia gestorCompetencia = new GestorCompetencia();
-		gestorCompetencia.obtenerCompetencia(null); //busca un objeto null para que hibernate arranque antes de la app
-		
+		CompetenciaDAO compeDAO = new CompetenciaDAOHibernate();
+		compeDAO.verificarSiExiste("hola"); //busca un objeto null para que hibernate arranque antes de la app
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
