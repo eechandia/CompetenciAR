@@ -241,7 +241,7 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			}
 			
 			if(filtro.getEstado() != null) {
-				System.out.println("entro");
+				
 				String whereEstado = " estado = '" +filtro.getEstado().toString() +"' and";	
 				hql += whereEstado;
 			}
@@ -289,8 +289,6 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 	@Override
 	public List<Competencia> obtenerCompetenciasDeUsuario(Filtro filtro, Integer idUsuario) throws Exception {
 		Session session = HibernateUtils.getSessionFactory().openSession();
-		
-		System.out.println(filtro.getModalidad());
 
 		try {	
 			String finalHql;
@@ -328,7 +326,6 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 			}
 			
 			if(filtro.getEstado() != null) {
-				System.out.println("entro");
 				String whereEstado = " estado = '" +filtro.getEstado().toString() +"' and";	
 				hql += whereEstado;
 			}
@@ -357,7 +354,6 @@ public class CompetenciaDAOHibernate implements CompetenciaDAO{
 				throw new Exception("No hay competencias para este usuario con estos filtros");
 			}
 			else {
-				System.out.println(resultados);
 				return resultados;
 			}
 		}
