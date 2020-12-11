@@ -96,7 +96,10 @@ public class AltaCompetencia extends JPanel {
 	                                   boolean isSelected,
 	                                   boolean cellHasFocus) {
 	        if (value instanceof Triplet<?, ?, ?>) {
-	            value = ((Triplet<Integer, String, Integer>)value).getSecond();
+	            if(((Triplet<Integer, String, Integer>) value).getThird() >= 0){
+	        	value ="D: "+ (((Triplet<Integer, String, Integer>) value).getThird())+ " - " + ((Triplet<Integer, String, Integer>)value).getSecond();
+	            }
+	            else value = " ";
 	        }
 	        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 	        return this;
@@ -210,7 +213,12 @@ public class AltaCompetencia extends JPanel {
 		for(Pair<Integer,String> dep: deportes) {
 			deporteBox.addItem(dep.getSecond());
 		}
-
+//		deporteBox.addActionListener( e-> {
+//			actualizarComboLugares((Pair<Integer,String>) deporteBox.getSelectedItem() 
+//		});
+		
+		
+		
 		//Spinners
 		final JSpinner puntosAu = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
 		final JSpinner cantMaxSets = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
@@ -607,6 +615,7 @@ public class AltaCompetencia extends JPanel {
 		lugarDeRealizacion.setMinimumSize(new Dimension(500, 150));
 		lugarDeRealizacion.setMaximumSize(new Dimension(500, 150));
 		lugarDeRealizacion.setPreferredSize(new Dimension(500, 150));
+		
 		
 		List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
 		//final List<Triplet<Integer, String, Integer>> lugares = new ArrayList<Triplet<Integer, String, Integer>>();
@@ -1109,4 +1118,6 @@ public class AltaCompetencia extends JPanel {
 		tpPanel.remove(tpPanel.getComponentCount() - 2);
 		tpPanel.remove(this);
 	}
+	
+	
 }

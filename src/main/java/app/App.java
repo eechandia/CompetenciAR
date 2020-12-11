@@ -27,7 +27,7 @@ public class App extends JFrame {
 	
 	public void armarApp(){
 		this.setBackground(Color.WHITE);
-		this.setTitle("Trabajo Practico 2020 - Disenio de Sistemas");
+		this.setTitle("Trabajo Practico 2020 - Diseño de Sistemas");
 		this.setMinimumSize(new Dimension(1280, 720));
 		this.setMaximumSize(new Dimension(1280, 720));
 		this.setPreferredSize(new Dimension(1280, 720));
