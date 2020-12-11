@@ -18,7 +18,7 @@ public interface LugarDeRealizacionDAO {
 	
 	public abstract void guardarLugarDeRealizacion();
 	
-	public abstract List<LugarDeRealizacion> recuperarLugaresDeRealizacion();
+	public abstract List<LugarDeRealizacion> recuperarLugaresDeRealizacion(int idDeporte);
 
 	/**
 	 * @param reservasDisponibles

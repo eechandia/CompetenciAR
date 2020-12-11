@@ -106,6 +106,26 @@ public class AltaCompetencia extends JPanel {
 	    }
 	}
 	
+	class DeportesComboRenderer extends DefaultListCellRenderer {
+
+	    @SuppressWarnings({ "rawtypes", "unchecked" })
+		public Component getListCellRendererComponent(
+	                                   JList list,
+	                                   Object value,
+	                                   int index,
+	                                   boolean isSelected,
+	                                   boolean cellHasFocus) {
+	        if (value instanceof Pair<?, ?>) {
+	            if(((Pair<Integer, String>) value).getFirst() >= 0){
+	            	value = ((Pair) value).getSecond();
+	            }
+	            else value = " ";
+	        }
+	        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+	        return this;
+	    }
+	}
+	
 	
 	private JPanel tituloPanel;
 	private JPanel camposPanel;
@@ -197,25 +217,21 @@ public class AltaCompetencia extends JPanel {
 		final JTextField nombreTexto = new JTextField(150);
 		
 		//ComboBox
-		final JComboBox<String> deporteBox = new JComboBox<String>(); 
+		final JComboBox<Pair<Integer, String>> deporteBox = new JComboBox<Pair<Integer, String>>(); 
+		
 		final JComboBox<String> modalidadBox = new JComboBox<String>(arregloM);
 		final JComboBox<String> puntuacionBox = new JComboBox<String>(arregloP);
 		final JComboBox<Triplet<Integer, String, Integer>> comboLugares = new JComboBox<Triplet<Integer, String, Integer>>();
 		comboLugares.setRenderer(new LugarDeRealizacionComboRenderer());
 		
 		//Rellenar deporteBOx
-		Pair<Integer,String> vacio = new Pair<Integer, String>();
-		vacio.setFirst(0);
-		vacio.setSecond(" ");
 		final List<Pair<Integer,String>> deportes = new ArrayList<Pair<Integer, String>>();
-		deportes.add(vacio);
+		deportes.add(new Pair<Integer, String>(-1, " "));
 		deportes.addAll(gestorDeporte.getDeportesInterfaz());
-		for(Pair<Integer,String> dep: deportes) {
-			deporteBox.addItem(dep.getSecond());
+		deporteBox.setRenderer(new DeportesComboRenderer());
+		for(Pair<Integer, String> elemento : deportes) {
+			deporteBox.addItem(elemento);
 		}
-//		deporteBox.addActionListener( e-> {
-//			actualizarComboLugares((Pair<Integer,String>) deporteBox.getSelectedItem() 
-//		});
 		
 		
 		
@@ -617,15 +633,34 @@ public class AltaCompetencia extends JPanel {
 		lugarDeRealizacion.setPreferredSize(new Dimension(500, 150));
 		
 		
-		List<Triplet<Integer, String, Integer>> listaLugares = GestorLugarDeRealizacion.recuperarLugares();
+
 		//final List<Triplet<Integer, String, Integer>> lugares = new ArrayList<Triplet<Integer, String, Integer>>();
 		List<Triplet<Integer, String, Integer>> reservas = new ArrayList<Triplet<Integer,String,Integer>>();
-		comboLugares.addItem(new Triplet<Integer, String, Integer>(-1, " ", -1));	
-		for(Triplet<Integer, String, Integer> elemento : listaLugares) {
-			comboLugares.addItem(elemento);
-		}
 
 		List<Triplet<Integer, String, Integer>> lugaresSeleccionados = new ArrayList<Triplet<Integer, String, Integer>>();		
+		
+		deporteBox.addActionListener( e-> {
+			Pair<Integer, String> deporteSeleccionado = (Pair<Integer, String>) deporteBox.getSelectedItem();
+			List<Triplet<Integer, String, Integer>> nuevaListaLugares = new ArrayList<Triplet<Integer, String, Integer>>();
+			
+			if(deporteSeleccionado.getFirst()!= null &&  deporteSeleccionado.getFirst() >=0) {	
+				try {
+					nuevaListaLugares = GestorLugarDeRealizacion.recuperarLugares(deporteSeleccionado.getFirst());
+				}
+				catch(Exception ex){
+					JOptionPane.showMessageDialog(new JPanel(), "Aviso: No se encontraron lugares de realización para el deporte seleccionado", "Aviso", JOptionPane.WARNING_MESSAGE);
+				}
+				
+			}
+			
+			comboLugares.removeAllItems();
+			comboLugares.addItem(new Triplet<Integer, String, Integer>(-1, " ", -1));
+			
+			for(Triplet<Integer, String, Integer> element : nuevaListaLugares) {
+				
+				comboLugares.addItem(element);
+			}
+		});
 		
 		auxConstraints.gridx = 0;
 		auxConstraints.gridy = 0;
@@ -967,6 +1002,8 @@ public class AltaCompetencia extends JPanel {
 	    	
 	    });
 	    
+	    
+	    
 		volver.addActionListener( new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -1031,7 +1068,8 @@ public class AltaCompetencia extends JPanel {
 				
 			}
 			
-		});
+		});	
+		
 		
 		puntuacionBox.addActionListener( new ActionListener() {
 
@@ -1118,6 +1156,8 @@ public class AltaCompetencia extends JPanel {
 		tpPanel.remove(tpPanel.getComponentCount() - 2);
 		tpPanel.remove(this);
 	}
+	
+
 	
 	
 }
