@@ -47,7 +47,7 @@ public class GestorParticipante {
 		if(fixture != null) {
 			gestorFixture.bajaFixture(fixture);
 		}
-		Participante participante = participanteDAO.recuperarParticipante(participanteDto);
+		Participante participante = participanteDAO.recuperarParticipante(participanteDto,competenciaDto.getId());
 		List<Participante> aux = new ArrayList<Participante>();
 		for (Participante unPart : competencia.getParticipantes()) {
 			if(unPart.getIdParticipante() != participante.getIdParticipante()) aux.add(unPart);

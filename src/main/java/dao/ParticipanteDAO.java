@@ -11,7 +11,7 @@ public interface ParticipanteDAO {
 	public abstract void modificarParticipante();
 	
 	
-	public abstract Participante recuperarParticipante(ParticipanteDTO participanteDTO);
+	public abstract Participante recuperarParticipante(ParticipanteDTO participanteDTO,Integer id_competencia);
 
 	public abstract Boolean nombreOEmailYaExiste(ParticipanteDTO participante, CompetenciaDTO competencia);
 

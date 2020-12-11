@@ -69,7 +69,7 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO{
 	}
 
 	@Override
-	public Participante recuperarParticipante(ParticipanteDTO participanteDTO) {
+	public Participante recuperarParticipante(ParticipanteDTO participanteDTO,Integer id_competencia) {
 		Session session = HibernateUtils.getSessionFactory().openSession();
 		Transaction tx=null; 
 		  Participante participante = null;
@@ -78,7 +78,9 @@ public class ParticipanteDAOHibernate implements ParticipanteDAO{
 		    CriteriaBuilder builder = session.getCriteriaBuilder();
 		    CriteriaQuery<Participante> criteria = builder.createQuery(Participante.class);
 		    Root<Participante> root = criteria.from(Participante.class);
-		    criteria.select(root).where(builder.equal(root.get("nombre"), participanteDTO.getNombre()));
+		    criteria.select(root).where(
+		    		builder.equal(root.get("nombre"), participanteDTO.getNombre()),
+		    		builder.equal(root.get("competencia"), id_competencia));
 		    participante = session.createQuery(criteria).getSingleResult();
 			session.flush();	
 			tx.commit();
