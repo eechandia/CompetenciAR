@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -32,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dominio.Competencia;
 import dominio.Competencia.Estado;
+import dominio.SistemaDeCompetencia;
 import dto.CompetenciaDTO;
 import dto.EncuentroDTO;
 import dto.ParticipanteDTO;
@@ -461,7 +463,7 @@ public class VerCompetencia extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int ok = JOptionPane.showConfirmDialog(new JPanel(), "¿Desea crear un nuevo Fixture?\nSi ya existe un Fixture este será eliminado", "Advertencia", JOptionPane.OK_CANCEL_OPTION);
-				if(ok == JOptionPane.OK_OPTION) {
+				if(ok == JOptionPane.OK_OPTION && competencia.getTipoSistemaDeCompetencia() == SistemaDeCompetencia.Tipo.LIGA) {
 					try {
 						gestorCompetencia.generarFixture(competencia);
 						JOptionPane.showMessageDialog(new JPanel(), "El Fixture se ha creado exitosamente", " ", JOptionPane.INFORMATION_MESSAGE);
@@ -479,6 +481,11 @@ public class VerCompetencia extends JPanel {
 					}
 					catch (ReservasNoDisponiblesException e4) {
 						JOptionPane.showMessageDialog(new JPanel(), e4.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				else {
+					if(competencia.getTipoSistemaDeCompetencia() != SistemaDeCompetencia.Tipo.LIGA) {
+						JOptionPane.showMessageDialog(new JPanel(), "Modalidad aún no implementada para los sistemas\nde eliminatoria doble y eliminatoria simple", " ", JOptionPane.INFORMATION_MESSAGE);
 					}
 				}
 			}
@@ -569,15 +576,21 @@ public class VerCompetencia extends JPanel {
 		tablaParticipantes.setModel(modeloParticipantes);
 	}
 	
-	private void actualizarTablaEncuentros( List<EncuentroDTO> proximosEncuentros) {
+	private void actualizarTablaEncuentros( List<EncuentroDTO> proximosEncuentros ) {
 		String[] columnas = {"Etapa", "Local", "Fecha y Hora", "Visitante"};
 		modeloEncuentros = new DefaultTableModel(columnas, 0);	
 		 
-		if(proximosEncuentros!= null) {
+		if(proximosEncuentros != null) {
 			for(EncuentroDTO encuentro: proximosEncuentros) {
-				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-				String fecha = formato.format( encuentro.getFecha() );
-				Object[] renglon = { encuentro.getEtapa(), encuentro.getParticipante1(), fecha, encuentro.getParticipante2()};
+				String fecha = null;
+				if(encuentro.getFecha() != null) {
+					SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+					fecha = formato.format( (LocalDateTime) encuentro.getFecha() );
+				}
+				else {
+					fecha = "--/--/---- --:--";
+				}
+				Object[] renglon = { encuentro.getEtapa(), encuentro.getParticipante1().getNombre(), fecha, encuentro.getParticipante2().getNombre()};
 				modeloEncuentros.addRow(renglon);
 				
 			}

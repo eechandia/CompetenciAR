@@ -39,7 +39,6 @@ import javax.swing.text.Document;
 
 import dominio.Competencia.Estado;
 import dominio.SistemaDeCompetencia;
-import dominio.Usuario;
 import dto.CompetenciaDTO;
 import gestor.GestorCompetencia;
 import gestor.GestorDeporte;

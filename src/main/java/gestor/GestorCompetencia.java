@@ -206,7 +206,9 @@ public class GestorCompetencia {
 	}
 	
 	public List<EncuentroDTO> obtenerProximosEncuentros(CompetenciaDTO competenciaDto){
-		return null;
+		Competencia c = obtenerCompetencia(competenciaDto);
+		List<EncuentroDTO> proxEncuentros =	gestorEncuentro.recuperarProximosEncuentrosDTO(c);
+		return proxEncuentros;
 	}
 
 	public List<CompetenciaDTO> obtenerCompetencias(Usuario usr, Filtro filtros) throws Exception {
@@ -262,7 +264,7 @@ public class GestorCompetencia {
 				for(Reserva r: c.getReservasDisponibles()) {
 					Pair<Integer, Integer> re = new Pair<Integer, Integer>();
 					re.setFirst(r.getLugarDeRealizacion().getCodigo());
-					re.setSecond(r.getDisponibilidad()); //???????????
+					re.setSecond(r.getDisponibilidad()); 
 					reservas.add(re);
 				}
 				
