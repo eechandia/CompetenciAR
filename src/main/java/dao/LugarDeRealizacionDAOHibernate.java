@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -53,17 +55,13 @@ public class LugarDeRealizacionDAOHibernate implements LugarDeRealizacionDAO{
 		return null;
 	}
 
-	public List<LugarDeRealizacion> recuperarLugaresDeRealizacion() {
+	public List<LugarDeRealizacion> recuperarLugaresDeRealizacion(int idDeporte) {
 		
 		Session session = HibernateUtils.getSessionFactory().openSession();
+		String finalHql;
 		try {	
 			
-			//List<LugarDeRealizacion> lugares = session.createSQLQuery("Select * from tp.lugarDeRealizacion").addEntity(LugarDeRealizacion.class).list();
-			
-			CriteriaBuilder builder = session.getCriteriaBuilder();
-		    CriteriaQuery<LugarDeRealizacion> criteria = builder.createQuery(LugarDeRealizacion.class);
-		    criteria.from(LugarDeRealizacion.class);
-		    List<LugarDeRealizacion> lugares = session.createQuery(criteria).getResultList();
+			List<LugarDeRealizacion> lugares = session.createSQLQuery("Select * from tp.lugar_de_realizacion LR INNER JOIN tp.deporte_lugar_de_realizacion DLR ON LR.codigo = DLR.id_lugar_de_realizacion WHERE id_deporte = "+ idDeporte).addEntity(LugarDeRealizacion.class).list();
 		    
 			return lugares;
 		}
