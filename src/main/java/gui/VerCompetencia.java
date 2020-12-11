@@ -474,7 +474,7 @@ public class VerCompetencia extends JPanel {
 						JOptionPane.showMessageDialog(new JPanel(), "La Competencia se encuentra en Estado: " + competencia.getEstadoCompetencia() + "\nNo se puede generar un nuevo Fixture", "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					catch(ReservasInsuficientesException e2) {
-						JOptionPane.showMessageDialog(new JPanel(), "Los lugares de realización se encuentran llenos\nPruebe más tarde", "Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(new JPanel(), e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 					catch (ParticipantesInsuficientesException e3) {
 						JOptionPane.showMessageDialog(new JPanel(), "Cantidad de participantes insuficientes", "Error", JOptionPane.ERROR_MESSAGE);
